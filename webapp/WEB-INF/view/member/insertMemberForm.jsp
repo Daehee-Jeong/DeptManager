@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | Registration Page</title>
+<title>회원등록</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -34,7 +34,6 @@
 <!-- Google Font -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
 </head>
 <body class="hold-transition register-page">
 	<div class="register-box">
@@ -46,13 +45,12 @@
 			<p id="reg-ment" class="login-box-msg">공주대 학생 인증을 통해 쉽게 가입하세요</p>
 
 			<div class="form-group">
-				<label> <input type="radio" name="r1" class="minimal"
+				<label> <input type="radio" name="r1" class="minimal special"
 					checked>&nbsp;&nbsp;포털 계정 인증
 				</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label> <input
-					type="radio" name="r1" class="minimal">&nbsp;&nbsp;도서관 계정
+					type="radio" name="r1" class="minimal special">&nbsp;&nbsp;도서관 계정
 					인증
 				</label>
-
 			</div>
 
 			<form action="" method="post">
@@ -71,26 +69,48 @@
 
 			<hr />
 
-			<form action="../../index.html" method="post">
+			<form id="member-form" method="post">
 				<div class="form-group has-feedback">
-					<input id="input-data-name" type="text" class="form-control" placeholder="이름">
-					<span class="glyphicon glyphicon-user form-control-feedback"></span>
+					<input name="memberName" id="input-data-name" type="text"
+						class="form-control" placeholder="이름"> <span
+						class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input id="input-data-dept" type="text" class="form-control" placeholder="전공">
-					<span class="glyphicon glyphicon-education form-control-feedback"></span>
+					성별 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>
+						<input name="memberGen" type="radio" name="r1" class="minimal" value="남" checked> 남
+					</label>
+					&nbsp;&nbsp;&nbsp;
+					<label>
+						<input name="memberGen" type="radio" name="r1" class="minimal" value="여"> 여
+					</label>
+				</div>
+				<input id="input-data-state" name="memberState" type="hidden" >
+				<input id="input-data-id" name="memberId" type="hidden" >
+				<div class="form-group has-feedback">
+					<input name="memberDept" id="input-data-dept" type="text"
+						class="form-control" placeholder="전공"> <span
+						class="glyphicon glyphicon-education form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input id="input-data-hp" type="text" class="form-control" placeholder="전화번호">
-					<span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+					<input name="memberHp" id="input-data-hp" type="text"
+						class="form-control" placeholder="전화번호"> <span
+						class="glyphicon glyphicon-earphone form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input id="input-data-email" type="email" class="form-control" placeholder="이메일">
-					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					<input name="memberEmail" id="input-data-email" type="email"
+						class="form-control" placeholder="이메일"> <span
+						class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input id="input-data-pw" type="password" class="form-control" placeholder="비밀번호">
-					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					<input name="memberAddr" id="input-data-addr" type="text"
+						class="form-control" placeholder="주소"> <span
+						class="glyphicon glyphicon-home form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input name="memberPw" id="input-data-pw" type="password"
+						class="form-control" placeholder="비밀번호"> <span
+						class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
 					<input id="input-data-pw2" type="password" class="form-control"
@@ -100,14 +120,14 @@
 				<div class="row">
 					<div class="col-xs-8">
 						<div class="checkbox icheck">
-							<label> <input type="checkbox"><a
-								href="#">약관</a> 에 동의합니다
+							<label> <input type="checkbox" class="special">&nbsp;&nbsp;<a href="#">약관</a>
+								에 동의합니다
 							</label>
 						</div>
 					</div>
 					<!-- /.col -->
 					<div class="col-xs-4">
-						<button type="submit" class="btn btn-primary btn-block btn-flat">회원가입</button>
+						<button id="btn-submit" type="button" class="btn btn-primary btn-block btn-flat">회원가입</button>
 					</div>
 					<!-- /.col -->
 				</div>
@@ -152,7 +172,7 @@
 	<script src="/resources/plugins/iCheck/icheck.min.js"></script>
 	<script>
 		$(function() {
-			$('input').iCheck({
+			$('input.special').iCheck({
 				checkboxClass : 'icheckbox_square-blue',
 				radioClass : 'iradio_square-blue',
 				increaseArea : '20%' // optional
@@ -163,6 +183,9 @@
 		$(document).ready(function() {
 			$('#btn-auth').click(function() {
 				doAuth();
+			});
+			$('#btn-submit').click(function() {
+				doSubmit();
 			});
 		});
 
@@ -191,12 +214,43 @@
 						$('#btn-auth').attr('disabled', 'disabled');
 						$('#input-auth-id').attr('disabled', 'disabled');
 						$('#input-auth-pw').attr('disabled', 'disabled');
-						$('#reg-ment').html('<div class="form-group has-success"><label class="control-label" for="inputSuccess"><i class="fa fa-check"></i> 인증에 성공하였습니다.</label></div>');
+						$('#reg-ment').html('<div class="has-success"><label class="control-label" for="inputSuccess"><i class="fa fa-check"></i> 인증에 성공하였습니다.</label></div>');
 						
 						$('#input-data-name').val(data.aBean.name);
 						$('#input-data-dept').val(data.aBean.deptName);
 						$('#input-data-hp').val(data.aBean.mobilePhoneNo);
 						$('#input-data-email').val(data.aBean.email);
+						$('#input-data-state').val(data.aBean.state);
+						$('#input-data-addr').val(data.aBean.addr);
+						$('#input-data-id').val($('#input-auth-id').val());
+						
+						return;
+					} else {
+						alert(data.resultMsg);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				}
+			});
+		}
+		
+		function doSubmit() {
+			
+			console.log('doSubmit');
+			
+			var param = $('#member-form').serialize();
+			console.log(param);
+			
+			$.ajax({
+				type : 'POST',
+				url: '/member/insertMemberProc.do',
+				data : param,
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					if (data.result == 'success') {
 						
 						return;
 					} else {

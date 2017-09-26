@@ -7,17 +7,38 @@ public class AuthBean {
 	private String email = "";
 	private String mobilePhoneNo = "";
 	private String deptName = "";
+	private String state = "";
+	private String addr = "";
 	
 	// 빈 생성자
 	public AuthBean() {}
 
-	public AuthBean(String name, String memberNo, String email, String mobilePhoneNo, String deptName) {
+	public AuthBean(String name, String memberNo, String email, String mobilePhoneNo, String deptName, String state,
+			String addr) {
 		super();
 		this.name = name;
 		this.memberNo = memberNo;
 		this.email = email;
 		this.mobilePhoneNo = mobilePhoneNo;
 		this.deptName = deptName;
+		this.state = state;
+		this.addr = addr;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 
 	public String getName() {

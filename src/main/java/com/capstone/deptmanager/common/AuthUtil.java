@@ -207,18 +207,24 @@ public class AuthUtil {
 					String email = data.get("email").getAsString();
 					String mobilePhoneNo = data.get("mobilePhoneNo").getAsString();
 					String deptName = data.get("dept").getAsJsonObject().get("name").getAsString();
+					String state = data.get("patronState").getAsJsonObject().get("name").getAsString();
+					String addr = data.get("addressBase").getAsString();
 					
 					aBean.setName(name);
 					aBean.setMemberNo(memberNo);
 					aBean.setEmail(email);
 					aBean.setMobilePhoneNo(mobilePhoneNo);
 					aBean.setDeptName(deptName);
+					aBean.setState(state);
+					aBean.setAddr(addr);
 					
 					System.out.println("name : " + name);
 					System.out.println("memberNo : " + memberNo);
 					System.out.println("email : " + email);
 					System.out.println("mobilePhoneNo : " + mobilePhoneNo);
 					System.out.println("deptName : " + deptName);
+					System.out.println("state : " + state);
+					System.out.println("addr : " + addr);
 				}
 			}
 			

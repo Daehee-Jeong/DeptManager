@@ -111,7 +111,7 @@
         <columns UUID="Column_cKN-d6HNEeezKcp9Kzxyag" logicalName="주소" physicalName="member_addr" dataType="VARCHAR(255)" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_cKN-eKHNEeezKcp9Kzxyag"/>
         </columns>
-        <columns UUID="Column_cKN-eaHNEeezKcp9Kzxyag" logicalName="앱토큰" physicalName="member_token" dataType="VARCHAR(255)" notNull="TRUE">
+        <columns UUID="Column_cKN-eaHNEeezKcp9Kzxyag" logicalName="앱토큰" physicalName="member_token" dataType="VARCHAR(255)" notNull="FALSE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_cKN-eqHNEeezKcp9Kzxyag"/>
         </columns>
         <columns UUID="Column_ZOh9cKHaEeezKcp9Kzxyag" logicalName="성별" physicalName="member_gen" dataType="VARCHAR(10)" notNull="TRUE">
