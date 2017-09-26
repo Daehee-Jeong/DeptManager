@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 	
-	// 재현 커밋
-	
-	@RequestMapping
+	@RequestMapping("/index")
 	public String index() {
 		return "index";
 	} // end of index
