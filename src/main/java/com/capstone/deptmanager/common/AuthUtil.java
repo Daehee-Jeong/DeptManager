@@ -94,7 +94,8 @@ public class AuthUtil {
 		HttpsURLConnection conn = null;
 		
 		String URL_APPENDED = "https://library.kongju.ac.kr/pyxis-api/api/login";
-		String param = "{\"loginId\":\"201202023\",\"password\":\"1085312\",\"_psm\":false}";
+		String param = "{\"loginId\":\"" + memberId + "\",\"password\":\"" + memberPw + "\",\"_psm\":false}";
+		System.out.println(param);
 		
 		try {
 			URL url = new URL(URL_APPENDED);
@@ -230,7 +231,7 @@ public class AuthUtil {
 			e.printStackTrace();
 		} finally {
 			if(conn != null) {
-				conn.disconnect();
+				conn.disconnect();	
 			}
 		} // end of try~catch~finally
 		

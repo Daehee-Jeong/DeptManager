@@ -19,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.capstone.deptmanager.common.AuthBean;
+import com.capstone.deptmanager.common.AuthUtil;
 import com.capstone.deptmanager.common.Constants;
 import com.capstone.deptmanager.member.bean.MemberBean;
 import com.capstone.deptmanager.member.service.MemberService;
@@ -36,9 +38,9 @@ public class MemberController {
 	
 	// 회원가입 화면
 	@RequestMapping("/member/insertMemberForm")
-	public String insertMemberForm(){
-		return "/member/insertMember";
-	}
+	public String insertMemberForm() {
+		return "/member/insertMemberForm";
+	} // end of insertMemberForm
 	
 	// 회원가입 처리
 	@RequestMapping("/member/insertMemberProc")
@@ -260,5 +262,28 @@ public class MemberController {
 		
 		return resMap;
 	}
+	
+	
+	
+	// 학생 인증
+	@RequestMapping("/member/authMemberProc")
+	@ResponseBody
+	public Map<String, Object> authMemberProc(String memberId, String memberPw) {
+		
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "계정 인증에 실패하였습니다.");
+		
+		AuthBean aBean = AuthUtil.authKnuLibrary(memberId, memberPw);
+		
+		if (aBean != null) {
+			resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+			resMap.put(Constants.RESULT_MSG, "계정 인증에 성공하였습니다.");
+			resMap.put("aBean", aBean);
+		}
+		
+		return resMap;
+	} // end of authMemberProc
 	
 } // end of class
