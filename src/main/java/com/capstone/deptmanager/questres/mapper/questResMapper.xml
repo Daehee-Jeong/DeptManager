@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.deptmanager.questres.dao.QuestResDao">
+    
+    <sql id="questResColumns">
+    		questres_no AS questResNo,
+		questres_quest questResQuest,
+		questres_member AS questResMember,
+		questres_content AS questResContent,
+		questres_date AS questResDate
+    </sql>
+    
+    <!-- 설문응답을 삽입한다. (응답제출) -->
+	<insert id="insertQuestRes" parameterType="QuestResBean">
+	    INSERT INTO member
+ 		(
+			questres_no,
+			questres_quest,
+			questres_member,
+			questres_content,
+			questres_date
+ 		)
+		VALUES
+ 		(
+ 			#{questResNo}, 
+ 			#{questResQuest} 
+ 			#{questResMember}, 
+ 			#{questResContent},
+ 			#{questResDate}
+ 		)
+ 		<selectKey order="AFTER" keyProperty="no" resultType="string">
+	   		SELECT LAST_INSERT_ID()        
+		</selectKey>
+	</insert>
+	
+	<!-- 설문응답 1건 조회해서 가져온다. -->
+	<select id="selectQuestRes" resultType="QuestResBean" parameterType="QuestResBean">
+	    SELECT
+	    		<include refid="questResColumns"/>
+	    FROM
+	    		questres
+	    WHERE
+  			questres_no = #{questResNo}
+  			AND
+  			questres_member = #{questResMember}
+	</select>
+	
+	<!-- 설문응답들을 조회해서 리스트로 가져온다. --> 
+	<select id="selectQuestResList" resultType="QuestResBean">
+	    SELECT
+	    		<include refid="questResColumns"/>
+	    FROM
+	    		questres_no = #{questResNo}
+	</select>
+	
+</mapper>

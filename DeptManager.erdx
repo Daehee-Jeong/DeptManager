@@ -144,6 +144,12 @@
         <columns UUID="Column_ycrT2KHNEeezKcp9Kzxyag" logicalName="날짜" physicalName="notice_date" dataType="DATETIME" defaultValue="CURRENT_TIMESTAMP" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Rbb1maHPEeezKcp9Kzxyag"/>
         </columns>
+        <columns UUID="Column_U_Na8KaIEeeBGaQw55uEeA" logicalName="유형" physicalName="notice_type" dataType="VARCHAR(50)" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_U_P3MKaIEeeBGaQw55uEeA"/>
+        </columns>
+        <columns UUID="Column_aUyYgKaIEeeBGaQw55uEeA" logicalName="대상" physicalName="notice_target" dataType="VARCHAR(50)" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_aUzmoKaIEeeBGaQw55uEeA"/>
+        </columns>
         <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_Rbb1mqHPEeezKcp9Kzxyag" logicalName="공지 기본키" physicalName="PK_notice" derivedPhysicalName="true" derivedLogicalName="true">
           <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_ZOh9cqHaEeezKcp9Kzxyag"/>
           <primaryKeyConstraint UUID="PKConstraint_Rbb1m6HPEeezKcp9Kzxyag" logicalName="공지 기본키" physicalName="PK_notice" derivedPhysicalName="true" derivedLogicalName="true"/>

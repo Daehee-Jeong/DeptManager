@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.capstone.deptmanager.common.bean.AuthBean;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

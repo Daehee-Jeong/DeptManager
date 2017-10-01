@@ -19,9 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.capstone.deptmanager.common.AuthBean;
+
 import com.capstone.deptmanager.common.AuthUtil;
 import com.capstone.deptmanager.common.Constants;
+import com.capstone.deptmanager.common.bean.AuthBean;
 import com.capstone.deptmanager.member.bean.MemberBean;
 import com.capstone.deptmanager.member.service.MemberService;
 
@@ -39,7 +40,7 @@ public class MemberController {
 	// 회원가입 화면
 	@RequestMapping("/member/insertMemberForm")
 	public String insertMemberForm() {
-		return "/member/insertMemberForm";
+		return "/member/insertMember";
 	} // end of insertMemberForm
 	
 	// 회원가입 처리

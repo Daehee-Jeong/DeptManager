@@ -1,4 +1,4 @@
-package com.capstone.deptmanager.common;
+package com.capstone.deptmanager.common.bean;
 
 public class AuthBean {
 

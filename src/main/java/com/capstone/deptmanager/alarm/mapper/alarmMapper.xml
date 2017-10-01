@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.deptmanager.alarm.dao.AlarmDao">
+    
+    <sql id="alarmColumns">
+    		alarm_no AS alarmNo,
+		alarm_to AS alarmTo,
+		alarm_title AS alarmTitle,
+		alarm_msg AS alarmMsg,
+		alarm_date AS alarmDate,
+		alarm_check AS alarmCheck
+    </sql>
+    
+    <!--  -->
+	<insert id="insertAlarm" parameterType="alarmBean">
+	    INSERT INTO alarm
+ 		(
+			alarm_to,
+			alarm_title,
+			alarm_msg
+ 		)
+		VALUES
+ 		(
+ 			#{alarmTo}, 
+ 			#{alarmTitle}, 
+ 			#{alarmMsg}
+ 		)
+ 		<selectKey order="AFTER" keyProperty="no" resultType="string">
+	   		SELECT LAST_INSERT_ID()        
+		</selectKey>
+	</insert>
+	
+	<!--  -->
+	<select id="selectAlarm" resultType="alarmBean" parameterType="alarmBean">
+	    SELECT
+	    		<include refid="alarmColumns"/>
+	    FROM
+	    		alarm
+	    WHERE
+  			alarm_no = #{alarmNo}
+	</select>
+	
+	<!--  -->
+	<select id="selectMemberList" resultType="alarmBean">
+	    SELECT
+	    		<include refid="alarmColumns"/>
+	    FROM
+	    		alarm
+	    	WHERE
+	    		alarm_to = #{alarmTo}
+	</select>
+	
+</mapper>
