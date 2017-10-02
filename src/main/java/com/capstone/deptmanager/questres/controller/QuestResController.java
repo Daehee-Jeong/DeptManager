@@ -23,9 +23,9 @@ import com.capstone.deptmanager.questres.service.QuestResService;
 public class QuestResController {
 	
 	@Autowired
-	QuestResService questResService;
+	private QuestResService questResService;
 	
-	@RequestMapping("insertQuestResForm")
+	@RequestMapping("/questres/insertQuestResForm")
 	public String insertQuestResForm() {
 		return "/questres/insertQuestRes";
 	} // end of insertQuestResForm

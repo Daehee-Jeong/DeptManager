@@ -2,6 +2,9 @@ package com.capstone.deptmanager.questres.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.capstone.deptmanager.questres.bean.QuestResBean;
 import com.capstone.deptmanager.questres.dao.QuestResDao;
 
@@ -11,8 +14,10 @@ import com.capstone.deptmanager.questres.dao.QuestResDao;
  *
  */
 
+@Service
 public class QuestResServiceImpl implements QuestResService{
 	
+	@Autowired
 	private QuestResDao questResDao;
 	
 	@Override
