@@ -163,7 +163,7 @@
           </partition>
         </physicalProperties>
         <columns UUID="Column_RbccoKHPEeezKcp9Kzxyag" logicalName="설문번호" physicalName="quest_no" dataType="BIGINT">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccoaHPEeezKcp9Kzxyag"/>
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccoaHPEeezKcp9Kzxyag" autoIncrement="true"/>
           <memberships UUID="MEntry_RbccoqHPEeezKcp9Kzxyag" key="PKCGroup_RbccrqHPEeezKcp9Kzxyag">
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_Rbcco6HPEeezKcp9Kzxyag" group="PKCGroup_RbccrqHPEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
@@ -242,7 +242,7 @@
           </partition>
         </physicalProperties>
         <columns UUID="Column_71UIEaHWEeezKcp9Kzxyag" logicalName="일정번호" physicalName="schedule_no" dataType="BIGINT" notNull="TRUE">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOikg6HaEeezKcp9Kzxyag"/>
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOikg6HaEeezKcp9Kzxyag" autoIncrement="true"/>
           <memberships UUID="MEntry_ZOikhKHaEeezKcp9Kzxyag" key="PKCGroup_ZOikj6HaEeezKcp9Kzxyag">
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_ZOikhaHaEeezKcp9Kzxyag" group="PKCGroup_ZOikj6HaEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
@@ -280,6 +280,7 @@
           </foreignKeyConstraint>
         </columnGroups>
         <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_ZOikj6HaEeezKcp9Kzxyag" logicalName="일정 기본키" physicalName="PK_schedule" derivedPhysicalName="true" derivedLogicalName="true">
+          <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_facngKdIEeeWzp2XRUb5fQ"/>
           <primaryKeyConstraint UUID="PKConstraint_ZOikkKHaEeezKcp9Kzxyag" logicalName="일정 기본키" physicalName="PK_schedule" derivedPhysicalName="true" derivedLogicalName="true"/>
         </columnGroups>
       </tables>
@@ -291,7 +292,7 @@
           </partition>
         </physicalProperties>
         <columns UUID="Column_ZOTbVaHXEeezKcp9Kzxyag" logicalName="알림번호" physicalName="alarm_no" dataType="BIGINT" notNull="TRUE">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLkKHaEeezKcp9Kzxyag"/>
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLkKHaEeezKcp9Kzxyag" autoIncrement="true"/>
           <memberships UUID="MEntry_ZOjLkaHaEeezKcp9Kzxyag" key="PKCGroup_ZOjLmaHaEeezKcp9Kzxyag">
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_ZOjLkqHaEeezKcp9Kzxyag" group="PKCGroup_ZOjLmaHaEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
@@ -320,6 +321,7 @@
           </foreignKeyConstraint>
         </columnGroups>
         <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_ZOjLmaHaEeezKcp9Kzxyag" logicalName="알림 기본키" physicalName="PK_alarm" derivedPhysicalName="true" derivedLogicalName="true">
+          <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_c_uRgKdIEeeWzp2XRUb5fQ"/>
           <primaryKeyConstraint UUID="PKConstraint_ZOjLmqHaEeezKcp9Kzxyag" logicalName="알림 기본키" physicalName="PK_alarm" derivedPhysicalName="true" derivedLogicalName="true"/>
         </columnGroups>
       </tables>
