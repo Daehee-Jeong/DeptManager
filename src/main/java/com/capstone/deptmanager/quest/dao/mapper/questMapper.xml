@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.deptmanager.quest.dao.QuestDao">
+    
+    <sql id="questColumns">
+    		quest_no AS questNo,
+    		quest_title AS questTitle,
+    		quest_start AS questStart,
+    		quest_end AS questEnd,
+    		quest_content AS questContent,
+    		quest_type AS questType
+    </sql>
+    
+    <!-- 설문지 1건 저장 (등록)-->
+	<insert id="insertQuest" parameterType="questBean">
+	    INSERT INTO member
+ 		(
+			quest_title,
+			quest_start,
+			quest_end,
+			quest_content,
+			quest_type
+ 		)
+		VALUES
+ 		(
+ 			#{questTitle}, 
+ 			#{questStart}, 
+ 			#{questEnd}, 
+ 			#{questContent}, 
+ 			#{questType}
+ 		)
+ 		<selectKey order="AFTER" keyProperty="no" resultType="string">
+	   		SELECT LAST_INSERT_ID()      
+		</selectKey>
+	</insert>
+	
+	<!-- 설문지 재등록 (수정) -->
+	<update id="updateQuest" parameterType="questBean">
+		UPDATE member SET
+			quest_title = #{questTitle}
+			<if test="questStart != null and questStart != ''">
+			,quest_start = #{questStart}
+			</if>
+			<if test="questEnd != null and questEnd != ''">
+			,quest_end = #{questEnd}
+			</if>
+			<if test="questContent != null and questContent != ''">
+			,quest_content = #{questContent}
+			</if>
+			<if test="questType != null and questType != ''">
+			,quest_type = #{questType}
+			</if>
+		WHERE
+			quest_no = #{questNo}
+	</update>
+	
+	<!-- 설문지 삭제 -->
+	<delete id="deleteQuest" parameterType="questBean">
+	    DELETE FROM
+	    		quest
+	    WHERE
+	    		quest_no = #{questNo}
+	</delete>
+	
+	<!-- 설문지 1건 조회 -->
+	<select id="selectQuest" resultType="questBean" parameterType="questBean">
+	    SELECT
+	    		<include refid="questColumns"/>
+	    FROM
+	    		member
+	    WHERE
+  			quest_no = #{questNo}
+	</select>
+	
+	<!-- 설문지 List 조회 -->
+	<select id="selectQuestList" resultType="questBean">
+	    SELECT
+	    		<include refid="questColumns"/>
+	    FROM
+	    		quest
+	</select>
+	
+</mapper>
