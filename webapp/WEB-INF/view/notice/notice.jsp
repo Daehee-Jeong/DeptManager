@@ -14,6 +14,8 @@
 <!-- Bootstrap 3.3.7 -->
 <link rel="stylesheet"
   href="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+  href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
 <!-- Font Awesome -->
 <link rel="stylesheet"
   href="/resources/bower_components/font-awesome/css/font-awesome.min.css">
@@ -26,6 +28,10 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
   href="/resources/dist/css/skins/_all-skins.min.css">
+  
+<script type="text/javascript" src="../resources/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../resources/bower_components/ckeditor/ckeditor.js"></script>
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,6 +44,18 @@
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+
+<style>
+
+textarea{
+  width: 80%;
+  height: 100%;
+  border: none;
+  resize: none;
+  overflow: hidden;
+}
+
+</style>
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
@@ -516,6 +534,7 @@
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <section class="content-header">
+      
         <h1>
           Timeline <small>example</small>
         </h1>
@@ -525,6 +544,59 @@
           <li class="active">Timeline</li>
         </ol>
       </section>
+
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                Launch Default Modal
+      </button>
+      
+       <div class="modal fade" id="modal-default">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+          
+               
+                  <h4> 공지 등록 </h4>
+                  
+        
+                  <div class="form-inline">
+                  <div class="input-group" style="padding:10px;"> 
+                   
+                    
+                    <select id="type" class="selectpicker" data-style="btn-info">
+                     <option  data-content="<span class='glyphicon glyphicon-envelope'></span>" value="1">일반</option>
+                      <option data-content="<span class='glyphicon glyphicon-warning-sign'></span>" value="2">학사</option>
+                      <option data-content="<span class='glyphicon glyphicon-education'></span>" value="3">긴급</option>
+                    </select>
+                    
+                    <select id="target" class="selectpicker" data-style="btn-primary">
+                      <option value="0">전체</option>
+                      <option value="1">1학년</option>
+                      <option value="2">2학년</option>
+                      <option value="3">3학년</option>
+                      <option value="4">4학년</option>
+                      <option value="5">대학원</option>
+                     </select>
+                     
+                      <input type="text" id="title" class="form-control col-md-7" placeholder="공지 이름입력">
+                    </div>
+                </div>
+      
+              </div>
+              <div class="modal-body">
+                <p> <textarea name="contents" id="contents" style="width: 90%; height: 700px;"></textarea></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button id="create-btn" type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
       <!-- Main content -->
       <section class="content">
@@ -761,13 +833,23 @@
   <script src="/resources/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/resources/dist/js/demo.js"></script>
-
+<script type="text/javascript" src="../resources/bower_components/bootstrap/js/bootstrap-select.js"></script>
   <script type="text/javascript">
    var scrollCount = 1; 
 	var preDate = '';
 	var ul;
 	
+	
 	$(document).ready(function() {
+		$(".selectpicker").selectpicker();
+		CKEDITOR.replace(
+				'contents',
+				{
+					'filebrowserUploadUrl' : '${contextPath}/notice/imageUpload.do'
+				});
+		
+		$("#create-btn").click(createButtonEvent);
+		
 		loadPage();
 		
 		$(document).scroll(function() {
@@ -829,6 +911,7 @@
 				}
 		});
 	}
+	
 	/* TimeLine 소속되는 Label을 만드는 메소드
 	 * Label -> 하나의 공지
 	 * time -> 게시된 시:분:초
@@ -857,7 +940,8 @@
 			typeIcon = "fa fa-envelope bg-blue";
 			break;
 		} 
-		 
+		
+		
 		 
 		var str = 
 		"            <!-- timeline item -->\r\n" + 
@@ -893,6 +977,52 @@
 					"</ul>";
 							
 		return str;
+	}
+	
+	createButtonEvent = function() {
+		$.ajax({
+  			type : 'POST',
+  			url : '/notice/insertNoticeProc.do',
+  			data : {
+  				"noticeTitle" : $("#title").val(),
+  				"noticeContent" : CKEDITOR.instances.contents.getData(),
+  				"noticeType" : $("#target").val(),
+  				"noticeTarget" : $("#type").val()
+  			},
+  			dataType : 'json',
+  			success : function(data) {
+  				if (data.result == 'success') {
+        				console.log(data);
+        				
+						$("#modal-default").dialog("close");
+        				/* var list = data.mList;
+        				
+        				for(var i in list) {
+        					var noticeDate = list[i].noticeDate.split(' ');
+        							
+        					var date = noticeDate[0];
+        					var time = noticeDate[1];
+        							
+        					if(date != preDate) {
+        						notice.append(createTimeLine(date));
+        						preDate = date;
+        								
+        						if(ul != undefined) ul = ul.next();
+        						else ul=$("#notice").children().first();
+        					}
+        						
+        					console.log($("#notice").children().first());
+        					ul.append(createLabel(time, list[i].noticeTitle, list[i].noticeContent, list[i].noticeType, list[i].noticeTarget)); */
+        				
+  				}	
+			},
+			error : function(xhr, status, error) {
+				console.log(xhr);
+				alert("error\nxhr : " + xhr + ", status : " + status
+						+ ", error : " + error);
+				}
+		});
+		
 	}
 </script>
 </body>

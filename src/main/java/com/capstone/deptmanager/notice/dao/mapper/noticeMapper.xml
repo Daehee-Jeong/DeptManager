@@ -14,20 +14,22 @@
     
     <!-- 공지 작성 -->
 	<insert id="insertNotice" parameterType="noticeBean">
-	    INSERT INTO member
+	    INSERT INTO notice
  		(
-			notice_no,
 			notice_title,
-			notice_content
+			notice_content,
+			notice_type,
+			notice_target
  		)
 		VALUES
  		(
- 			#{noticeNo}, 
  			#{noticeTitle},
- 			#{noticeContent}
+ 			#{noticeContent},
+ 			#{noticeType},
+ 			#{noticeTarget}
  		)
  		
- 		<selectKey order="AFTER" keyProperty="notice_no" resultType="string">
+ 		<selectKey order="AFTER" keyProperty="no" resultType="string">
 	   		SELECT LAST_INSERT_ID()        
 		</selectKey>
 	</insert>
