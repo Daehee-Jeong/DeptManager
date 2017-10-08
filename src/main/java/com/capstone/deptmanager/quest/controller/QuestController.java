@@ -92,13 +92,13 @@ public class QuestController {
 		return resMap;
 	}
 
-	// 회원정보 탈퇴화면
+	// 설문지 삭제화면
 	@RequestMapping("/quest/deleteQuestForm")
 	public String deleteQuestForm(){
 		return "/quest/deleteQuest";
 	}
 
-	// 회원정보 탈퇴처리
+	// 설문지 삭제처리
 	@RequestMapping("/quest/deleteQuestProc")
 	@ResponseBody
 	public Map<String, Object> deleteQuestProc(QuestBean questBean){
@@ -122,7 +122,7 @@ public class QuestController {
 		return resMap;
 	}
 
-	// 회원정보 조회
+	// 설문지 1건 조회
 	@RequestMapping("/quest/selectQuestProc")
 	@ResponseBody
 	public Map<String, Object> selectQuest(QuestBean questBean) {
@@ -147,7 +147,7 @@ public class QuestController {
 		return resMap;
 	}
 
-	// 회원정보 리스트 조회
+	// 설문지 리스트 조회
 	@RequestMapping("/quest/selectQuestListProc")
 	@ResponseBody
 	public Map<String, Object> selectQuestList(QuestBean questBean) {
