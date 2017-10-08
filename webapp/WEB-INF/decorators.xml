@@ -12,6 +12,7 @@
  	<decorator name="header-footer-layout" page="header-footer-layout.jsp">
   		<!-- <pattern>/*</pattern> -->
   		<pattern>/index*</pattern>
+  		<pattern>/quest/*</pattern>
  	</decorator>
  	
  	

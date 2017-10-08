@@ -25,11 +25,6 @@ public class QuestResController {
 	@Autowired
 	private QuestResService questResService;
 	
-	@RequestMapping("/quest/insertQuest")
-	public String insertQuestResForm() {
-		return "/quest/insertQuest";
-	} // end of insertQuestResForm
-	
 	@RequestMapping("/questres/insertQuestResProc")
 	@ResponseBody
 	public Map<String, Object> insertQuestResProc(QuestResBean qBean){
