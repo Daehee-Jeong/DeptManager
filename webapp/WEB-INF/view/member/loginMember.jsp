@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>학과관리 시스템::: 로그인 페이지</title>
+<title>임조교::: 로그인 페이지</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -38,11 +38,11 @@
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="/member/loginMemberForm.do"><b>학과관리 시스템</b></a>
+			<a href="/member/loginMemberForm.do"><b>로그인</b></a>
 		</div>
 		<!-- /.login-logo -->
 		<div class="login-box-body">
-			<p class="login-box-msg">로그인 하기</p>
+			<p class="login-box-msg"></p>
 
 			<form method="post">
 				<div class="form-group has-feedback">
@@ -57,8 +57,8 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-8">
-						<div class="checkbox icheck">
-							<label> <input type="checkbox"> 자동 로그인
+						<div class="checkbox icheck"> 
+							<label> <input type="checkbox">&nbsp;&nbsp;자동 로그인
 							</label>
 						</div>
 					</div>
@@ -71,9 +71,8 @@
 				</div>
 			</form>
 
-			<a href="/member/findMemberForm.do">비밀번호를 잃어버렸습니다</a><br> <a
-				href="/member/insertMemberForm.do" class="text-center">회원이
-				아니신가요?</a>
+			<a href="/member/findMemberForm.do">비밀번호를 잃어버렸습니다</a><br> 
+			<a href="/member/insertMemberForm.do" class="text-center">회원이 아니신가요?</a>
 
 		</div>
 		<!-- /.login-box-body -->

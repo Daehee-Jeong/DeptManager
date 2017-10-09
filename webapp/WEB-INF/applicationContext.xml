@@ -84,6 +84,22 @@
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<mvc:interceptors>
+	    
+	    <mvc:interceptor>
+	        <mvc:mapping path="/**"/>
+	        
+	        <!-- 예외 -->
+	        <mvc:exclude-mapping path="/member/loginMember*"/>
+	        <mvc:exclude-mapping path="/member/insertMember*"/>
+	        <mvc:exclude-mapping path="/member/findMember*"/>
+	         
+	        <bean class="com.capstone.deptmanager.common.SessionInterceptor" />
+	        
+	    </mvc:interceptor>
+	    
+	</mvc:interceptors>
 
 </beans>
 
