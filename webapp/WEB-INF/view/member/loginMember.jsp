@@ -45,8 +45,8 @@
 			<p class="login-box-msg"></p>
 
 			<form method="post">
-				<div class="form-group has-feedback">
-					<input id="memberId" type="email" class="form-control"
+				<div class="form-group">
+					<input id="memberId" type="text" class="form-control"
 						placeholder="학번"> <span
 						class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>
