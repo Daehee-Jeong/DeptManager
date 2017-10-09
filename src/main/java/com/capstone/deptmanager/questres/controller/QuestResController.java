@@ -6,10 +6,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.capstone.deptmanager.common.Constants;
+import com.capstone.deptmanager.quest.bean.QuestBean;
 import com.capstone.deptmanager.questres.bean.QuestResBean;
 import com.capstone.deptmanager.questres.service.QuestResService;
 
@@ -24,6 +26,12 @@ public class QuestResController {
 	
 	@Autowired
 	private QuestResService questResService;
+	
+	@RequestMapping("/questres/insertQuestResForm")
+	public String insertQuestResForm(Model model, QuestBean qBean) {
+		model.addAttribute("qBean", qBean);
+		return "/questres/insertQuestRes";
+	} // end of insertQuestResForm
 	
 	@RequestMapping("/questres/insertQuestResProc")
 	@ResponseBody

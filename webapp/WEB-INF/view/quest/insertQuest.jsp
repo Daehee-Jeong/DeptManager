@@ -168,9 +168,6 @@
 		</div>
 		</section>
 	</div>
-
-	<!-- jQuery 3 -->
-	<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
 	<!-- date-range-picker -->
 	<script src="/resources/bower_components/moment/min/moment.min.js"></script>
 	<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -384,16 +381,8 @@
 	                type: 'POST',
 	                dataType: "json",
 	                success: function(data){
-	                	alert(data.resultMsg);
 	                	if(data.result == "ok") {
 	                		//화면이동 처리
-	                		
-	                		var noticeTitle = data.noticeTitle;
-	                		var noticeContent = data.noticeContent;
-							$("#noticeTitle").text("noticeTitle");
-							$("#noticeContent").text("noticeContent");
-							
-							location.href = "/index.do";
 							return;
 						} else {
 							alert(data.resultMsg);
