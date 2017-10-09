@@ -14,7 +14,7 @@
     
     <!-- 설문지 1건 저장 (등록)-->
 	<insert id="insertQuest" parameterType="questBean">
-	    INSERT INTO member
+	    INSERT INTO quest
  		(
 			quest_title,
 			quest_start,
