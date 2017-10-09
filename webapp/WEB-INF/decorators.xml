@@ -13,6 +13,7 @@
   		<!-- <pattern>/*</pattern> -->
   		<pattern>/index*</pattern>
   		<pattern>/quest/*</pattern>
+  		<pattern>/questres/*</pattern>
  	</decorator>
  	
  	<!-- 예외 URL - 자식창 -->

@@ -37,7 +37,7 @@
 	
 	<!-- 설문지 재등록 (수정) -->
 	<update id="updateQuest" parameterType="questBean">
-		UPDATE member SET
+		UPDATE quest SET
 			quest_title = #{questTitle}
 			<if test="questStart != null and questStart != ''">
 			,quest_start = #{questStart}
@@ -68,7 +68,7 @@
 	    SELECT
 	    		<include refid="questColumns"/>
 	    FROM
-	    		member
+	    		quest
 	    WHERE
   			quest_no = #{questNo}
 	</select>

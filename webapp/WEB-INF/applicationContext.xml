@@ -27,12 +27,14 @@
 	<!-- DB연결정보 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mariadb://uj64-017.cafe24.com:3306/eoeowo" />
-		<!-- <property name="url" value="jdbc:mariadb://localhost:3306/ldh66210" 
-			/> -->
-		<property name="username" value="eoeowo" />
-		<property name="password" value="eoeowo1!" />
+		<!-- <property name="url"
+			value="jdbc:mariadb://uj64-017.cafe24.com:3306/eoeowo" /> -->
+		<property name="url" value="jdbc:mariadb://localhost:3306/deptmanager" 
+			/>
+		<!--  -->
+		<property name="username" value="root" />
+		<property name="password" value="wjdeogml1!" />
+		<!-- TODO : Service -> ServiceImpl 기능 수행시 에러로그 없이 응답없는 경우 DB 설정 확인 -->
 	</bean>
 
 	<!-- MyBatis 설정연결 -->
