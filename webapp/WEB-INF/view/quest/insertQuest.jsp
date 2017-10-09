@@ -169,8 +169,6 @@
 		</section>
 	</div>
 
-	<!-- jQuery 3 -->
-	<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
 	<!-- date-range-picker -->
 	<script src="/resources/bower_components/moment/min/moment.min.js"></script>
 	<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
