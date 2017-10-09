@@ -38,7 +38,7 @@
 <body class="hold-transition register-page">
 	<div class="register-box">
 		<div class="register-logo">
-			<a href="../../index2.html"><b>Admin</b>LTE</a>
+			<a href="../../index2.html"><b>회원가입</b></a>
 		</div>
 
 		<div class="register-box-body">

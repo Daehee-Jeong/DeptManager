@@ -27,12 +27,11 @@
 	<!-- DB연결정보 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mariadb://uj64-017.cafe24.com:3306/eoeowo" />
-		<!-- <property name="url" value="jdbc:mariadb://localhost:3306/ldh66210" 
-			/> -->
-		<property name="username" value="eoeowo" />
-		<property name="password" value="eoeowo1!" />
+		<!-- <property name="url"
+			value="jdbc:mariadb://uj64-017.cafe24.com:3306/eoeowo" /> -->
+		<property name="url" value="jdbc:mariadb://localhost:3306/deptmanager" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
 	</bean>
 
 	<!-- MyBatis 설정연결 -->
@@ -82,6 +81,22 @@
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<mvc:interceptors>
+	    
+	    <mvc:interceptor>
+	        <mvc:mapping path="/**"/>
+	        
+	        <!-- 예외 -->
+	        <mvc:exclude-mapping path="/member/loginMember*"/>
+	        <mvc:exclude-mapping path="/member/insertMember*"/>
+	        <mvc:exclude-mapping path="/member/findMember*"/>
+	         
+	        <bean class="com.capstone.deptmanager.common.SessionInterceptor" />
+	        
+	    </mvc:interceptor>
+	    
+	</mvc:interceptors>
 
 </beans>
 

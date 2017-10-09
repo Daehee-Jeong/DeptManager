@@ -102,8 +102,15 @@ public class MemberController {
 	@RequestMapping("/member/logoutMemberProc")
 	@ResponseBody
 	public Map<String, Object> logoutMemberProc(HttpServletRequest request){
+		
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
 		request.getSession().invalidate();
-		return null;
+		
+		resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+		resMap.put(Constants.RESULT_MSG, "로그아웃에 성공 하였습니다.");
+				
+		return resMap;
 	}
 	
 	// 회원정보 수정화면
