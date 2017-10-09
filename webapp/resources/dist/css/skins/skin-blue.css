@@ -50,6 +50,14 @@
 .skin-blue .main-header .logo:hover {
   background-color: #357ca5;
 }
+@media (max-width: 767px) {
+  .skin-blue .main-header .logo {
+    display: none;
+  }
+  .skin-blue .main-header .logo:hover {
+    display: none;
+  }
+}
 .skin-blue .main-header li.user-header {
   background-color: #3c8dbc;
 }

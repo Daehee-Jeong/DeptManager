@@ -88,6 +88,7 @@ public class MemberController {
 			if( memberBean != null 
 					&& memberBean.getMemberId().equals(bean.getMemberId()) ) {
 				//로그인 성공 - 세션에 저장
+				System.out.println("Login Success!");
 				request.getSession().setAttribute(Constants.MEMBER_LOGIN_BEAN, memberBean);
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
 			}

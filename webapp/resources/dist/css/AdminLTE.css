@@ -381,7 +381,10 @@ a:focus {
   .main-header {
     position: relative;
   }
-  .main-header .logo,
+  /*상단 로고바 제거를 위해 수정*/
+  .main-header .logo {
+  	display: none;
+  }
   .main-header .navbar {
     width: 100%;
     float: none;

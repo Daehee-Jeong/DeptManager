@@ -23,6 +23,7 @@ public class MemberServiceImpl implements MemberService{
 	// 회원정보 삽입 (회원가입)
 	@Override
 	public int insertMember(MemberBean bean) throws Exception {
+		System.out.println("insertMember");
 		return memberDao.insertMember(bean);
 	}
 	

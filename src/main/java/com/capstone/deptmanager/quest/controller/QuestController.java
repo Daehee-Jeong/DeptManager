@@ -1,5 +1,7 @@
 package com.capstone.deptmanager.quest.controller;
 
+import java.util.ArrayList;
+
 /**
  * DeptManager QuestController
  * @author "dev.daehyoung"
@@ -14,12 +16,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.capstone.deptmanager.common.Constants;
+import com.capstone.deptmanager.member.bean.MemberBean;
 import com.capstone.deptmanager.quest.bean.QuestBean;
 import com.capstone.deptmanager.quest.service.QuestService;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 @Controller
 public class QuestController {
@@ -92,13 +99,13 @@ public class QuestController {
 		return resMap;
 	}
 
-	// 설문지 삭제화면
+	// 회원정보 탈퇴화면
 	@RequestMapping("/quest/deleteQuestForm")
 	public String deleteQuestForm(){
 		return "/quest/deleteQuest";
 	}
 
-	// 설문지 삭제처리
+	// 회원정보 탈퇴처리
 	@RequestMapping("/quest/deleteQuestProc")
 	@ResponseBody
 	public Map<String, Object> deleteQuestProc(QuestBean questBean){
@@ -122,7 +129,7 @@ public class QuestController {
 		return resMap;
 	}
 
-	// 설문지 1건 조회
+	// 회원정보 조회
 	@RequestMapping("/quest/selectQuestProc")
 	@ResponseBody
 	public Map<String, Object> selectQuest(QuestBean questBean) {
@@ -147,7 +154,7 @@ public class QuestController {
 		return resMap;
 	}
 
-	// 설문지 리스트 조회
+	// 회원정보 리스트 조회
 	@RequestMapping("/quest/selectQuestListProc")
 	@ResponseBody
 	public Map<String, Object> selectQuestList(QuestBean questBean) {
@@ -171,5 +178,50 @@ public class QuestController {
 
 		return resMap;
 	}
+	
+	@RequestMapping("/quest/selectTargetForm")
+	public String selectTargetForm() {
+		return "/quest/selectTarget";
+	}
+	
+	@RequestMapping("/quest/selectTargetProc")
+	@ResponseBody
+	public Map<String, Object> selectTargetProc(@RequestParam(value="memberIds", required=true) String memberIds) {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		JsonParser parser = new JsonParser();
+		JsonArray array = (JsonArray) parser.parse(memberIds);
+		
+		List<MemberBean> mBeanList = new ArrayList<>();
+		for (int i = 0; i < array.size(); i++) {
+			MemberBean mBean = new MemberBean();
+			String id = array.get(i).getAsString();
+			mBean.setMemberId(id);
+			mBeanList.add(mBean);
+			System.out.println("id : " + id);
+		}
+		
+		
+		// 테스트를 위해 리턴시
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문지 리스트 조회에 실패 하였습니다.");
+		resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+		resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
+		resMap.put("mBeanList", mBeanList);
 
+//		try {
+//			List<QuestBean> questList = questService.selectQuestList();
+//
+//			if(questList != null && questList.size() > 0) {
+//				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+//				resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
+//				resMap.put("qList", questList);
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+
+		return resMap;
+	}
+	
 } // end of class

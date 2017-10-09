@@ -48,9 +48,9 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <decorator:head />
-
+	
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed"><!-- 상단바 고정을 위해 수정 -->
 	<div class="wrapper">
 
 		<!-- Main Header -->
@@ -263,6 +263,16 @@
 			</section>
 			<!-- /.sidebar -->
 		</aside>
+		
+			<!-- REQUIRED JS SCRIPTS -->
+
+	<!-- jQuery 3 -->
+	<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script
+		src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="/resources/dist/js/adminlte.min.js"></script>
 
 		<!-- 내용 -->
 		<decorator:body />
@@ -351,15 +361,7 @@
 	</div>
 	<!-- ./wrapper -->
 
-	<!-- REQUIRED JS SCRIPTS -->
 
-	<!-- jQuery 3 -->
-	<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
-	<!-- Bootstrap 3.3.7 -->
-	<script
-		src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="/resources/dist/js/adminlte.min.js"></script>
 
 	<!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
@@ -382,7 +384,13 @@
 	<!-- Page specific script -->
 	<script>
 		$(function() {
-
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+			
+			if (w < 767) {
+				$('.main-header>a').css('display', 'none');
+			}
+			
 			/* initialize the external events
 			 -----------------------------------------------------------------*/
 			function init_events(ele) {

@@ -11456,7 +11456,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "총 _TOTAL_ 개의 데이터 중 _START_ 에서 _END_ 번 째 데이터",
 	
 	
 			/**
