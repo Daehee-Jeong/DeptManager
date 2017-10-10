@@ -246,7 +246,7 @@
 		});
 		
 		function doRadioAdd(element) {
-			var str = '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
+			var str = '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
 			$(element).parent().find('.form-group').append(str);
 		}
 		
@@ -255,7 +255,7 @@
 		}
 		
 		function doCheckAdd(element) {
-			var str = '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
+			var str = '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
 			$(element).parent().find('.form-group').append(str);
 		}
 		
@@ -295,8 +295,7 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요."></div><br><br>';
-				str += '<label class="col-sm-2 control-label">항목 설명</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="항목에 대한 자세한 설명을 입력해주세요."></div><br><br>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
 				str += '<input type="text" class="form-control" placeholder="답변" disabled> </div>';
 				str += '</div></div></div></div>';
 				$('#quest-content').append(str);
@@ -309,8 +308,7 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요."></div><br><br>';
-				str += '<label class="col-sm-2 control-label">항목 설명</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="항목에 대한 자세한 설명을 입력해주세요."></div><br><br>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
 				str += '<textarea class="form-control" rows="3" placeholder="자세한 답변" disabled></textarea></div>';
 				str += '</div></div></div></div>';
 				$('#quest-content').append(str);
@@ -323,10 +321,9 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요."></div><br><br>';
-				str += '<label class="col-sm-2 control-label">항목 설명</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="항목에 대한 자세한 설명을 입력해주세요."></div><br><br>';
-				str += '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목"></label></div>';
-				str += '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
+				str += '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
 				str += '</div><i class="fa fa-plus-square-o" onclick="doRadioAdd(this)"></i>';
 				str += '</div></div></div>';
 				$('#quest-content').append(str);
@@ -339,10 +336,9 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요."></div><br><br>';
-				str += '<label class="col-sm-2 control-label">항목 설명</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="항목에 대한 자세한 설명을 입력해주세요."></div><br><br>';
-				str += '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목"></label></div>';
-				str += '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
+				str += '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
 				str += '</div><i class="fa fa-plus-square-o" onclick="doCheckAdd(this)"></i>';
 				str += '</div></div></div>';
 				$('#quest-content').append(str);
@@ -355,8 +351,7 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요."></div><br><br>';
-				str += '<label class="col-sm-2 control-label">항목 설명</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="항목에 대한 자세한 설명을 입력해주세요."></div><br><br>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
 				str += '<select class="form-control"></select>';
               	str += '<input type="text" class="form-control" id="input-list" placeholder="추가할 항목을 입력해주세요."><i class="fa fa-plus-square-o" onclick="doListAdd(this)">';
 				str += '</div></div></div></div>';
@@ -366,35 +361,40 @@
 			
 		}
 		
+		function setValue(element) {
+			var x = $(element).val();
+			$(element).attr('value', x);
+		}
+		
 		/* 다음 페이지 이동 (설문지 설정화면) */
 		function doNext() {
 			
 			$.ajax({
-	                url: '/quest/insertQuestProc.do',
-	                data: {
-	                		"questTitle" : $("#questTitle").val(),
-	                		"questEnd" : $("#reservationtime").val(),
-	                		"questContent" : $("#quest-content").html(),
-	                		"questType" :  $("#questType").val()
-	                		
-	                },
-	                type: 'POST',
-	                dataType: "json",
-	                success: function(data){
-	                	if(data.result == "ok") {
-	                		//화면이동 처리
-							return;
-						} else {
-							alert(data.resultMsg);
-							return;
-						}
-	                },//success
-	                	error: function(xhr, status, error) {
-						console.log(xhr);
-						alert("error\nxhr : " + xhr + ", status : " 
-								+ status + ", error : " + error);      
-						}
-	            }); 
+                url: '/quest/insertQuestProc.do',
+                data: {
+                		"questTitle" : $("#questTitle").val(),
+                		"questEnd" : $("#reservationtime").val(),
+                		"questContent" : $("#quest-content").html(),
+                		"questType" :  $("#questType").val()
+                		
+                },
+                type: 'POST',
+                dataType: "json",
+                success: function(data){
+                	if(data.result == "ok") {
+                		//화면이동 처리
+						return;
+					} else {
+						alert(data.resultMsg);
+						return;
+					}
+                },//success
+                	error: function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " 
+							+ status + ", error : " + error);      
+				}
+            });
 
 		};//end function
 	</script>
