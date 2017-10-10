@@ -6,8 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>설문지 작성</title>
 
-<!-- Bootstrap 3.3.7 -->
-<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
 <!-- daterange picker -->
 <link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 <!-- bootstrap datepicker -->
@@ -18,11 +16,6 @@
 <link rel="stylesheet" href="/resources/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
 <!-- Bootstrap time Picker -->
 <link rel="stylesheet" href="/resources/plugins/timepicker/bootstrap-timepicker.min.css">
-<!-- Select2 -->
-<link rel="stylesheet" href="/resources/bower_components/select2/dist/css/select2.min.css">
-<!-- AdminLTE Skins. Choose a skin from the css/skins
-     folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet" href="/resources/dist/css/skins/_all-skins.min.css">
 
 </head>
 <body>
@@ -60,7 +53,7 @@
 
 								<div class="form-group has-feedback">
 									<i class="fa fa-fw fa-file-text-o"></i> <label>텍스트 장문형</label>
-									<textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
+									<textarea class="form-control" rows="3" style="max-width : 100%;" placeholder="Enter ..." disabled></textarea>
 								</div>
 								<button id="btn-long-text">추가</button>
 								<!-- /.form-group -->
@@ -146,9 +139,7 @@
 					
 					<div class="box-body">
 						<div class="row">
-							<div class="col-md-12" id="quest-content">
-								<!-- 설문지 내용 삽입 공간 -->
-							</div>
+							<div class="col-md-12" id="quest-content"><!-- 설문지 내용 삽입 공간 --></div>
 							<!-- col -->
 						</div>
 						<!-- /.row -->
@@ -182,6 +173,10 @@
 	<!-- AdminLTE for demo purposes -->
 	<script src="/resources/dist/js/demo.js"></script>
 	<script>
+		
+		var radioCnt = 1; // radio 버튼 name 속성 카운트
+		var checkCnt = 1; // checkBox name 속성 카운트
+	
 		$(function() {
 			//Date range picker with time picker
 			$('#reservationtime').daterangepicker({
@@ -246,7 +241,14 @@
 		});
 		
 		function doRadioAdd(element) {
-			var str = '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
+			
+			var arr = $(element).parent().find('.inputRadio');
+			var tag = $(arr).get(0);
+			var nameValue = $(tag).attr('name');
+			
+			console.log(nameValue);
+			
+			var str = '<div class="radio"><label><input type="radio" name="'+nameValue+'" class="inputRadio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
 			$(element).parent().find('.form-group').append(str);
 		}
 		
@@ -255,7 +257,12 @@
 		}
 		
 		function doCheckAdd(element) {
-			var str = '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
+			
+			var arr = $(element).parent().find('.inputCheck');
+			var tag = $(arr).get(0);
+			var nameValue = $(tag).attr('name');
+			
+			var str = '<div class="checkbox"><label><input type="checkbox" name="'+nameValue+'" class="inputCheck" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
 			$(element).parent().find('.form-group').append(str);
 		}
 		
@@ -309,7 +316,7 @@
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
 				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
-				str += '<textarea class="form-control" rows="3" placeholder="자세한 답변" disabled></textarea></div>';
+				str += '<textarea class="form-control" rows="3" placeholder="자세한 답변" style="max-width : 100%;" disabled></textarea></div>';
 				str += '</div></div></div></div>';
 				$('#quest-content').append(str);
 				break;
@@ -322,11 +329,13 @@
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
 				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
-				str += '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
-				str += '<div class="radio"><label><input type="radio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
+				str += '<div class="radio"><label><input type="radio" name="'+'radio'+radioCnt+'" class="inputRadio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
+				str += '<div class="radio"><label><input type="radio" name="'+'radio'+radioCnt+'" class="inputRadio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
 				str += '</div><i class="fa fa-plus-square-o" onclick="doRadioAdd(this)"></i>';
 				str += '</div></div></div>';
 				$('#quest-content').append(str);
+				
+				radioCnt++;
 				break;
 			case 3:
 				var str = '';
@@ -337,11 +346,13 @@
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
 				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
-				str += '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
-				str += '<div class="checkbox"><label><input type="checkbox" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
+				str += '<div class="checkbox"><label><input type="checkbox" name="'+'check'+checkCnt+'" class="inputCheck" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
+				str += '<div class="checkbox"><label><input type="checkbox" name="'+'check'+checkCnt+'" class="inputCheck" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
 				str += '</div><i class="fa fa-plus-square-o" onclick="doCheckAdd(this)"></i>';
 				str += '</div></div></div>';
 				$('#quest-content').append(str);
+				
+				checkCnt++;
 				break;
 			case 4:
 				var str = '';
@@ -369,32 +380,35 @@
 		/* 다음 페이지 이동 (설문지 설정화면) */
 		function doNext() {
 			
-			$.ajax({
-                url: '/quest/insertQuestProc.do',
-                data: {
-                		"questTitle" : $("#questTitle").val(),
-                		"questEnd" : $("#reservationtime").val(),
-                		"questContent" : $("#quest-content").html(),
-                		"questType" :  $("#questType").val()
-                		
-                },
-                type: 'POST',
-                dataType: "json",
-                success: function(data){
-                	if(data.result == "ok") {
-                		//화면이동 처리
-						return;
-					} else {
-						alert(data.resultMsg);
-						return;
-					}
-                },//success
-                	error: function(xhr, status, error) {
-					console.log(xhr);
-					alert("error\nxhr : " + xhr + ", status : " 
-							+ status + ", error : " + error);      
-				}
-            });
+			var form = document.createElement('form');
+        		var objs1;
+			objs1 = document.createElement('input');
+		    objs1.setAttribute('type', 'hidden');
+		    objs1.setAttribute('name', 'questTitle');
+		    objs1.setAttribute('value', $("#questTitle").val());
+			form.appendChild(objs1);
+			var objs2;
+			objs2 = document.createElement('input');
+			objs2.setAttribute('type', 'hidden');
+		    objs2.setAttribute('name', 'questEnd');
+		    objs2.setAttribute('value', $("#reservationtime").val());
+			form.appendChild(objs2);
+			var objs3;
+			objs3 = document.createElement('input');
+			objs3.setAttribute('type', 'hidden');
+		    objs3.setAttribute('name', 'questContent');
+		    objs3.setAttribute('value', $("#quest-content").html());
+			form.appendChild(objs3);
+			var objs4;
+			objs4 = document.createElement('input');
+			objs4.setAttribute('type', 'hidden');
+		    objs4.setAttribute('name', 'questType');
+		    objs4.setAttribute('value', $("#questType").val());
+			form.appendChild(objs4);
+			form.setAttribute('method', 'post');
+			form.setAttribute('action', "/quest/selectTargetForm.do");
+			document.body.appendChild(form);
+			form.submit(); 
 
 		};//end function
 	</script>

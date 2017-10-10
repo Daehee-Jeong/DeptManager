@@ -16,7 +16,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,7 +48,7 @@ public class QuestController {
 	// 설문지 등록 처리
 	@RequestMapping("/quest/insertQuestProc")
 	@ResponseBody
-	public Map<String, Object> insertQuestProc(QuestBean bean){
+	public Map<String, Object> insertQuestProc(@RequestParam(value="memberIds", required=true) String memberIds, QuestBean bean){
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 
@@ -64,6 +64,21 @@ public class QuestController {
 		}catch (Exception e) {
 
 		}
+
+		// 설문지 등록 완료 후 푸쉬 알림
+		
+		JsonParser parser = new JsonParser();
+		JsonArray array = (JsonArray) parser.parse(memberIds);
+		
+		List<MemberBean> mBeanList = new ArrayList<>();
+		for (int i = 0; i < array.size(); i++) {
+			MemberBean mBean = new MemberBean();
+			String id = array.get(i).getAsString();
+			mBean.setMemberId(id);
+			mBeanList.add(mBean);
+			System.out.println("id : " + id);
+		}
+		
 		return resMap;
 	}
 
@@ -179,49 +194,13 @@ public class QuestController {
 		return resMap;
 	}
 	
+	// 설문지 설정 화면 (excel명단 학번 추출)
 	@RequestMapping("/quest/selectTargetForm")
-	public String selectTargetForm() {
+	public String selectTargetForm(QuestBean questBean, Model model) {
+		
+		model.addAttribute("questBean", questBean);
+		
 		return "/quest/selectTarget";
-	}
-	
-	@RequestMapping("/quest/selectTargetProc")
-	@ResponseBody
-	public Map<String, Object> selectTargetProc(@RequestParam(value="memberIds", required=true) String memberIds) {
-		Map<String, Object> resMap = new HashMap<String, Object>();
-		
-		JsonParser parser = new JsonParser();
-		JsonArray array = (JsonArray) parser.parse(memberIds);
-		
-		List<MemberBean> mBeanList = new ArrayList<>();
-		for (int i = 0; i < array.size(); i++) {
-			MemberBean mBean = new MemberBean();
-			String id = array.get(i).getAsString();
-			mBean.setMemberId(id);
-			mBeanList.add(mBean);
-			System.out.println("id : " + id);
-		}
-		
-		
-		// 테스트를 위해 리턴시
-		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
-		resMap.put(Constants.RESULT_MSG, "설문지 리스트 조회에 실패 하였습니다.");
-		resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
-		resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
-		resMap.put("mBeanList", mBeanList);
-
-//		try {
-//			List<QuestBean> questList = questService.selectQuestList();
-//
-//			if(questList != null && questList.size() > 0) {
-//				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
-//				resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
-//				resMap.put("qList", questList);
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-
-		return resMap;
 	}
 	
 } // end of class
