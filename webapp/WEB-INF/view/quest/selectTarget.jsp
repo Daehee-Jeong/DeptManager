@@ -118,17 +118,23 @@
 			
 			
 			$('#btn-complete').click(function(){
+				
 				$.ajax({
 					type : 'POST',
-					url: '/quest/selectTargetProc.do',
+					url: '/quest/insertQuestProc.do',
 					data : {
-						"memberIds" : JSON.stringify(memberIds)
+						"memberIds" : JSON.stringify(memberIds),
+						"questTitle" : '${questBean.questTitle}',
+						"questEnd" : '${questBean.questEnd}',
+						"questContent" : '${questBean.questContent}',
+						"questType" : '${questBean.questType}'
 					},
 					dataType : 'json',
 					success : function(data) {
 						console.log(data);
 						if (data.result == 'success') {
-							
+							alert(data.resultMsg);
+							location.replace('/index.do');
 							return;
 						} else {
 							alert(data.resultMsg);
@@ -139,6 +145,7 @@
 						alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 					}
 				});
+				 
 			});
 			
 			$('#exampleInputFile').on('change', function(evt) {

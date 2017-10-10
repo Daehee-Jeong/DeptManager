@@ -45,7 +45,7 @@
 			<p class="login-box-msg"></p>
 
 			<form method="post">
-				<div class="form-group">
+				<div class="form-group has-feedback">
 					<input id="memberId" type="text" class="form-control"
 						placeholder="학번"> <span
 						class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -64,8 +64,7 @@
 					</div>
 					<!-- /.col -->
 					<div class="col-xs-4">
-						<button id="btn-login" type="submit"
-							class="btn btn-primary btn-block btn-flat">로그인</button>
+						<button id="btn-login" type="button" class="btn btn-primary btn-block btn-flat">로그인</button>
 					</div>
 					<!-- /.col -->
 				</div>
@@ -80,13 +79,12 @@
 	<!-- /.login-box -->
 
 	<!-- jQuery 3 -->
-	<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
-	<!-- Bootstrap 3.3.7 -->
-	<script
-		src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- iCheck -->
-	<script src="/resources/plugins/iCheck/icheck.min.js"></script>
-	<script>
+<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="/resources/plugins/iCheck/icheck.min.js"></script>
+<script>
   $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
