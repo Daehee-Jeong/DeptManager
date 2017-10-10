@@ -69,6 +69,9 @@ body {
   .main-footer {
     margin-left: 0;
   }
+  .main-footer {
+    display: none;
+  }
 }
 @media (min-width: 768px) {
   .sidebar-collapse .content-wrapper,
@@ -114,7 +117,7 @@ body {
 @media (max-width: 767px) {
   .fixed .content-wrapper,
   .fixed .right-side {
-    padding-top: 100px;
+    padding-top: 50px;
   }
 }
 .fixed.layout-boxed .wrapper {
@@ -138,7 +141,7 @@ body {
 }
 /* Content */
 .content {
-  min-height: 250px;
+  /*min-height: 250px;*/
   padding: 15px;
   margin-right: auto;
   margin-left: auto;

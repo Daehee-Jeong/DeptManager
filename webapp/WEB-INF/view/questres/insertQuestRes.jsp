@@ -95,9 +95,9 @@
 						
 						str += '<div class="box box-info"><div class="box-header with-border"><h3 class="box-title">';
 						str += data.qBean.questTitle;
-						str += '</h3></div><div class="box-body"><div class="row"><div class="col-md-12"><form><h5>';
+						str += '</h3></div><div class="box-body"><div class="row"><div class="col-md-12"><form><h5><small>';
 						str += data.qBean.questType;
-						str += '</h5>';
+						str += '</small></h5>';
 						
 						$.each(divHiddenChild, function(index, value) {
 							var divBox = $(divHiddenChild).get(index);
@@ -165,12 +165,12 @@
 										var optText = $(option).text();
 										str += '<option>' + optText + '</option>';
 									});
-									str += '</select>';
+									str += '</select><br/>';
 						        }
 							}); // inner each
 						}); // outer each
 						
-						str += '</form></div><br/></div><div class="box-footer">* 설문작성 완료 후 제출버튼을 눌러주세요</div></div>';
+						str += '</form></div></div></br><div class="box-footer">* 설문작성 완료 후 제출버튼을 눌러주세요</div></div>';
 						console.log(str);
 						
 						var divQuest = $('#div-quest');
