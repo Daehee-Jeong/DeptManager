@@ -4,7 +4,7 @@
 <mapper namespace="com.capstone.deptmanager.notice.dao.NoticeDao">
     
     <sql id="noticeColumns">
-    	notice_no AS noticerNo,
+    	notice_no AS noticeNo,
 		notice_title AS noticeTitle,
 		notice_content AS noticeContent,
 		notice_date AS noticeDate,

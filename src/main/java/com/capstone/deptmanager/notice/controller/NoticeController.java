@@ -34,9 +34,9 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
-	@RequestMapping("/notice/notice")
-	public String notice() {
-		return "/notice/notice";
+	@RequestMapping("/notice/noticeForm")
+	public String noticeForm() {
+		return "/notice/noticeForm";
 	}
 	
 	@RequestMapping("/notice/insertNoticeProc")
@@ -60,6 +60,29 @@ public class NoticeController {
 		}
 		return resMap;
 	}
+	
+	@RequestMapping("/notice/deleteNoticeProc")
+	@ResponseBody
+	public Map<String, Object> deleteNotice(NoticeBean bean) throws Exception {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "공지 삭제에 실패했습니다.");
+		
+		try {
+			System.out.println(bean.getNoticeNo());
+			int res = noticeService.deleteNotice(bean);
+			System.out.println("res 값:" + res);
+			if(res > 0){
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "공지 삭제에 성공했습니다.");
+			}
+		}catch (Exception e) {
+			
+		}
+		return resMap;
+	}
+
 
 	@RequestMapping("/notice/imageUpload")
 	public String imageUpload(ImageBean bean, HttpServletRequest request, Model model) {

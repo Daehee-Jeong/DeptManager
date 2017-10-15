@@ -5,5 +5,3 @@
 	window.parent.CKEDITOR.tools.callFunction('${CKEditorFuncNum}',
 			'${file_path}', '파일 전송 완료.');
 </script>
-
-출처: http://syaku.tistory.com/270 [개발자 샤쿠 (Syaku)]

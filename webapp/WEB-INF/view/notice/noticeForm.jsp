@@ -544,7 +544,8 @@ textarea{
           <li class="active">Timeline</li>
         </ol>
       </section>
-
+      
+      <!--  Modal  -->
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
                 Launch Default Modal
       </button>
@@ -555,7 +556,7 @@ textarea{
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-          
+                   
                
                   <h4> 공지 등록 </h4>
                   
@@ -564,32 +565,36 @@ textarea{
                   <div class="input-group" style="padding:10px;"> 
                    
                     
-                    <select id="type" class="selectpicker" data-style="btn-info">
-                     <option  data-content="<span class='glyphicon glyphicon-envelope'></span>" value="1">일반</option>
+                    <select id="type" name="sel1" class="selectpicker" data-style="btn-info">
+                     <option selected data-content="<span class='glyphicon glyphicon-envelope'></span>" value="1">일반</option>
                       <option data-content="<span class='glyphicon glyphicon-warning-sign'></span>" value="2">학사</option>
                       <option data-content="<span class='glyphicon glyphicon-education'></span>" value="3">긴급</option>
                     </select>
                     
-                    <select id="target" class="selectpicker" data-style="btn-primary">
-                      <option value="0">전체</option>
+                    <select id="target" name="sel2" class="selectpicker" data-style="btn-primary">
+                      <option selected value="0">전체</option>
                       <option value="1">1학년</option>
                       <option value="2">2학년</option>
                       <option value="3">3학년</option>
                       <option value="4">4학년</option>
                       <option value="5">대학원</option>
                      </select>
+                     <!-- HTML to write -->
+
                      
-                      <input type="text" id="title" class="form-control col-md-7" placeholder="공지 이름입력">
+                   <input type="text" id="title" title="제목이 빈칸일 수 없습니다." class="form-control col-md-7" placeholder="공지 이름입력" required>
+                    
                     </div>
                 </div>
       
               </div>
               <div class="modal-body">
-                <p> <textarea name="contents" id="contents" style="width: 90%; height: 700px;"></textarea></p>
+                <p id="tootlip-contents" title="내용이 빈칸일 수 없습니다."> <textarea name="contents" id="contents" style="width: 90%; height: 700px;"></textarea></p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button id="create-btn" type="button" class="btn btn-primary">Save changes</button>
+                <button id="create-btn" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+                
               </div>
             </div>
             <!-- /.modal-content -->
@@ -597,6 +602,8 @@ textarea{
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+
+     
 
       <!-- Main content -->
       <section class="content">
@@ -829,6 +836,7 @@ textarea{
     src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- FastClick -->
   <script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="/resources/bower_components/moment/moment.js"></script>
   <!-- AdminLTE App -->
   <script src="/resources/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
@@ -849,8 +857,10 @@ textarea{
 				});
 		
 		$("#create-btn").click(createButtonEvent);
-		
+	
 		loadPage();
+		
+		console.log($('.timeline-footer').child);
 		
 		$(document).scroll(function() {
 			maxHeight = $(document).height();
@@ -861,6 +871,8 @@ textarea{
 				loadPage();
 			}
 		});
+		
+
 	});
 	
 	loadPage = function() {
@@ -882,7 +894,7 @@ textarea{
         				
         				for(var i in list) {
         					var noticeDate = list[i].noticeDate.split(' ');
-        							
+
         					var date = noticeDate[0];
         					var time = noticeDate[1];
         							
@@ -894,9 +906,30 @@ textarea{
         						else ul=$("#notice").children().first();
         					}
         						
-        					console.log($("#notice").children().first());
-        					ul.append(createLabel(time, list[i].noticeTitle, list[i].noticeContent, list[i].noticeType, list[i].noticeTarget));
+        					ul.append(createLabel(list[i].noticeNo, time, list[i].noticeTitle, list[i].noticeContent, list[i].noticeType, list[i].noticeTarget));
+        				
+        					$('button[type="button"]').on("click", function(event) {
+        						 event.preventDefault();
+        						 console.log(event);
+        					})
         				}
+        				
+        				$('button[name="delete"]').click(function(event) {
+        					var no = $(this).attr("id");
+        					
+        				 	$.ajax({
+        			  			type : 'POST',
+        			  			url : '/notice/deleteNoticeProc.do',
+        			  			data : {
+        			  				"noticeNo" : no
+        			  			},
+        			  			dataType : 'json',
+        			  			success : function(data) {
+        			  				console.log(data);
+        			  				$("#"+no).parent().parent().parent().hide();
+        			  			}
+        					}); 
+        				})
   				}
   					
   				else {
@@ -917,7 +950,7 @@ textarea{
 	 * time -> 게시된 시:분:초
 	 * type -> 공지의 분류
 	 * target -> 공지대상                                 */
-	createLabel = function(time, title, content, type, target) {
+	createLabel = function(no, time, title, content, type, target) {
 		var typeIcon;
 		var targetIcon;
 		 
@@ -931,10 +964,10 @@ textarea{
 			typeIcon = "fa fa-envelope bg-blue";
 			break;
 		case '2':
-			typeIcon = "fa fa-mortar-board bg-black";
+			typeIcon = "fa fa-warning bg-red";
 			break;
 		case '3':
-			typeIcon = "fa fa-warning bg-red";
+			typeIcon = "fa fa-mortar-board bg-black";
 			break;
 		default:
 			typeIcon = "fa fa-envelope bg-blue";
@@ -949,7 +982,7 @@ textarea{
 		"              <i class=\"" + typeIcon + "\"></i>\r\n" + 
 		"\r\n" + 
 		"              <div class=\"timeline-item\">\r\n" + 
-		"                <span class=\"time\"><i class=\"fa fa-clock-o\"></i>"+ time + "</span>\r\n" + 
+		"                <span class=\"time\"><i class=\"fa fa-clock-o\"></i>"+ time.split(".")[0] + "</span>\r\n" + 
 		"\r\n" + 
 		"                <h3 class=\"timeline-header\">" + title + "</h3>\r\n" + 
 		"\r\n" + 
@@ -958,7 +991,7 @@ textarea{
 		"                </div>\r\n" + 
 		"                <div class=\"timeline-footer\">\r\n" + 
 		"                  <a class=\"btn btn-primary btn-xs\">Read more</a>\r\n" + 
-		"                  <a class=\"btn btn-danger btn-xs\">Delete</a>\r\n" + 
+		"                  <button tpye=\"button\" id=\""+no+"\" name=\"delete\" class=\"btn btn-danger btn-xs\">Delete</button>\r\n" + 
 		"                </div>\r\n" + 
 		"              </div>\r\n" + 
 		"            </li>";
@@ -967,7 +1000,7 @@ textarea{
 	}
 			
 	createTimeLine = function(date) {
-		var str = "<ul class=\"timeline\ id=\"" + date + "\">" +
+		var str = "<ul class=\"timeline\" id=\"" + date.trim() + "\">" +
 				
 					 "	<li class=\"time-label\">\r\n" + 
 					 "     <span class=\"bg-red\">\r\n" + 
@@ -980,21 +1013,60 @@ textarea{
 	}
 	
 	createButtonEvent = function() {
+		if($("#title").val().length < 1) {
+			$("#title").tooltip('show');
+			
+			setTimeout(function() {
+				$("#title").tooltip('destroy');
+				},2000)
+			
+			return false;
+		}
+		
+		if(CKEDITOR.instances.contents.getData().trim().length < 1) {
+			$("#tootlip-contents").tooltip("show");
+			
+			setTimeout(function() {
+				$("#tootlip-contents").tooltip('destroy');
+				},2000)
+
+			
+			return false;
+		}
+		
+		console.log( $("#target").val());
+		console.log( $("#type").val()); 
+		
 		$.ajax({
   			type : 'POST',
   			url : '/notice/insertNoticeProc.do',
   			data : {
   				"noticeTitle" : $("#title").val(),
   				"noticeContent" : CKEDITOR.instances.contents.getData(),
-  				"noticeType" : $("#target").val(),
-  				"noticeTarget" : $("#type").val()
+  				"noticeType" : $("#type").val(),
+  				"noticeTarget" : $("#target").val()
   			},
   			dataType : 'json',
   			success : function(data) {
   				if (data.result == 'success') {
         				console.log(data);
+        				var today = moment().format("YYYY-MM-DD");
         				
-						$("#modal-default").dialog("close");
+        				if($("#"+today) == undefined) {
+        					createTimeLine(today);
+        				}
+        				
+        				
+        				$(createLabel("방금", $("#title").val(), CKEDITOR.instances.contents.getData(), $("#type").val(), $("#target").val())).insertAfter("#"+today+ " li:nth-child(1)");
+        				
+        				$("#title").val("");
+        				CKEDITOR.instances.contents.setData("");
+        				$('select[name=sel1]').val(1);
+        				$('select[name=sel2]').val(0);
+        				$('.selectpicker').selectpicker('refresh')
+        				
+        				
+        				
         				/* var list = data.mList;
         				
         				for(var i in list) {
@@ -1022,7 +1094,11 @@ textarea{
 						+ ", error : " + error);
 				}
 		});
+	}
 		
+	deleteBtnEvent = function(event) {
+		console.log("event");
+		console.log(this);
 	}
 </script>
 </body>
