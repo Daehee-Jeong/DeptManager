@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.deptmanager.schedule.dao.ScheduleDao">
+
+    <sql id="scheduleColumns">
+    	schedule_no AS scheduleNo,
+    	schedule_notice AS scheduleNotice,
+		schedule_title AS scheduleTitle,
+		DATE_FORMAT(schedule_start, '%Y/%m/%d %H:%i') AS scheduleStart,
+		DATE_FORMAT(schedule_end, '%Y/%m/%d %H:%i') AS scheduleEnd,
+		schedule_allday AS scheduleAllday,
+		schedule_type AS scheduleType,
+		schedule_target AS scheduleTarget,
+		schedule_desc AS scheduleDesc
+    </sql>
+    
+    
+    <!-- 일정 1건 저장 -->
+	<insert id="insertSchedule" parameterType="scheduleBean">
+	    INSERT INTO schedule
+ 		(
+			schedule_notice,
+			schedule_title,
+			schedule_start,
+			schedule_end,
+			schedule_allday,
+			schedule_type,
+			schedule_target,
+			schedule_desc
+ 		)
+		VALUES
+ 		(
+ 			#{scheduleNotice}, 
+ 			#{scheduleTitle}, 
+ 			#{scheduleStart}, 
+ 			#{scheduleEnd},
+ 			#{scheduleAllday},
+ 			#{scheduleType},
+ 			#{scheduleTarget},
+ 			#{scheduleDesc}
+ 		)
+ 		<selectKey order="AFTER" keyProperty="no" resultType="string">
+	   		SELECT LAST_INSERT_ID()        
+		</selectKey>
+	</insert>
+	
+	<!-- 일정 1건 조회 -->
+	<select id="selectSchedule" resultType="scheduleBean" parameterType="scheduleBean">
+	    SELECT
+	    		<include refid="scheduleColumns"/>
+	    FROM
+	    		schedule
+	    WHERE
+  			schedule_no = #{scheduleNo}
+	</select>
+	
+	<!-- 
+	<update id="updateSchedule" parameterType="scheduleBean">
+		UPDATE schedule SET
+			<if test="schedulePw != null and schedulePw != ''">
+			,schedule_pw = PASSWORD(#{schedulePw})
+			</if>
+			<if test="scheduleName != null and scheduleName != ''">
+			,schedule_name = #{scheduleName}
+			</if>
+			<if test="scheduleEmail != null and scheduleEmail != ''">
+			,schedule_email = #{scheduleEmail}
+			</if>
+			<if test="scheduleHp != null and scheduleHp != ''">
+			,schedule_hp = #{scheduleHp}
+			</if>
+			<if test="scheduleDept != null and scheduleDept != ''">
+			,schedule_dept = #{scheduleDept}
+			</if>
+			<if test="scheduleState != null and scheduleState != ''">
+			,schedule_state = #{scheduleState}
+			</if>
+			<if test="scheduleAddr != null and scheduleAddr != ''">
+			,schedule_addr = #{scheduleAddr}
+			</if>
+			<if test="scheduleToken != null and scheduleToken != ''">
+			,schedule_token = #{scheduleToken}
+			</if>
+			<if test="scheduleGen != null and scheduleGen != ''">
+			,schedule_gen = #{scheduleGen}
+			</if>
+		WHERE
+			schedule_no = #{scheduleNo}
+	</update> -->
+	
+	<!-- 회원정보 삭제 -->
+	<delete id="deleteSchedule" parameterType="scheduleBean">
+	    DELETE FROM
+	    		schedule
+	    WHERE
+	    		schedule_no = #{scheduleNo}
+	</delete>
+	
+	<!-- 회원정보 List 조회 -->
+	<select id="selectScheduleList" resultType="scheduleBean">
+	    SELECT
+	    		<include refid="scheduleColumns"/>
+	    FROM
+	    		schedule
+	</select>
+	
+</mapper>
