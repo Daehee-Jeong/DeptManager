@@ -168,6 +168,12 @@ public class QuestController {
 
 		return resMap;
 	}
+	
+	// 설문지 등록 화면
+	@RequestMapping("/quest/selectQuestListForm")
+	public String selectQuestForm() {
+		return "/quest/selectQuestList";
+	} // end of insertMemberForm
 
 	// 설문지 리스트 조회
 	@RequestMapping("/quest/selectQuestListProc")
