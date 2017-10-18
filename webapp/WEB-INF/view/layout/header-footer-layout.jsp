@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><decorator:title default="임조교" /></title>
+<title><decorator:title default="김조교" /></title>
 
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -59,8 +59,8 @@
 
 			<!-- Logo -->
 			<a href="/index.do" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-mini"><b>임</b></span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg"><b>임</b>조교</span>
+				<span class="logo-mini"><b>김</b></span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b>김</b>조교</span>
 			</a>
 
 			<!-- Header Navbar -->

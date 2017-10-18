@@ -174,8 +174,11 @@
 	<script src="/resources/dist/js/demo.js"></script>
 	<script>
 		
+		var textShortCnt = 1;
+		var textLongCnt = 1;
 		var radioCnt = 1; // radio 버튼 name 속성 카운트
 		var checkCnt = 1; // checkBox name 속성 카운트
+		var listCnt = 1;
 	
 		$(function() {
 			//Date range picker with time picker
@@ -248,7 +251,7 @@
 			
 			console.log(nameValue);
 			
-			var str = '<div class="radio"><label><input type="radio" name="'+nameValue+'" class="inputRadio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
+			var str = '<div class="radio"><label><input type="radio" name="'+nameValue+'" class="inputRadio" id="" value="" disabled><input id="radio" type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
 			$(element).parent().find('.form-group').append(str);
 		}
 		
@@ -262,7 +265,7 @@
 			var tag = $(arr).get(0);
 			var nameValue = $(tag).attr('name');
 			
-			var str = '<div class="checkbox"><label><input type="checkbox" name="'+nameValue+'" class="inputCheck" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
+			var str = '<div class="checkbox"><label><input type="checkbox" name="'+nameValue+'" class="inputCheck" id="" value="" disabled><input id="check" type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
 			$(element).parent().find('.form-group').append(str);
 		}
 		
@@ -302,10 +305,12 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" name="'+'textShortTitle'+textShortCnt+'" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
 				str += '<input type="text" class="form-control" placeholder="답변" disabled> </div>';
 				str += '</div></div></div></div>';
 				$('#quest-content').append(str);
+				
+				textShortCnt++;
 				break;
 			case 1:
 				var str = '';
@@ -315,10 +320,12 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" name="'+'textLongTitle'+textLongCnt+'" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
 				str += '<textarea class="form-control" rows="3" placeholder="자세한 답변" style="max-width : 100%;" disabled></textarea></div>';
 				str += '</div></div></div></div>';
 				$('#quest-content').append(str);
+				
+				textLongCnt++;
 				break;
 			case 2:
 				var str = '';
@@ -328,9 +335,9 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
-				str += '<div class="radio"><label><input type="radio" name="'+'radio'+radioCnt+'" class="inputRadio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
-				str += '<div class="radio"><label><input type="radio" name="'+'radio'+radioCnt+'" class="inputRadio" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" name="'+'radioTitle'+radioCnt+'" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<div class="radio"><label><input type="radio" name="'+'radio'+radioCnt+'" class="inputRadio" id="" value="" disabled><input id="radio" type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
+				str += '<div class="radio"><label><input type="radio" name="'+'radio'+radioCnt+'" class="inputRadio" id="" value="" disabled><input id="radio" type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doRadioDelete(this)"></i></div>';
 				str += '</div><i class="fa fa-plus-square-o" onclick="doRadioAdd(this)"></i>';
 				str += '</div></div></div>';
 				$('#quest-content').append(str);
@@ -345,9 +352,9 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
-				str += '<div class="checkbox"><label><input type="checkbox" name="'+'check'+checkCnt+'" class="inputCheck" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
-				str += '<div class="checkbox"><label><input type="checkbox" name="'+'check'+checkCnt+'" class="inputCheck" id="" value="" disabled><input type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" name="'+'checkTitle'+checkCnt+'" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<div class="checkbox"><label><input type="checkbox" name="'+'check'+checkCnt+'" class="inputCheck" id="" value="" disabled><input id="check" type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label></div>';
+				str += '<div class="checkbox"><label><input type="checkbox" name="'+'check'+checkCnt+'" class="inputCheck" id="" value="" disabled><input id="check" type="text" class="form-control" placeholder="항목" onchange="setValue(this)"></label><i class="fa fa-fw fa-remove" onclick="doCheckDelete(this)"></i></div>';
 				str += '</div><i class="fa fa-plus-square-o" onclick="doCheckAdd(this)"></i>';
 				str += '</div></div></div>';
 				$('#quest-content').append(str);
@@ -362,11 +369,13 @@
 				str += '<div class="box-body"><div class="row">';
 				str += '<div class="col-md-12" id="quest-content">';
 				str += '<div class="form-group">';
-				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
+				str += '<label class="col-sm-2 control-label">항목 제목</label><div class="col-sm-10"><input type="text" name="'+'listTitle'+listCnt+'" class="form-control" placeholder="제목을 입력해주세요." onchange="setValue(this)"></div><br><br>';
 				str += '<select class="form-control"></select>';
               	str += '<input type="text" class="form-control" id="input-list" placeholder="추가할 항목을 입력해주세요."><i class="fa fa-plus-square-o" onclick="doListAdd(this)">';
 				str += '</div></div></div></div>';
 				$('#quest-content').append(str);
+				
+				listCnt++;
 				break;
 			}
 			
@@ -375,6 +384,15 @@
 		function setValue(element) {
 			var x = $(element).val();
 			$(element).attr('value', x);
+			
+			var type = $(element).attr('id');
+			if(type == 'radio') {
+				var arr = $(element).parent().find('.inputRadio');
+				$(arr).val(x);
+			} else if (type == 'checkbox') {
+				var arr = $(element).parent().find('.inputCheck');
+				$(arr).val(x);
+			}
 		}
 		
 		/* 다음 페이지 이동 (설문지 설정화면) */
