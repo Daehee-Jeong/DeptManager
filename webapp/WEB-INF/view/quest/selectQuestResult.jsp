@@ -30,15 +30,40 @@
 			<li class="active">Advanced Elements</li>
 		</ol>
 		</section>
+
 		<section class="content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title">설문 응답률</h3>
+						<span class="badge bg-red">55%</span>
+					</div>
+					<div class="box-body">
+						<div class="progress progress-xs">
+							<div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+						</div>
+						
+						<button type="button" class="btn btn-block btn-primary btn-xs">미응답자 재알림</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8" id="div-box-list"></div>
+		</div>
 		</section>
 
 	</div>
 	<!-- date-range-picker -->
 	<script src="/resources/bower_components/moment/min/moment.min.js"></script>
 	<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<!-- bootstrap datepicker -->
+	<!-- bootstrap datepicker -->	
 	<script src="/resources/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<!-- DataTables -->
+	<script src="/resources/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="/resources/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<!-- Chart JS -->
+	<script src="/resources/bower_components/chart.js/Chart.js"></script>
+	
 	<!-- SlimScroll -->
 	<script src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<!-- FastClick -->
@@ -51,6 +76,10 @@
 	
 		var renderData = [
 			
+		];
+		
+		var colorList = [
+			'#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'
 		];
 	
 		$(document).ready(function() {
@@ -102,7 +131,7 @@
 						};
 						obj.type = type;
 						obj.name = v.name;
-						obj[v.value] = 1;
+						obj['text'][v.value] = 1;
 						
 						var index = -1;
 						// renderData 를 하나씩 돌면서
@@ -120,10 +149,10 @@
 						// 라디오항목의 타입이 renderData 안에 존재하는지 여부
 						if (index >= 0) { // 존재할 때
 							//console.log(renderData[index]);
-							if (renderData[index][v.value] == undefined) {
-								renderData[index][v.value] = 1;
+							if (renderData[index]['text'][v.value] == undefined) {
+								renderData[index]['text'][v.value] = 1;
 							} else {
-								renderData[index][v.value]++;
+								renderData[index]['text'][v.value]++;
 							}
 						} else { // 존재하지 않을 때
 							renderData.push(obj);
@@ -173,7 +202,141 @@
 				};
 			});
 			console.log(renderData);
+			doRender(renderData);
+		} // end of makeRenderData
+		
+		function doRender(renderData) {
+			$.each(renderData, function(index, value) {
+				if (value.type.indexOf("radio") >= 0) {
+					var str = '';
+					str += '<div class="box box-default"><div class="box-header with-border"><h3 class="box-title">';
+					str += value.name;
+					str += '</h3></div><div class="box-body">';
+					str += '<canvas id="' + value.type + '"></canvas>'
+					str += '</div></div></div></div>';
+					$('#div-box-list').append(str);
+					
+					var cvs = $('#' + value.type);
+					
+					drawPie(value.text, cvs);
+				}
+				else if (value.type.indexOf("textShort") >= 0) {
+					var str = '';
+					str += '<div class="box box-default"><div class="box-header with-border"><h3 class="box-title">';
+					str += value.name;
+					str += '</h3></div><div class="box-body">';
+					str += '<div id="' + value.type + '"></div'
+					str += '</div></div></div></div>';
+					$('#div-box-list').append(str);
+					
+					var div = $('#' + value.type);
+					
+					drawTable(value.text, div);
+				}
+				else if (value.type.indexOf("textLong") >= 0) {
+					
+				}
+			});
 		}
+		
+		function drawPie(data, cvs) {
+			console.log('pieData');
+			console.log(data);
+			
+			//-------------
+		    //- PIE CHART -
+		    //-------------
+		    // Get context with jQuery - using jQuery's .get() method.
+		    var pieChartCanvas = $(cvs).get(0).getContext('2d');
+		    var pieChart       = new Chart(pieChartCanvas)
+			
+			var PieData = [];
+			
+		    var keys = Object.keys(data);
+			$.each(keys, function(index, key) {
+				var obj = {
+					value : data[key],
+					color : colorList[index],
+					label : key
+				};
+				PieData.push(obj);
+			});
+
+			var pieOptions     = {
+		      //Boolean - Whether we should show a stroke on each segment
+		      segmentShowStroke    : true,
+		      //String - The colour of each segment stroke
+		      segmentStrokeColor   : '#fff',
+		      //Number - The width of each segment stroke
+		      segmentStrokeWidth   : 2,
+		      //Number - The percentage of the chart that we cut out of the middle
+		      percentageInnerCutout: 50, // This is 0 for Pie charts
+		      //Number - Amount of animation steps
+		      animationSteps       : 100,
+		      //String - Animation easing effect
+		      animationEasing      : 'easeOutBounce',
+		      //Boolean - Whether we animate the rotation of the Doughnut
+		      animateRotate        : true,
+		      //Boolean - Whether we animate scaling the Doughnut from the centre
+		      animateScale         : false,
+		      //Boolean - whether to make the chart responsive to window resizing
+		      responsive           : true,
+		      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+		      maintainAspectRatio  : true,
+		      //String - A legend template
+		      legendTemplate       : ''
+		    }
+		    //Create pie or douhnut chart
+		    // You can switch between pie and douhnut using the method below.
+		    pieChart.Doughnut(PieData, pieOptions);
+		} // end of doRender
+		
+		function drawTable(data, div) {
+			var str = '';
+			str += '<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">';
+            str += '<thead>';
+            str += '<tr role="row">';
+            str += '<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">번호</th>';
+            str += '<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column descending" aria-sort="ascending">내용</th>'
+            str += '</tr>';
+            str += '</thead>';
+            str += '<tbody>';
+            
+            $.each(data, function(index, value) {
+	            	if (index == 0) {
+	        			str += '<tr role="row" class="odd">';
+	    	            str += '<td class="" width="15%">' + (index+1) + '</td>';
+	    	            str += '<td class="sorting_1" width="85%">' + value + '</td>';
+	    	            str += '</tr>';
+	        		} else {
+	        			if (index%2 == 0) {
+	        				str += '<tr role="row" class="odd">';
+	        				str += '<td class="" width="15%">' + (index+1) + '</td>';
+		    	            str += '<td class="sorting_1" width="85%">' + value + '</td>';
+	        	            str += '</tr>';
+	        			} else if (index%2 == 1) {
+	        				str += '<tr role="row" class="even">';
+	        				str += '<td class="" width="15%">' + (index+1) + '</td>';
+		    	            str += '<td class="sorting_1" width="85%">' + value + '</td>';
+	        	            str += '</tr>';
+        				}
+        			}
+            });
+            
+            str += '</tbody>';
+            str += '<table>';
+            
+			$(div).append(str);
+            
+            $('#example2').DataTable({
+            		'paging'      : true,
+                'lengthChange': false,
+                'searching'   : false,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+            });
+		} // end of drawTable
 	</script>
 </body>
 </html>
