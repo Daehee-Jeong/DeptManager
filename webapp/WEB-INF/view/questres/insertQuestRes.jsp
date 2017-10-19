@@ -99,6 +99,7 @@
 										var input = $($(eleInDiv).get(0)).get(0);
 										//console.log(input.value);
 										questionArray.push(input.value);
+										//console.log('name : ' + $(input).attr('name'));
 										str += '<br/><label>';
 										str += input.value;
 										
@@ -119,10 +120,12 @@
 							        				str += textRadio;
 							        				str += '</label></div>';
 							        			} else if (type == 'checkbox') {
-							        				console.log('check');
+							        				var checkboxName = $($(labelChild).get(0)).attr('name');
+							        				console.log('checkboxName');
+							        				console.log(checkboxName);
 							        				var textCheck = $($(labelChild).next()).val();
 							        				//console.log(textCheck);
-							        				str += '<div class="check"><label><input type="checkbox">';
+							        				str += '<div class="check"><label><input type="checkbox" name="' + checkboxName + '">';
 							        				str += textCheck;
 							        				str += '</label></div>';
 							        			}
@@ -131,11 +134,21 @@
 							    } else if (tagName == 'INPUT') {
 									var input = $(value).get(0);
 									var placeholder = $(input).attr('placeholder');
+									
+									var inputForName = $($($(input).parent()).children().get(1)).children().get(0);
+									var inputName = $(inputForName).attr('name');
+									//console.log('inputForName');
+									//console.log(inputName);
+									
 									if (placeholder == '답변') {
-										str += '<input type="text" class="form-control" placeholder="Enter ...">';
+										str += '<input type="text" class="form-control" placeholder="Enter ..." name="' + inputName + '">';
 									}
 						        } else if (tagName == 'TEXTAREA') {
-						        		str += '<textarea class="form-control" rows="3" placeholder="내용을 입력해주세요..."></textarea>';
+						        		var ta = $(value).get(0);
+						        		var taForName = $($($(ta).parent()).children().get(1)).children().get(0);
+									var taName = $(taForName).attr('name');
+									console.log('taName : ' + taName);
+						        		str += '<textarea class="form-control" rows="3" placeholder="내용을 입력해주세요..." name="' + taName + '"></textarea>';
 						        } else if (tagName == 'SELECT') {
 						        		var select = $(value).get(0);
 									var selectChild = $(select).children();
@@ -174,17 +187,20 @@
 				console.log(formData);
 				var jsonData = formToJson(formData);
 				console.log(JSON.stringify(jsonData));
-				/* $.ajax({
+				
+				$.ajax({
 					type : 'POST',
 					url: '/questres/insertQuestResProc.do',
 					data : {
-						"questNo" : "${param.questNo}"
+						'questResQuest' : ${param.questNo},
+						'questResMember' : ${sessionScope.memberLoginBean.memberId},
+						'questResContent' : JSON.stringify(jsonData)
 					},
 					dataType : 'json',
 					success : function(data) {
 						console.log(data);
 						if (data.result == 'success') {
-							
+							alert(data.resultMsg);
 						} else {
 							alert(data.resultMsg);
 						}
@@ -193,7 +209,7 @@
 						console.log(xhr);
 						alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 					}
-				}); */
+				});
 			});
 		});
 		
