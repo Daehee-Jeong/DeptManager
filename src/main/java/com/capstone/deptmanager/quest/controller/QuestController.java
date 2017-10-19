@@ -44,9 +44,6 @@ public class QuestController {
 	@Autowired
 	private QuestResService questResService;
 	
-	@Autowired
-	private QuestResService questResService;
-	
 	// 설문지 등록 화면
 	@RequestMapping("/quest/insertQuestForm")
 	public String insertQuestForm() {
@@ -207,7 +204,7 @@ public class QuestController {
 				
 				QuestResBean qrBean = new QuestResBean();
 				qrBean.setQuestResQuest(questBean.getQuestNo());
-				List<QuestResBean> resList = questResService.selectQuestResList(qrBean);
+				List<QuestResBean> resList = questResService.selectQuestResListFromQuestNo(qrBean);
 				
 				if (resList != null && resList.size() > 0) {
 					resMap.put(Constants.RESULT_MSG, "설문지 조회에 성공 하였습니다. 응답목록 조회에 성공하였습니다.");
