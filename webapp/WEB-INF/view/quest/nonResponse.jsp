@@ -21,7 +21,7 @@
         <li class="active">미응답 재요청</li>
       </ol>
     </section>
-		<button type="submit" class="btn btn-primary">미응답자 재송신</button>
+		<button id="btn-nonResponserSend" type="submit" class="btn btn-primary">미응답자 재송신</button>
 	<section class="content">
 		
 	</section>
@@ -31,7 +31,9 @@
 	<script>
       
 	$(document).ready(function() {
-		nonResponserSend();
+		$('#btn-nonResponserSend').click(function{
+			nonResponserSend();
+		});
 	});
 	
 	// 미응답자 재송신 요청
@@ -39,23 +41,14 @@
 		$.ajax({
 			type : 'POST',
 			url: '/quest/nonResponseProc.do',
+			data : {
+				"questNo" = "${}"	
+			},
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
 				
 				if (data.result == 'success') {
-					
-					$.each(data.qList, function(i, obj) {
-			            
-			            var str = '';
-						str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
-				        str += '<div class="box-body">'+ obj.questType +'</div>';
-				        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
-						$(".content").append(str);
-						
-						lastQuestNo = obj.questNo;
-						
-			        });
 					
 					return;
 				} else {

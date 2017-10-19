@@ -24,10 +24,16 @@ public interface QuestDao {
 	/** 설문지를 1건 조회해서 가져온다. **/
 	public QuestBean selectQuest(QuestBean bean);
 	
-	/** 설문지를 조회해서 리스트로 가져온다. (최초 10건) **/
+	/** [관리자] 설문지를 조회해서 리스트로 가져온다. (최초 10건) **/
 	public List<QuestBean> selectQuestList();
 	
-	/** 설문지를 조회해서 리스트로 가져온다. (무한 스크롤)**/
+	/** [관리자] 설문지를 조회해서 리스트로 가져온다. (무한 스크롤)**/
 	public List<QuestBean> selectQuestListScrollDown(QuestBean bean);
+	
+	/** [학생] 설문지를 조회해서 리스트로 가져온다. (최초 10건) **/
+	public List<QuestBean> selectQuestListStudent(QuestBean bean);
+	
+	/** [학생] 설문지를 조회해서 리스트로 가져온다. (무한 스크롤)**/
+	public List<QuestBean> selectQuestListStudentScrollDown(QuestBean bean);
 	
 }

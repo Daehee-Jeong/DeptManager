@@ -19,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.capstone.deptmanager.common.AuthUtil;
 import com.capstone.deptmanager.common.Constants;
 import com.capstone.deptmanager.common.bean.AuthBean;
@@ -91,6 +90,14 @@ public class MemberController {
 				System.out.println("Login Success!");
 				request.getSession().setAttribute(Constants.MEMBER_LOGIN_BEAN, memberBean);
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				
+				// 관리자 로그인 체크 - 세션에 저장
+				if(memberBean.getMemberId().equals(Constants.ADMIN_ID)) {
+					request.getSession().setAttribute(Constants.ADMIN_LOGIN_CHECK, Constants.ADMIN_LOGIN_YES);
+				} else {
+					request.getSession().setAttribute(Constants.ADMIN_LOGIN_CHECK, Constants.ADMIN_LOGIN_NO);
+				}
+				
 			}
 		}catch (Exception e) {
 			
@@ -271,8 +278,6 @@ public class MemberController {
 		
 		return resMap;
 	}
-	
-	
 	
 	// 학생 인증
 	@RequestMapping("/member/authMemberProc")
