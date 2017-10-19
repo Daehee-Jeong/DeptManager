@@ -14,7 +14,7 @@
    http://www.springframework.org/schema/util/spring-util-3.0.xsd
    http://www.springframework.org/schema/aop 
    http://www.springframework.org/schema/aop/spring-aop.xsd
-   http://www.springframework.org/schema/tx 
+   http://www.springframework.org/schema/tx
    http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
@@ -33,7 +33,7 @@
 			/>
 		<!--  -->
 		<property name="username" value="root" />
-		<property name="password" value="wjdeogml1!" />
+		<property name="password" value="root" />
 		<!-- TODO : Service -> ServiceImpl 기능 수행시 에러로그 없이 응답없는 경우 DB 설정 확인 -->
 	</bean>
 
@@ -74,10 +74,6 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.capstone.deptmanager.**.dao" />
 	</bean>
-
-	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> 예외 <mvc:exclude-mapping 
-		path="/index*"/> <mvc:exclude-mapping path="/resta/**"/> <bean class="com.capstone.deptmanager.common.SessionInterceptor" 
-		/> </mvc:interceptor> </mvc:interceptors> -->
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
