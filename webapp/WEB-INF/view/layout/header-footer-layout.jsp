@@ -3,6 +3,7 @@
 	uri="http://www.opensymphony.com/sitemesh/decorator"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!-- 태그 라이브러리는 사이트매쉬 적용 안됨-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -171,8 +172,14 @@
 					<!-- Optionally, you can add icons to the links -->
 					<li class="active"><a href="/notice/notice.do"><i class="fa fa-link"></i>
 							<span>공지사항</span></a></li>
+					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">		
 					<li><a href="/quest/selectQuestListForm.do"><i class="fa fa-link"></i> 
 							<span>설문목록</span></a></li>
+					</c:if>
+					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">		
+					<li><a href="/quest/selectQuestListStudentForm.do"><i class="fa fa-link"></i> 
+							<span>설문목록</span></a></li>
+					</c:if>		
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
 							<span>일정</span> <span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>

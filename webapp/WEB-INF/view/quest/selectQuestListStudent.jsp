@@ -16,7 +16,7 @@
     <section class="content-header">
       <h1>
         설문지 목록
-        <small><button id="btn-insertQuest" type="button" class="btn btn-block btn-primary btn-xs">설문지 등록</button></small>
+        <small>미응답한 설문에 응답해주세요.</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 메인화면</a></li>
@@ -27,26 +27,27 @@
 	<section class="content"></section>
     
 	</div>
-      
+    
 	<script>
       	
 		var lastQuestNo = 0;
 		
 		$(document).ready(function() {
 			selectList();
-			$("#btn-insertQuest").click(function (){
-				location.href = "/quest/insertQuestForm.do";				
-			});
 		});
       	
 		// 최초 페이지 로드시 설문지 리스트 10건 조회
 		function selectList() {
 			$.ajax({
 				type : 'POST',
-				url: '/quest/selectQuestListProc.do',
+				url: '/quest/selectQuestListStudentProc.do',
+				data : {
+					"questTo" : "${sessionScope.memberLoginBean.memberId}"
+				},
 				dataType : 'json',
 				success : function(data) {
 					console.log(data);
+					
 					if (data.result == 'success') {
 						
 						$.each(data.qList, function(i, obj) {
@@ -83,9 +84,10 @@
 		function selectListScrollDown() {
 			$.ajax({
 				type : 'POST',
-				url: '/quest/selectQuestListScrollDownProc.do',
+				url: '/quest/selectQuestListStudentScrollDownProc.do',
 				data : {
-					"questNo" : lastQuestNo
+					"questNo" : lastQuestNo,
+					"questTo" : "${sessionScope.memberLoginBean.memberId}"
 				},
 				dataType : 'json',
 				success : function(data) {
@@ -117,10 +119,42 @@
 		}
 		
 		function detailQuest(questNo){
-			location.href = "/questres/selectQuestResultForm.do?questNo="+questNo;
+			
+			$.ajax({
+				type : 'POST',
+				url: '/quest/isResponseProc.do',
+				data : {
+					"questNo" : questNo,
+					"questTo" : "${sessionScope.memberLoginBean.memberId}"
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					
+					if (data.result == 'success') {
+						
+						if(data.isResponse) {
+							// 이미 응답한 경우
+							location.href = "/quest/selectQuestResultForm.do?questNo="+questNo;
+						}else {
+							// 미응답한 경우
+							location.href = "/questres/insertQuestResForm.do?questNo="+questNo;
+						}
+						
+						return;
+					} else {
+						alert(data.resultMsg);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				}
+			});
+			
 		}
 		
 	</script>
-	
+
 </body>
 </html>

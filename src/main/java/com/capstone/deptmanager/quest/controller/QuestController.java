@@ -1,7 +1,6 @@
 package com.capstone.deptmanager.quest.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * DeptManager QuestController
@@ -44,14 +43,11 @@ public class QuestController {
 	@Autowired
 	private QuestResService questResService;
 	
-	@Autowired
-	private QuestResService questResService;
-	
 	// 설문지 등록 화면
 	@RequestMapping("/quest/insertQuestForm")
 	public String insertQuestForm() {
 		return "/quest/insertQuest";
-	} // end of insertMemberForm
+	} // end of insertQuestForm
 
 	// 설문지 등록 처리
 	@RequestMapping("/quest/insertQuestProc")
@@ -78,8 +74,8 @@ public class QuestController {
 		}catch (Exception e) {
 
 		}
-
-		// 설문지 등록 완료 후 푸쉬 알림
+		
+		// TODO : 설문지 등록 완료 후 푸쉬 알림
 		
 		System.out.println("JsonArray ToString : " + array.toString());
 		
@@ -93,13 +89,13 @@ public class QuestController {
 		}
 		
 		return resMap;
-	}
+	} // end of insertQuestProc
 
 	// 설문지 재등록화면 (수정화면)
 	@RequestMapping("/quest/updateQuestForm")
 	public String updateQuestForm(){
 		return "/quest/updateQuest";
-	}
+	} // end of updateQuestForm
 
 	// 설문지 재등록처리
 	@RequestMapping("/quest/updateQuestProc")
@@ -125,13 +121,13 @@ public class QuestController {
 		}
 
 		return resMap;
-	}
+	} // end of updateQuestProc
 
 	// 설문지 삭제화면
 	@RequestMapping("/quest/deleteQuestForm")
 	public String deleteQuestForm(){
 		return "/quest/deleteQuest";
-	}
+	} // end of deleteQuestForm
 
 	// 설문지 삭제처리
 	@RequestMapping("/quest/deleteQuestProc")
@@ -155,7 +151,7 @@ public class QuestController {
 		}
 
 		return resMap;
-	}
+	} // end of deleteQuestProc
 
 	// 설문지 조회
 	@RequestMapping("/quest/selectQuestProc")
@@ -223,16 +219,16 @@ public class QuestController {
 		return resMap;
 	}
 	
-	// 설문지 등록 화면
+	// [관리자] 설문지 목록 화면
 	@RequestMapping("/quest/selectQuestListForm")
-	public String selectQuestForm() {
+	public String selectQuestListForm() {
 		return "/quest/selectQuestList";
-	} // end of insertMemberForm
-
-	// 설문지 리스트 최초 10건 조회
+	} // end of selectQuestListForm
+	
+	// [관리자] 설문지 리스트 최초 10건 조회
 	@RequestMapping("/quest/selectQuestListProc")
 	@ResponseBody
-	public Map<String, Object> selectQuestList(QuestBean questBean) {
+	public Map<String, Object> selectQuestListProc(QuestBean questBean) {
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 
@@ -252,15 +248,15 @@ public class QuestController {
 		}
 
 		return resMap;
-	}
+	} // end of selectQuestListProc
 	
-	// 설문지 리스트 조회 (무한 스크롤)
+	// [관리자] 설문지 리스트 조회 (무한 스크롤)
 	@RequestMapping("/quest/selectQuestListScrollDownProc")
 	@ResponseBody
-	public Map<String, Object> selectQuestListScrollDown(QuestBean questBean) {
+	public Map<String, Object> selectQuestListScrollDownProc(QuestBean questBean) {
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
-
+ 
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
 		resMap.put(Constants.RESULT_MSG, "설문지를 모두 조회 하였습니다.");
 
@@ -277,16 +273,113 @@ public class QuestController {
 		}
 
 		return resMap;
-	}
+	} // end of selectQuestListScrollDownProc
+	
+	// [학생] 설문지 목록 화면
+	@RequestMapping("/quest/selectQuestListStudentForm")
+	public String selectQuestListStudentForm() {
+		return "/quest/selectQuestListStudent";
+	} // end of selectQuestListStudentForm
+
+	// [학생] 설문지 리스트 최초 10건 조회
+	@RequestMapping("/quest/selectQuestListStudentProc")
+	@ResponseBody
+	public Map<String, Object> selectQuestListStudentProc(QuestBean questBean) {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문지 리스트 조회에 실패 하였습니다.");
+
+		try {
+			List<QuestBean> questList = questService.selectQuestListStudent(questBean);
+
+			if(questList != null && questList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
+				resMap.put("qList", questList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return resMap;
+	} // end of selectQuestListStudentProc
+	
+	// [학생] 설문지 리스트 조회 (무한 스크롤)
+	@RequestMapping("/quest/selectQuestListStudentScrollDownProc")
+	@ResponseBody
+	public Map<String, Object> selectQuestListStudentScrollDownProc(QuestBean questBean) {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+ 
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문지를 모두 조회 하였습니다.");
+
+		try {
+			List<QuestBean> questList = questService.selectQuestListStudentScrollDown(questBean);
+
+			if(questList != null && questList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
+				resMap.put("qList", questList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return resMap;
+	} // end of selectQuestListStudentScrollDownProc
+	
+	//[학생] 응답여부 판별
+	@RequestMapping("/quest/isResponseProc")
+	@ResponseBody
+	public Map<String, Object> isResponseProc(QuestBean questBean) {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+ 
+		boolean isResponse = false;
+		
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "응답자 판별 조회에 실패 하였습니다.");
+
+		QuestResBean qrBean = new QuestResBean();
+		qrBean.setQuestResQuest(questBean.getQuestNo());
+		
+		
+		try {
+			List<QuestResBean> questResList = questResService.selectQuestResListFromQuestNo(qrBean);
+			
+			resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+			resMap.put(Constants.RESULT_MSG, "응답자 판별 조회에 성공 하였습니다.");
+			
+			for (int i = 0; i < questResList.size(); i++) {
+				String id = questResList.get(i).getQuestResMember();
+				if(questBean.getQuestTo().equals(id)) {
+					isResponse = true;
+				}
+			}
+			
+			if(isResponse) {
+				resMap.put("isResponse", true);
+			} else {
+				resMap.put("isResponse", false);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return resMap;
+	} // end of isResponseProc
+	
 	
 	// 설문지 설정 화면 (excel명단 학번 추출)
 	@RequestMapping("/quest/selectTargetForm")
 	public String selectTargetForm(QuestBean questBean, Model model) {
-		
 		model.addAttribute("questBean", questBean);
-		
 		return "/quest/selectTarget";
-	}
+	} // end of selectTargetForm
 	
 	// 미응답자 재송신 화면
 	@RequestMapping("/quest/nonResponseForm")
@@ -301,31 +394,62 @@ public class QuestController {
 	@RequestMapping("/quest/nonResponseProc")
 	@ResponseBody
 	public Map<String, Object> nonResponseProc(QuestBean questBean) {
-
+		
 		Map<String, Object> resMap = new HashMap<String, Object>();
-
+		
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
-		resMap.put(Constants.RESULT_MSG, "설문응답 조회를 실패하였습니다.");
+		resMap.put(Constants.RESULT_MSG, "미응답자 푸쉬알림을 실패하였습니다.");
 		
 		QuestResBean qrBean = new QuestResBean();
 		qrBean.setQuestResQuest(questBean.getQuestNo());
 		
 		try {
-			List<QuestResBean> questResList = questResService.selectQuestResListFromQuestNo(qrBean);
-
-			System.out.println("설문응답리스트 : " + questResList.toString());
+			// 설문지 푸쉬요청 전체 학생학번 추출
+			QuestBean qBean = questService.selectQuest(questBean);
+			String jsonObjStr = qBean.getQuestTo();
 			
-			if(questResList != null && questResList.size() > 0) {
-				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
-				resMap.put(Constants.RESULT_MSG, "설문응답 조회에 성공 하였습니다.");
-				resMap.put("qrList", questResList);
+			JsonParser parser = new JsonParser();
+			JsonArray array = (JsonArray) parser.parse(jsonObjStr);
+			
+			List<String> entireList = new ArrayList<>();
+			for (int i = 0; i < array.size(); i++) {
+				String id = array.get(i).getAsString();
+				entireList.add(id);
 			}
+			
+			// 설문지 응답한 학생학번 추출 / 설문지 전체학생 - 응답학생 = 미응답 학생
+			List<QuestResBean> questResList = questResService.selectQuestResListFromQuestNo(qrBean);
+			
+			for (int i = 0; i < questResList.size(); i++) {
+				String subtractId = questResList.get(i).getQuestResMember();
+				entireList.remove(subtractId);
+			}
+			
+			// MemberBean List 생성
+			List<MemberBean> mBeanList = new ArrayList<>();
+			for (int i = 0; i < entireList.size(); i++) {
+				MemberBean mBean = new MemberBean();
+				mBean.setMemberId(entireList.get(i));
+				mBeanList.add(mBean);
+			}
+			
+			if(mBeanList.size() == 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+				resMap.put(Constants.RESULT_MSG, "해당 설문에 모두 응답하였습니다.");
+				
+				return resMap;
+			}
+			
+			// TODO 미응답자 푸쉬알림
+			
+			resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+			resMap.put(Constants.RESULT_MSG, "미응답자에게 성공적으로 푸쉬알림하였습니다.");
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return resMap;
-	}
-	
+	} // end of nonResponseProc
 	
 } // end of class
