@@ -44,6 +44,9 @@ public class QuestController {
 	@Autowired
 	private QuestResService questResService;
 	
+	@Autowired
+	private QuestResService questResService;
+	
 	// 설문지 등록 화면
 	@RequestMapping("/quest/insertQuestForm")
 	public String insertQuestForm() {
@@ -170,6 +173,47 @@ public class QuestController {
 			if(qBean != null) {
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
 				resMap.put(Constants.RESULT_MSG, "설문지 조회에 성공 하였습니다.");
+				resMap.put("qBean", qBean);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return resMap;
+	}
+	
+	// 설문지 결과 조회 화면
+	@RequestMapping("/quest/selectQuestResultForm")
+	public String selectQuestResultForm() {
+		return "/quest/selectQuestResult";
+	}
+	
+	// 설문지 결과 조회 기능
+	@RequestMapping("/quest/selectQuestResultProc")
+	@ResponseBody
+	public Map<String, Object> selectQuestResultProc(QuestBean questBean) {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문 조회에 실패 하였습니다.");
+
+		try {
+			QuestBean qBean = questService.selectQuest(questBean);
+
+			if(qBean != null) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "설문지 조회에 성공 하였습니다. 응답목록 조회에 실패하였습니다.");
+				
+				QuestResBean qrBean = new QuestResBean();
+				qrBean.setQuestResQuest(questBean.getQuestNo());
+				List<QuestResBean> resList = questResService.selectQuestResList(qrBean);
+				
+				if (resList != null && resList.size() > 0) {
+					resMap.put(Constants.RESULT_MSG, "설문지 조회에 성공 하였습니다. 응답목록 조회에 성공하였습니다.");
+					resMap.put("resList", resList);
+				}
+				
 				resMap.put("qBean", qBean);
 			}
 		} catch(Exception e) {
