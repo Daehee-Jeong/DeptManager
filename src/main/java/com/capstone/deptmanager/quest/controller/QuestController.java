@@ -182,7 +182,7 @@ public class QuestController {
 	@RequestMapping("/quest/selectQuestResultForm")
 	public String selectQuestResultForm() {
 		return "/quest/selectQuestResult";
-	}
+	} // end of selectQuestResultForm
 	
 	// 설문지 결과 조회 기능
 	@RequestMapping("/quest/selectQuestResultProc")
@@ -217,7 +217,7 @@ public class QuestController {
 		}
 
 		return resMap;
-	}
+	} // end of selectQuestResultProc
 	
 	// [관리자] 설문지 목록 화면
 	@RequestMapping("/quest/selectQuestListForm")

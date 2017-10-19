@@ -14,7 +14,7 @@ public class QuestResBean {
 	private String questResDate;			// 설문응답 날짜
 	
 	public QuestResBean() {}
-
+	
 	public QuestResBean(String questResNo, String questResQuest, String questResMember, String questResContent,
 			String questResDate) {
 		this.questResNo = questResNo;

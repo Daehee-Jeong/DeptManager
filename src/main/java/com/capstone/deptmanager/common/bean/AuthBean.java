@@ -13,8 +13,7 @@ public class AuthBean {
 	// 빈 생성자
 	public AuthBean() {}
 
-	public AuthBean(String name, String memberNo, String email, String mobilePhoneNo, String deptName, String state,
-			String addr) {
+	public AuthBean(String name, String memberNo, String email, String mobilePhoneNo, String deptName, String state, String addr) {
 		super();
 		this.name = name;
 		this.memberNo = memberNo;
@@ -24,7 +23,7 @@ public class AuthBean {
 		this.state = state;
 		this.addr = addr;
 	}
-
+	
 	public String getState() {
 		return state;
 	}

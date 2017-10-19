@@ -64,13 +64,13 @@ public class MemberController {
 			
 		}
 		return resMap;
-	}
+	} // end of insertMemberProc
 	
 	// 로그인 화면
 	@RequestMapping("/member/loginMemberForm")
 	public String loginMemberForm(){
 		return "/member/loginMember";
-	}
+	} // end of loginMemberForm
 	
 	// 로그인 처리
 	@RequestMapping("/member/loginMemberProc")
@@ -103,7 +103,7 @@ public class MemberController {
 			
 		}
 		return resMap;
-	}
+	} // end of loginMemberProc
 	
 	// 로그아웃 처리
 	@RequestMapping("/member/logoutMemberProc")
@@ -118,13 +118,13 @@ public class MemberController {
 		resMap.put(Constants.RESULT_MSG, "로그아웃에 성공 하였습니다.");
 				
 		return resMap;
-	}
+	} // end of logoutMemberProc 
 	
 	// 회원정보 수정화면
 	@RequestMapping("/member/updateMemberForm")
 	public String updateMemberForm(){
 		return "/member/updateMember";
-	}
+	} // end of updateMemberForm
 	
 	// 회원정보 수정처리
 	@RequestMapping("/member/updateMemberProc")
@@ -151,13 +151,13 @@ public class MemberController {
 		}
 		
 		return resMap;
-	}
+	} // end of updateMemberProc
 	
 	// 회원정보 탈퇴화면
 	@RequestMapping("/member/deleteMemberForm")
 	public String deleteMemberForm(){
 		return "/member/deleteMember";
-	}
+	} // end of deleteMemberForm
 		
 	// 회원정보 탈퇴처리
 	@RequestMapping("/member/deleteMemberProc")
@@ -184,13 +184,13 @@ public class MemberController {
 		}
 		
 		return resMap;
-	}
+	} // end of deleteMemberProc
 	
 	// 비밀번호 찾기 화면
 	@RequestMapping("/member/findMemberForm")
 	public String findMemberForm(){
 		return "/member/findMember";
-	}
+	} // end of findMemberForm
 	
 	// 비밀번호 찾기 처리
 	@RequestMapping("/member/findMemberProc")
@@ -220,19 +220,19 @@ public class MemberController {
 		}
 		
 		return resMap;
-	}
+	} // end of findMemberProc
 	
 	// 새 비밀번호 화면
 	@RequestMapping("/member/newPasswordMemberForm")
 	public String newPasswordMemberForm(MemberBean memberBean, Model model){
 		model.addAttribute("memberId", memberBean.getMemberId());
 		return "/member/newPasswordMember";
-	}
+	} // end of newPasswordMemberForm
 	
 	// 회원정보 조회
 	@RequestMapping("/member/selectMemberProc")
 	@ResponseBody
-	public Map<String, Object> selectMember(MemberBean memberBean) {
+	public Map<String, Object> selectMemberProc(MemberBean memberBean) {
 		
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
@@ -252,12 +252,12 @@ public class MemberController {
 		}
 		
 		return resMap;
-	}
+	} // end of selectMemberProc
 	
 	// 회원정보 리스트 조회
 	@RequestMapping("/member/selectMembeListProc")
 	@ResponseBody
-	public Map<String, Object> selectMemberList(MemberBean memberBean) {
+	public Map<String, Object> selectMembeListProc(MemberBean memberBean) {
 		
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
@@ -277,7 +277,7 @@ public class MemberController {
 		}
 		
 		return resMap;
-	}
+	} // end of selectMembeListProc
 	
 	// 학생 인증
 	@RequestMapping("/member/authMemberProc")
