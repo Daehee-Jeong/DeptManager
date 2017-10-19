@@ -90,6 +90,7 @@
 	        <mvc:exclude-mapping path="/member/loginMember*"/>
 	        <mvc:exclude-mapping path="/member/insertMember*"/>
 	        <mvc:exclude-mapping path="/member/findMember*"/>
+	        <mvc:exclude-mapping path="/member/authMember*"/>
 	         
 	        <bean class="com.capstone.deptmanager.common.SessionInterceptor" />
 	        

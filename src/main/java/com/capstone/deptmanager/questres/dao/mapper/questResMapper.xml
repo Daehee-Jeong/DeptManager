@@ -13,21 +13,17 @@
     
     <!-- 설문응답을 삽입한다. (응답제출) -->
 	<insert id="insertQuestRes" parameterType="QuestResBean">
-	    INSERT INTO member
+	    INSERT INTO questres
  		(
-			questres_no,
 			questres_quest,
 			questres_member,
-			questres_content,
-			questres_date
+			questres_content
  		)
 		VALUES
  		(
- 			#{questResNo}, 
- 			#{questResQuest} 
+ 			#{questResQuest},
  			#{questResMember}, 
- 			#{questResContent},
- 			#{questResDate}
+ 			#{questResContent}
  		)
  		<selectKey order="AFTER" keyProperty="no" resultType="string">
 	   		SELECT LAST_INSERT_ID()        

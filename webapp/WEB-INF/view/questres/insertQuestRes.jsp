@@ -6,7 +6,7 @@
 <title>설문지 작성</title>
 </head>
 <body>
-	<div class="content-wrapper">
+	<div class="content-wrapper" style="min-height: 900px;">
 		<section class="content-header">
 		<h1>
 			설문 제출 <small>설문 응답을 작성하고 제출합니다</small>
@@ -18,13 +18,10 @@
 			<div id="div-hidden" style="display: none;"></div>
 			<div class="col-md-12" id="div-quest">
 			</div>
-		</div>
-		</section>
-
-		<section class="content">
-		<div class="row">
-			<button class="btn btn-default">취소</button>
-			<button class="btn btn-success" id='btn-complete'>완료</button>
+			<div class="row" style="text-align:center;">
+				<button class="btn btn-default">취소</button>
+				<button class="btn btn-success" id='btn-complete'>완료</button>
+			</div>
 		</div>
 		</section>
 	</div>
@@ -51,30 +48,10 @@
 	</div>
 	
 	<script>
+	
+		var questionArray = [];
+	
 		$(document).ready(function() {
-			
-			/* <div class="form-group has-feedback">
-			
-			<div class="form-group has-feedback">
-				<label>전공엠티 불참 여부가 무엇이라고 생각하십니까?</label>
-				<input type="text" class="form-control" placeholder="Enter ...">
-			</div>
-			<div class="form-group">
-				<label>금번 전공엠티에 참석하시겠습니까?</label>
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios1" value="option1" checked="">
-						네
-					</label>
-				</div>
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios2" value="option2">
-						아니오
-					</label>
-				</div>
-			</div>
-		</div> */
 			
 			console.log("param: " + "${param.questNo}");
 			$.ajax({
@@ -121,8 +98,11 @@
 									if (eleTagName == 'INPUT') {
 										var input = $($(eleInDiv).get(0)).get(0);
 										//console.log(input.value);
+										questionArray.push(input.value);
+										//console.log('name : ' + $(input).attr('name'));
 										str += '<br/><label>';
 										str += input.value;
+										
 										str += '</label>';
 							        } else if (eleTagName == 'LABEL') {
 							        		var label = $($(eleInDiv).get(0)).get(0);
@@ -132,17 +112,20 @@
 							        		$.each(labelChild, function(index, value) {
 							        			var child = $(labelChild).get(index);
 							        			var type = $(child).attr('type');
+							        			var name = $(child).attr('name');
 							        			if (type == 'radio') {
 							        				var textRadio = $($(labelChild).next()).val();
 							        				//console.log(textRadio);
-							        				str += '<div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">';
+							        				str += '<div class="radio"><label><input type="radio" name="' + name + '" id="optionsRadios1" value="' + textRadio + '" checked="">';
 							        				str += textRadio;
 							        				str += '</label></div>';
 							        			} else if (type == 'checkbox') {
-							        				console.log('check');
+							        				var checkboxName = $($(labelChild).get(0)).attr('name');
+							        				console.log('checkboxName');
+							        				console.log(checkboxName);
 							        				var textCheck = $($(labelChild).next()).val();
 							        				//console.log(textCheck);
-							        				str += '<div class="check"><label><input type="checkbox">';
+							        				str += '<div class="check"><label><input type="checkbox" name="' + checkboxName + '">';
 							        				str += textCheck;
 							        				str += '</label></div>';
 							        			}
@@ -151,11 +134,21 @@
 							    } else if (tagName == 'INPUT') {
 									var input = $(value).get(0);
 									var placeholder = $(input).attr('placeholder');
+									
+									var inputForName = $($($(input).parent()).children().get(1)).children().get(0);
+									var inputName = $(inputForName).attr('name');
+									//console.log('inputForName');
+									//console.log(inputName);
+									
 									if (placeholder == '답변') {
-										str += '<input type="text" class="form-control" placeholder="Enter ...">';
+										str += '<input type="text" class="form-control" placeholder="Enter ..." name="' + inputName + '">';
 									}
 						        } else if (tagName == 'TEXTAREA') {
-						        		str += '<textarea class="form-control" rows="3" placeholder="내용을 입력해주세요..."></textarea>';
+						        		var ta = $(value).get(0);
+						        		var taForName = $($($(ta).parent()).children().get(1)).children().get(0);
+									var taName = $(taForName).attr('name');
+									console.log('taName : ' + taName);
+						        		str += '<textarea class="form-control" rows="3" placeholder="내용을 입력해주세요..." name="' + taName + '"></textarea>';
 						        } else if (tagName == 'SELECT') {
 						        		var select = $(value).get(0);
 									var selectChild = $(select).children();
@@ -186,7 +179,63 @@
 					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 				}
 			});
+			
+			
+			$('#btn-complete').click(function() {
+				var formData = $('form').serializeArray();
+				formData.splice(0,1); // name 값이 q 인녀석을 제거해야함.. 0번인덱스에 있음 
+				console.log(formData);
+				var jsonData = formToJson(formData);
+				console.log(JSON.stringify(jsonData));
+				
+				$.ajax({
+					type : 'POST',
+					url: '/questres/insertQuestResProc.do',
+					data : {
+						'questResQuest' : ${param.questNo},
+						'questResMember' : ${sessionScope.memberLoginBean.memberId},
+						'questResContent' : JSON.stringify(jsonData)
+					},
+					dataType : 'json',
+					success : function(data) {
+						console.log(data);
+						if (data.result == 'success') {
+							alert(data.resultMsg);
+						} else {
+							alert(data.resultMsg);
+						}
+					},
+					error : function(xhr, status, error) {
+						console.log(xhr);
+						alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+					}
+				});
+			});
 		});
+		
+		function formToJson(formData) {
+			var jsonData = [];
+			
+			$.each(formData, function(i, v) {
+				//console.log(v);
+				var obj = {
+					"name" : "",
+					"type" : "",
+					"value" : ""
+				};
+				obj.name = questionArray[i];
+				obj.type = v.name;
+				obj.value = v.value;
+				
+				jsonData.push(obj);
+			});
+
+		    /* $.map(formData, function(n, i){
+		    		jsonData[n['name']] = n['value'];
+		    }); */
+		    
+		    return jsonData;
+		}
 	</script>
 </body>
 </html>

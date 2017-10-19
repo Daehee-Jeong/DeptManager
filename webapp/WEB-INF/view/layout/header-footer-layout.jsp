@@ -107,7 +107,7 @@
 							<ul class="dropdown-menu">
 								<!-- The user image in the menu -->
 								<li class="user-header"><img
-									src="/resources/dist/img/user2-160x160.jpg" class="img-circle"
+									src="/resources/dist/img/daehee2.jpg" class="img-circle"
 									alt="User Image">
 									<p>${sessionScope.memberLoginBean.memberName}
 									<small>${sessionScope.memberLoginBean.memberId}</small>
@@ -141,7 +141,7 @@
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="/resources/dist/img/user2-160x160.jpg"
+						<img src="/resources/dist/img/daehee2.jpg"
 							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">

@@ -43,11 +43,10 @@ public class QuestResController {
 		resMap.put(Constants.RESULT_MSG, "설문제출에 실패하였습니다.");
 		
 		try{
-			QuestResBean questResBean = questResService.selectQuestRes(qBean);
-			if( questResBean != null) {
+			int res = questResService.insertQuestRes(qBean);
+			if( res > 0 ) {
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
 				resMap.put(Constants.RESULT_MSG, "설문제출에 성공하였습니다.");
-				resMap.put("questResBean", questResBean);
 			}
 		}catch (Exception e) {
 			
