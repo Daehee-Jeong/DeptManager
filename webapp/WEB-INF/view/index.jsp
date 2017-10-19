@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>임조교 :: 메인화면</title>
+<title>김조교 :: 메인화면</title>
 </head>
 <body>
 

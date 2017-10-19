@@ -35,4 +35,9 @@ public class QuestResServiceImpl implements QuestResService{
 		return questResDao.selectQuestResList(bean);
 	}
 
+	@Override
+	public List<QuestResBean> selectQuestResListFromQuestNo(QuestResBean bean) {
+		return questResDao.selectQuestResListFromQuestNo(bean);
+	}
+
 } // end of class

@@ -1,6 +1,7 @@
 package com.capstone.deptmanager.quest.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * DeptManager QuestController
@@ -25,6 +26,8 @@ import com.capstone.deptmanager.common.Constants;
 import com.capstone.deptmanager.member.bean.MemberBean;
 import com.capstone.deptmanager.quest.bean.QuestBean;
 import com.capstone.deptmanager.quest.service.QuestService;
+import com.capstone.deptmanager.questres.bean.QuestResBean;
+import com.capstone.deptmanager.questres.service.QuestResService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
@@ -38,6 +41,8 @@ public class QuestController {
 	// 서비스 선언
 	@Autowired
 	private QuestService questService;
+	@Autowired
+	private QuestResService questResService;
 	
 	// 설문지 등록 화면
 	@RequestMapping("/quest/insertQuestForm")
@@ -55,7 +60,13 @@ public class QuestController {
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
 		resMap.put(Constants.RESULT_MSG, "설문지 등록에 실패 하였습니다.");
 
+		JsonParser parser = new JsonParser();
+		JsonArray array = (JsonArray) parser.parse(memberIds);
+		
 		try {
+			
+			bean.setQuestTo(array.toString());
+			
 			int res = questService.insertQuest(bean);
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
@@ -67,8 +78,7 @@ public class QuestController {
 
 		// 설문지 등록 완료 후 푸쉬 알림
 		
-		JsonParser parser = new JsonParser();
-		JsonArray array = (JsonArray) parser.parse(memberIds);
+		System.out.println("JsonArray ToString : " + array.toString());
 		
 		List<MemberBean> mBeanList = new ArrayList<>();
 		for (int i = 0; i < array.size(); i++) {
@@ -233,5 +243,45 @@ public class QuestController {
 		
 		return "/quest/selectTarget";
 	}
+	
+	// 미응답자 재송신 화면
+	@RequestMapping("/quest/nonResponseForm")
+	public String nonResponseForm(QuestBean questBean, Model model) {
+		
+		model.addAttribute("questBean", questBean);
+		
+		return "/quest/nonResponse";
+	}
+	
+	// 미응답자 재송신 처리
+	@RequestMapping("/quest/nonResponseProc")
+	@ResponseBody
+	public Map<String, Object> nonResponseProc(QuestBean questBean) {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문응답 조회를 실패하였습니다.");
+		
+		QuestResBean qrBean = new QuestResBean();
+		qrBean.setQuestResQuest(questBean.getQuestNo());
+		
+		try {
+			List<QuestResBean> questResList = questResService.selectQuestResListFromQuestNo(qrBean);
+
+			System.out.println("설문응답리스트 : " + questResList.toString());
+			
+			if(questResList != null && questResList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "설문응답 조회에 성공 하였습니다.");
+				resMap.put("qrList", questResList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resMap;
+	}
+	
 	
 } // end of class

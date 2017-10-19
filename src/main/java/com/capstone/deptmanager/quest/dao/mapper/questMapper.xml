@@ -9,7 +9,8 @@
     		quest_start AS questStart,
     		quest_end AS questEnd,
     		quest_content AS questContent,
-    		quest_type AS questType
+    		quest_type AS questType,
+    		quest_to AS questTo
     </sql>
     
     <!-- 설문지 1건 저장 (등록)-->
@@ -20,7 +21,8 @@
 			quest_start,
 			quest_end,
 			quest_content,
-			quest_type
+			quest_type,
+			quest_to
  		)
 		VALUES
  		(
@@ -28,7 +30,8 @@
  			#{questStart}, 
  			#{questEnd}, 
  			#{questContent}, 
- 			#{questType}
+ 			#{questType},
+ 			#{questTo}
  		)
  		<selectKey order="AFTER" keyProperty="no" resultType="string">
 	   		SELECT LAST_INSERT_ID()      

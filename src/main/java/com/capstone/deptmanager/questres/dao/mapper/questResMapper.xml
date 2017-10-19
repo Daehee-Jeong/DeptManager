@@ -49,5 +49,14 @@
 	    FROM
 	    		questres_no = #{questResNo}
 	</select>
-	
+
+	<!-- 설문지 번호를 이용하여 해당 설문응답들을 조회해서 리스트로 가져온다. --> 
+	<select id="selectQuestResListFromQuestNo" resultType="questResBean">
+	    SELECT
+	    		<include refid="questResColumns"/>
+	    FROM
+	    		questres
+	    	where
+	    		questres_quest = #{questResQuest}
+	</select>
 </mapper>
