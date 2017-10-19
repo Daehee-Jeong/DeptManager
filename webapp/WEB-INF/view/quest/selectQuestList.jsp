@@ -48,7 +48,7 @@
 						$.each(data.qList, function(i, obj) {
 				            
 				            var str = '';
-							str += '<div class="box"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+							str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
 					        str += '<div class="box-body">'+ obj.questType +'</div>';
 					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
 							$(".content").append(str);
@@ -92,7 +92,7 @@
 						$.each(data.qList, function(i, obj) {
 				            
 				            var str = '';
-							str += '<div class="box"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+							str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
 					        str += '<div class="box-body">'+ obj.questType +'</div>';
 					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
 							$(".content").append(str);
@@ -110,6 +110,10 @@
 					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 				}
 			});
+		}
+		
+		function detailQuest(questNo){
+			location.href = "/questres/insertQuestResForm.do?questNo="+questNo;
 		}
       
 	</script>
