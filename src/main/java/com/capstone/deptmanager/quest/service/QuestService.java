@@ -25,7 +25,10 @@ public interface QuestService {
 	/** 설문지를 1건 조회해서 가져온다. **/
 	public QuestBean selectQuest(QuestBean bean) throws Exception;
 	
-	/** 설문지를 조회해서 리스트로 가져온다. **/
+	/** 설문지를 조회해서 리스트로 가져온다. (최초 10건) **/
 	public List<QuestBean> selectQuestList() throws Exception;
+	
+	/** 설문지를 조회해서 리스트로 가져온다. (무한 스크롤) **/
+	public List<QuestBean> selectQuestListScrollDown(QuestBean bean) throws Exception;
 	
 }

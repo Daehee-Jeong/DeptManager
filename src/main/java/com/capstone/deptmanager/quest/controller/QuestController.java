@@ -175,7 +175,7 @@ public class QuestController {
 		return "/quest/selectQuestList";
 	} // end of insertMemberForm
 
-	// 설문지 리스트 조회
+	// 설문지 리스트 최초 10건 조회
 	@RequestMapping("/quest/selectQuestListProc")
 	@ResponseBody
 	public Map<String, Object> selectQuestList(QuestBean questBean) {
@@ -187,6 +187,31 @@ public class QuestController {
 
 		try {
 			List<QuestBean> questList = questService.selectQuestList();
+
+			if(questList != null && questList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
+				resMap.put("qList", questList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return resMap;
+	}
+	
+	// 설문지 리스트 조회 (무한 스크롤)
+	@RequestMapping("/quest/selectQuestListScrollDownProc")
+	@ResponseBody
+	public Map<String, Object> selectQuestListScrollDown(QuestBean questBean) {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문지를 모두 조회 하였습니다.");
+
+		try {
+			List<QuestBean> questList = questService.selectQuestListScrollDown(questBean);
 
 			if(questList != null && questList.size() > 0) {
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);

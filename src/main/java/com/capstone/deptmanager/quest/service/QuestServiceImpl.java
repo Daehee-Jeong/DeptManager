@@ -45,10 +45,16 @@ public class QuestServiceImpl implements QuestService{
 		return questDao.selectQuest(bean);
 	}
 	
-	// 설문지 리스트 조회
+	// 설문지 리스트 최초 10건 조회
 	@Override
 	public List<QuestBean> selectQuestList() throws Exception {
 		return questDao.selectQuestList();
+	}
+
+	// 설문지 리스트 조회 (무한 스크롤)
+	@Override
+	public List<QuestBean> selectQuestListScrollDown(QuestBean bean) throws Exception {
+		return questDao.selectQuestListScrollDown(bean);
 	}
 	
 } // end of class

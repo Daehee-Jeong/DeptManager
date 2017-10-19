@@ -171,7 +171,7 @@
 					<!-- Optionally, you can add icons to the links -->
 					<li class="active"><a href="/notice/notice.do"><i class="fa fa-link"></i>
 							<span>공지사항</span></a></li>
-					<li><a href="#"><i class="fa fa-link"></i> 
+					<li><a href="/quest/selectQuestListForm.do"><i class="fa fa-link"></i> 
 							<span>설문목록</span></a></li>
 					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
 							<span>일정</span> <span class="pull-right-container">

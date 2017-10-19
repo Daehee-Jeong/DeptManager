@@ -22,37 +22,97 @@
       </ol>
     </section>
 
-	<section class="content">
-
-		<div class="box">
-	        <div class="box-header with-border">
-	          <h3 class="box-title">Title</h3>
-	
-	          <div class="box-tools pull-right">
-	            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-	                    title="Collapse">
-	              <i class="fa fa-minus"></i></button>
-	            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-	              <i class="fa fa-times"></i></button>
-	          </div>
-	        </div>
-	        <div class="box-body">
-	          Start creating your amazing application!
-	        </div>
-	        <!-- /.box-body -->
-	        <div class="box-footer">
-	          Footer
-	        </div>
-	        <!-- /.box-footer-->
-	      </div>
+	<section class="content"></section>
       
-      </section>
+	</div>
       
-      </div>
+	<script>
       
-      <script>
+		var lastQuestNo = 0;
+		
+		$(document).ready(function() {
+			selectList();
+		});
+      	
+		// 최초 페이지 로드시 설문지 리스트 10건 조회
+		function selectList() {
+			$.ajax({
+				type : 'POST',
+				url: '/quest/selectQuestListProc.do',
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					
+					if (data.result == 'success') {
+						
+						$.each(data.qList, function(i, obj) {
+				            
+				            var str = '';
+							str += '<div class="box"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+					        str += '<div class="box-body">'+ obj.questType +'</div>';
+					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+							$(".content").append(str);
+							
+							lastQuestNo = obj.questNo;
+							
+				        });
+						
+						return;
+					} else {
+						alert(data.resultMsg);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				}
+			});
+		}
       
-      </script>
+		$(window).scroll(function() {
+		 	if ($(window).scrollTop() >= $(document).height() - $(window).height()){
+		 		selectListScrollDown();
+		 	}
+		});
+		
+		// 스크롤 다운 시 설문지 리스트 조회
+		function selectListScrollDown() {
+			$.ajax({
+				type : 'POST',
+				url: '/quest/selectQuestListScrollDownProc.do',
+				data : {
+					"questNo" : lastQuestNo
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					
+					if (data.result == 'success') {
+						
+						$.each(data.qList, function(i, obj) {
+				            
+				            var str = '';
+							str += '<div class="box"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+					        str += '<div class="box-body">'+ obj.questType +'</div>';
+					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+							$(".content").append(str);
+							
+							lastQuestNo = obj.questNo;
+				        });
+						
+						return;
+					} else {
+						alert(data.resultMsg);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				}
+			});
+		}
+      
+	</script>
 
 </body>
 </html>

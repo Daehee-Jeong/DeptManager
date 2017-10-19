@@ -73,12 +73,28 @@
   			quest_no = #{questNo}
 	</select>
 	
-	<!-- 설문지 List 조회 -->
+	<!-- 설문지 List 최초 10건 조회 -->
 	<select id="selectQuestList" resultType="questBean">
 	    SELECT
 	    		<include refid="questColumns"/>
+		<![CDATA[
 	    FROM
 	    		quest
+	    	order by quest_no desc
+	    	limit 0, 10;
+	    	]]>
+	</select>
+	
+	<!-- 설문지 List 조회 (무한 스크롤)-->
+	<select id="selectQuestListScrollDown" resultType="questBean" parameterType="questBean">
+	    SELECT
+	    		<include refid="questColumns"/>
+		<![CDATA[
+	    FROM
+	    		quest
+	    	where quest_no < #{questNo} and quest_no >= #{questNo}-5
+	    	order by quest_no desc
+		]]>
 	</select>
 	
 </mapper>
