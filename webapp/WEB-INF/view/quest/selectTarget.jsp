@@ -135,7 +135,7 @@
 						console.log(data);
 						if (data.result == 'success') {
 							alert(data.resultMsg);
-							location.replace('/index.do');
+							location.replace('/quest/selectQuestListForm.do');
 							return;
 						} else {
 							alert(data.resultMsg);
