@@ -9,7 +9,7 @@
     		quest_start AS questStart,
     		quest_end AS questEnd,
     		quest_content AS questContent,
-    		quest_type AS questType,
+    		quest_desc AS questDesc,
     		quest_to AS questTo
     </sql>
     
@@ -21,7 +21,7 @@
 			quest_start,
 			quest_end,
 			quest_content,
-			quest_type,
+			quest_desc,
 			quest_to
  		)
 		VALUES
@@ -30,7 +30,7 @@
  			#{questStart}, 
  			#{questEnd}, 
  			#{questContent}, 
- 			#{questType},
+ 			#{questDesc},
  			#{questTo}
  		)
  		<selectKey order="AFTER" keyProperty="no" resultType="string">
@@ -51,8 +51,8 @@
 			<if test="questContent != null and questContent != ''">
 			,quest_content = #{questContent}
 			</if>
-			<if test="questType != null and questType != ''">
-			,quest_type = #{questType}
+			<if test="questDesc != null and questDesc != ''">
+			,quest_type = #{questDesc}
 			</if>
 		WHERE
 			quest_no = #{questNo}

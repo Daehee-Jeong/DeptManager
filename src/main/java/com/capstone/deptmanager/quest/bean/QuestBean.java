@@ -14,7 +14,7 @@ public class QuestBean {
 	private String questStart;
 	private String questEnd;
 	private String questContent;
-	private String questType;
+	private String questDesc;
 	private String questTo; // 해당 설문지에 푸쉬알림 받는 학생
 	
 	public String getQuestNo() {
@@ -47,11 +47,11 @@ public class QuestBean {
 	public void setQuestContent(String questContent) {
 		this.questContent = questContent;
 	}
-	public String getQuestType() {
-		return questType;
+	public String getQuestDesc() {
+		return questDesc;
 	}
-	public void setQuestType(String questType) {
-		this.questType = questType;
+	public void setQuestDesc(String questDesc) {
+		this.questDesc = questDesc;
 	}
 	public String getQuestTo() {
 		return questTo;

@@ -30,7 +30,9 @@
 	href="/resources/dist/css/skins/skin-blue.min.css">
 <!-- jQuery 3 -->
 	<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
-
+<!-- Slimscroll -->
+	<script
+		src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -303,15 +305,9 @@
 	<!-- 이하는 캘린더 추가를 위한 소 -->
 	<!-- jQuery UI 1.11.4 -->
 	<script src="/resources/bower_components/jquery-ui/jquery-ui.min.js"></script>
-	<!-- Slimscroll -->
-	<script
-		src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	
 	<!-- FastClick -->
 	<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
-	<!-- fullCalendar -->
-	<script src="/resources/bower_components/moment/moment.js"></script>
-	<script
-		src="/resources/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
 	<!-- Page specific script -->
 	<script>
 		$(function() {

@@ -17,6 +17,8 @@
 <!-- Bootstrap time Picker -->
 <link rel="stylesheet" href="/resources/plugins/timepicker/bootstrap-timepicker.min.css">
 
+<script src="/resources/bower_components/moment/min/moment.min.js"></script>
+
 </head>
 <body>
 	<div class="content-wrapper">
@@ -106,7 +108,7 @@
 								</div>
 
 								<div class="form-group">
-									<label>설명</label> <textarea class="form-control" rows="3" id="questType" placeholder="설명을 입력하세요."></textarea>
+									<label>설명</label> <textarea class="form-control" rows="3" id="questDesc" placeholder="설명을 입력하세요."></textarea>
 								</div>
 
 								<!-- Date and time range -->
@@ -163,6 +165,10 @@
 	<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- bootstrap datepicker -->
 	<script src="/resources/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<!-- fullCalendar -->
+	
+	<script
+		src="/resources/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
 	<script>
 		
 		var textShortCnt = 1;
@@ -389,6 +395,23 @@
 		/* 다음 페이지 이동 (설문지 설정화면) */
 		function doNext() {
 			
+			if($("#questTitle").val()==null || $("#questTitle").val()=='' || $("#questTitle").val()==' '){
+				alert("설문지 제목을 입력해주세요.");
+				return;
+			}
+			if($("#questDesc").val()==null || $("#questDesc").val()=='' || $("#questDesc").val()==' '){
+				alert("설문지 설명을 입력해주세요.");
+				return;
+			}
+			if($("#quest-content").html()==null || $("#quest-content").html()=='' ){
+				alert("설문지 내용을 작성해주세요.");
+				return;
+			}
+			
+			var datetime = $("#reservationtime").val()
+			var startDate = datetime.substring(6,10)+"-"+datetime.substring(0,2)+"-"+datetime.substring(3,5)+" 12:00:00";
+			var endDate = datetime.substring(19,23)+"-"+datetime.substring(13,15)+"-"+datetime.substring(16,18)+" 12:00:00";
+			
 			var form = document.createElement('form');
         		var objs1;
 			objs1 = document.createElement('input');
@@ -399,25 +422,31 @@
 			var objs2;
 			objs2 = document.createElement('input');
 			objs2.setAttribute('type', 'hidden');
-		    objs2.setAttribute('name', 'questEnd');
-		    objs2.setAttribute('value', $("#reservationtime").val());
+		    objs2.setAttribute('name', 'questStart');
+		    objs2.setAttribute('value', startDate);
 			form.appendChild(objs2);
 			var objs3;
 			objs3 = document.createElement('input');
 			objs3.setAttribute('type', 'hidden');
-		    objs3.setAttribute('name', 'questContent');
-		    objs3.setAttribute('value', $("#quest-content").html());
+		    objs3.setAttribute('name', 'questEnd');
+		    objs3.setAttribute('value', endDate);
 			form.appendChild(objs3);
 			var objs4;
 			objs4 = document.createElement('input');
 			objs4.setAttribute('type', 'hidden');
-		    objs4.setAttribute('name', 'questType');
-		    objs4.setAttribute('value', $("#questType").val());
+		    objs4.setAttribute('name', 'questContent');
+		    objs4.setAttribute('value', $("#quest-content").html());
 			form.appendChild(objs4);
+			var objs5;
+			objs5 = document.createElement('input');
+			objs5.setAttribute('type', 'hidden');
+		    objs5.setAttribute('name', 'questDesc');
+		    objs5.setAttribute('value', $("#questDesc").val());
+			form.appendChild(objs5);
 			form.setAttribute('method', 'post');
 			form.setAttribute('action', "/quest/selectTargetForm.do");
 			document.body.appendChild(form);
-			form.submit(); 
+			form.submit();
 
 		};//end function
 	</script>
