@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -43,8 +45,9 @@
 						<div class="progress progress-xs">
 							<div class="progress-bar progress-bar-danger" style="width: 55%"></div>
 						</div>
-						
-						<button type="button" class="btn btn-block btn-primary btn-xs">미응답자 재알림</button>
+						<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">	
+						<button id="btn-nonResponserSend" type="button" class="btn btn-block btn-primary btn-xs">미응답자 재알림</button>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -53,25 +56,6 @@
 		</section>
 
 	</div>
-	<!-- date-range-picker -->
-	<script src="/resources/bower_components/moment/min/moment.min.js"></script>
-	<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<!-- bootstrap datepicker -->	
-	<script src="/resources/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-	<!-- DataTables -->
-	<script src="/resources/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script src="/resources/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<!-- Chart JS -->
-	<script src="/resources/bower_components/chart.js/Chart.js"></script>
-	
-	<!-- SlimScroll -->
-	<script src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<!-- FastClick -->
-	<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
-	<!-- AdminLTE App -->
-	<script src="/resources/dist/js/adminlte.min.js"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script src="/resources/dist/js/demo.js"></script>
 	<script>
 	
 		var renderData = [
@@ -83,6 +67,7 @@
 		];
 	
 		$(document).ready(function() {
+			
 			$.ajax({
 				type : 'GET',
 				url: '/quest/selectQuestResultProc.do?questNo=' + '${param.questNo}',
@@ -103,6 +88,10 @@
 					console.log(xhr);
 					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 				}
+			});
+			
+			$('#btn-nonResponserSend').click(function (){
+				nonResponserSend();
 			});
 		});
 		
@@ -337,6 +326,33 @@
                 'autoWidth'   : false
             });
 		} // end of drawTable
+		
+		// 미응답자 재송신 요청
+		function nonResponserSend() {
+			$.ajax({
+				type : 'POST',
+				url: '/quest/nonResponseProc.do',
+				data : {
+					"questNo" : "${param.questNo}"	
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					
+					if (data.result == 'success') {
+						
+						return;
+					} else {
+						
+						alert(data.resultMsg);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				}
+			});
+		}
 	</script>
 </body>
 </html>

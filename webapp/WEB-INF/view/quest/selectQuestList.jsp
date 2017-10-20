@@ -117,7 +117,7 @@
 		}
 		
 		function detailQuest(questNo){
-			location.href = "/questres/selectQuestResultForm.do?questNo="+questNo;
+			location.href = "/quest/selectQuestResultForm.do?questNo="+questNo;
 		}
 		
 	</script>

@@ -160,18 +160,9 @@
 		</section>
 	</div>
 	<!-- date-range-picker -->
-	<script src="/resources/bower_components/moment/min/moment.min.js"></script>
 	<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- bootstrap datepicker -->
 	<script src="/resources/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-	<!-- SlimScroll -->
-	<script src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<!-- FastClick -->
-	<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
-	<!-- AdminLTE App -->
-	<script src="/resources/dist/js/adminlte.min.js"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script src="/resources/dist/js/demo.js"></script>
 	<script>
 		
 		var textShortCnt = 1;

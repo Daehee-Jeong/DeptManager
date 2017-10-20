@@ -381,15 +381,6 @@ public class QuestController {
 		return "/quest/selectTarget";
 	} // end of selectTargetForm
 	
-	// 미응답자 재송신 화면
-	@RequestMapping("/quest/nonResponseForm")
-	public String nonResponseForm(QuestBean questBean, Model model) {
-		
-		model.addAttribute("questBean", questBean);
-		
-		return "/quest/nonResponse";
-	}
-	
 	// 미응답자 재송신 처리
 	@RequestMapping("/quest/nonResponseProc")
 	@ResponseBody
