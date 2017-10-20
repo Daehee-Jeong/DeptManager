@@ -58,7 +58,7 @@
 				<div class="row">
 					<div class="col-xs-8">
 						<div class="checkbox icheck"> 
-							<label> <input type="checkbox">&nbsp;&nbsp;자동 로그인
+							<label> <input type="checkbox" onchange="onCheckChanged();">&nbsp;&nbsp;자동 로그인
 							</label>
 						</div>
 					</div>
@@ -91,6 +91,7 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
+    
   });
   
   // 로그인 버튼 이벤트
@@ -123,6 +124,14 @@
 			} 
 		});
 	});
+  
+  	function onCheckChanged() {
+  		try {
+            window.JSInterface.setAutoLogin();
+        } catch(event) {
+            console.log(event);
+        }
+  	}
 </script>
 </body>
 </html>
