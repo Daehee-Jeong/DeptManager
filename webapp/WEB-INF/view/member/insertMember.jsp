@@ -251,7 +251,7 @@
 				success : function(data) {
 					console.log(data);
 					if (data.result == 'success') {
-						
+						location.replace("/index.do");
 						return;
 					} else {
 						alert(data.resultMsg);
