@@ -242,7 +242,7 @@ public class QuestController {
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
 				resMap.put(Constants.RESULT_MSG, "설문 리스트 조회에 성공 하였습니다.");
 				resMap.put("qList", questList);
-			}
+			} 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

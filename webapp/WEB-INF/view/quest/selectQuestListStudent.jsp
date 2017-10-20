@@ -64,7 +64,8 @@
 						
 						return;
 					} else {
-						alert(data.resultMsg);
+						// 안드로이드 토스트 호출
+						// alert(data.resultMsg);
 					}
 				},
 				error : function(xhr, status, error) {
