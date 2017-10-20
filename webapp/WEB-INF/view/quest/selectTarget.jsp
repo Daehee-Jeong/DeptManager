@@ -125,9 +125,10 @@
 					data : {
 						"memberIds" : JSON.stringify(memberIds),
 						"questTitle" : '${questBean.questTitle}',
+						"questStart" : '${questBean.questStart}',
 						"questEnd" : '${questBean.questEnd}',
 						"questContent" : '${questBean.questContent}',
-						"questType" : '${questBean.questType}'
+						"questDesc" : '${questBean.questDesc}'
 					},
 					dataType : 'json',
 					success : function(data) {
