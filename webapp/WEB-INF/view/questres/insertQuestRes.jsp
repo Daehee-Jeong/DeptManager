@@ -200,9 +200,11 @@
 					success : function(data) {
 						console.log(data);
 						if (data.result == 'success') {
-							alert(data.resultMsg);
+							// alert 관련 안내요소는	하이브리드 앱에서 모두 처리 해야함
+							location.replace('/quest/selectQuestListStudentForm.do');
+							//alert(data.resultMsg);
 						} else {
-							alert(data.resultMsg);
+							//alert(data.resultMsg);
 						}
 					},
 					error : function(xhr, status, error) {

@@ -19,6 +19,14 @@
 <!-- Bootstrap time Picker -->
 <link rel="stylesheet" href="/resources/plugins/timepicker/bootstrap-timepicker.min.css">
 
+<!-- DataTable JS -->
+<!-- DataTables -->
+<script src="/resources/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/resources/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<!-- ChartJS -->
+<script src="/resources/bower_components/chart.js/Chart.js"></script>
+
 </head>
 <body>
 	<div class="content-wrapper">
