@@ -4,14 +4,8 @@
     <relation key="FKCGroup_RbccxaHPEeezKcp9Kzxyag">
       <value foreignKeyColumnGroup="FKCGroup_RbccxaHPEeezKcp9Kzxyag"/>
     </relation>
-    <relation key="FKCGroup_Rbccx6HPEeezKcp9Kzxyag">
-      <value foreignKeyColumnGroup="FKCGroup_Rbccx6HPEeezKcp9Kzxyag"/>
-    </relation>
     <relation key="FKCGroup_ZOTbU6HXEeezKcp9Kzxyag">
       <value foreignKeyColumnGroup="FKCGroup_ZOTbU6HXEeezKcp9Kzxyag"/>
-    </relation>
-    <relation key="FKCGroup_iYkygKHXEeezKcp9Kzxyag">
-      <value foreignKeyColumnGroup="FKCGroup_iYkygKHXEeezKcp9Kzxyag"/>
     </relation>
   </relationManager>
   <configuration>
@@ -68,7 +62,7 @@
         <cellsToShow>domain</cellsToShow>
         <cellsToShow>dataType</cellsToShow>
       </viewSettings>
-      <printSettings marginTop="10" marginRight="10" marginBottom="10" marginLeft="10" paperKind="A4" paperOrientation="landscape" header="${FILE} - ${DIAGRAM} - ${PAGENUM} / ${FULLPAGE}" footter="${YEAR}-${MONTH}-${DAY} ${HOUR}:${DAY}"/>
+      <printSettings marginTop="10" marginRight="10" marginBottom="10" marginLeft="10" paperKind="A4" paperOrientation="landscape" scale="1.19" header="${FILE} - ${DIAGRAM} - ${PAGENUM} / ${FULLPAGE}" footter="${YEAR}-${MONTH}-${DAY} ${HOUR}:${DAY}"/>
     </diagrams>
   </businessAreas>
   <databaseModel UUID="DModel_wVs1sKHMEeezKcp9Kzxyag" logicalName="새 데이터베이스" physicalName="NEW_DATABASE">
@@ -130,7 +124,7 @@
           </partition>
         </physicalProperties>
         <columns UUID="Column_ycrT1aHNEeezKcp9Kzxyag" logicalName="공지번호" physicalName="notice_no" dataType="BIGINT">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Rbb1lKHPEeezKcp9Kzxyag"/>
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Rbb1lKHPEeezKcp9Kzxyag" autoIncrement="true"/>
           <memberships UUID="MEntry_Rbb1laHPEeezKcp9Kzxyag" key="PKCGroup_Rbb1mqHPEeezKcp9Kzxyag">
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_Rbb1lqHPEeezKcp9Kzxyag" group="PKCGroup_Rbb1mqHPEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
@@ -168,7 +162,7 @@
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_Rbcco6HPEeezKcp9Kzxyag" group="PKCGroup_RbccrqHPEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
         </columns>
-        <columns UUID="Column_RbccpKHPEeezKcp9Kzxyag" logicalName="제목" physicalName="quest_title" dataType="VARCHAR(100)" notNull="TRUE">
+        <columns UUID="Column_RbccpKHPEeezKcp9Kzxyag" logicalName="제목" physicalName="quest_title" dataType="VARCHAR(255)" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccpaHPEeezKcp9Kzxyag"/>
         </columns>
         <columns UUID="Column_RbccpqHPEeezKcp9Kzxyag" logicalName="시작일" physicalName="quest_start" dataType="DATETIME" notNull="TRUE">
@@ -180,8 +174,11 @@
         <columns UUID="Column_RbccqqHPEeezKcp9Kzxyag" logicalName="내용" physicalName="quest_content" dataType="TEXT" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Rbccq6HPEeezKcp9Kzxyag"/>
         </columns>
-        <columns UUID="Column_RbccrKHPEeezKcp9Kzxyag" logicalName="대상" physicalName="quest_type" dataType="VARCHAR(20)" notNull="TRUE">
+        <columns UUID="Column_RbccrKHPEeezKcp9Kzxyag" logicalName="설명" physicalName="quest_desc" dataType="MEDIUMTEXT" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccraHPEeezKcp9Kzxyag"/>
+        </columns>
+        <columns UUID="Column_tKJtQLU0EeeBoPCfGJOeOA" logicalName="대상" physicalName="quest_to" dataType="TEXT" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_tKK7YLU0EeeBoPCfGJOeOA"/>
         </columns>
         <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_RbccrqHPEeezKcp9Kzxyag" logicalName="설문지 기본키" physicalName="PK_quest" derivedPhysicalName="true" derivedLogicalName="true">
           <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_ZOh9c6HaEeezKcp9Kzxyag"/>
@@ -196,37 +193,29 @@
           </partition>
         </physicalProperties>
         <columns UUID="Column_RbcctaHPEeezKcp9Kzxyag" logicalName="응답번호" physicalName="questres_no" dataType="BIGINT">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbcctqHPEeezKcp9Kzxyag"/>
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbcctqHPEeezKcp9Kzxyag" autoIncrement="true"/>
           <memberships UUID="MEntry_Rbcct6HPEeezKcp9Kzxyag" key="PKCGroup_RbccyaHPEeezKcp9Kzxyag">
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_RbccuKHPEeezKcp9Kzxyag" group="PKCGroup_RbccyaHPEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
         </columns>
-        <columns UUID="Column_RbccuaHPEeezKcp9Kzxyag" logicalName="설문번호" physicalName="questres_quest" derivedLogicalName="true" dataType="BIGINT">
+        <columns UUID="Column_RbccuaHPEeezKcp9Kzxyag" logicalName="설문번호" physicalName="questres_quest" derivedLogicalName="true" dataType="BIGINT" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccuqHPEeezKcp9Kzxyag"/>
           <memberships UUID="MEntry_Rbccu6HPEeezKcp9Kzxyag" key="FKCGroup_RbccxaHPEeezKcp9Kzxyag">
             <value xsi:type="e:ColumnReference" UUID="CReference_RbccvKHPEeezKcp9Kzxyag" group="FKCGroup_RbccxaHPEeezKcp9Kzxyag" parentColumn="Column_RbccoKHPEeezKcp9Kzxyag"/>
           </memberships>
         </columns>
-        <columns UUID="Column_RbccvaHPEeezKcp9Kzxyag" logicalName="회원번호" physicalName="questres_member" derivedLogicalName="true" dataType="BIGINT">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccvqHPEeezKcp9Kzxyag"/>
-          <memberships UUID="MEntry_Rbccv6HPEeezKcp9Kzxyag" key="FKCGroup_Rbccx6HPEeezKcp9Kzxyag">
-            <value xsi:type="e:ColumnReference" UUID="CReference_RbccwKHPEeezKcp9Kzxyag" group="FKCGroup_Rbccx6HPEeezKcp9Kzxyag" parentColumn="Column_cKN-Z6HNEeezKcp9Kzxyag"/>
-          </memberships>
-        </columns>
-        <columns UUID="Column_RbccwaHPEeezKcp9Kzxyag" logicalName="응답내용" physicalName="questres_content" dataType="TEXT">
+        <columns UUID="Column_RbccwaHPEeezKcp9Kzxyag" logicalName="응답내용" physicalName="questres_content" dataType="TEXT" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccwqHPEeezKcp9Kzxyag"/>
         </columns>
-        <columns UUID="Column_Rbccw6HPEeezKcp9Kzxyag" logicalName="날짜" physicalName="questres_date" dataType="DATETIME">
+        <columns UUID="Column_Rbccw6HPEeezKcp9Kzxyag" logicalName="날짜" physicalName="questres_date" dataType="DATETIME" defaultValue="CURRENT_TIMESTAMP" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_RbccxKHPEeezKcp9Kzxyag"/>
+        </columns>
+        <columns UUID="Column_zO06kLU2EeeBoPCfGJOeOA" logicalName="학번" physicalName="questres_member" dataType="VARCHAR(10)" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_zO1hoLU2EeeBoPCfGJOeOA"/>
         </columns>
         <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_RbccxaHPEeezKcp9Kzxyag" logicalName="설문지 -> 설문응답" physicalName="FK_quest_TO_questres" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_RbccrqHPEeezKcp9Kzxyag">
           <foreignKeyConstraint UUID="FKConstraint_RbccxqHPEeezKcp9Kzxyag" logicalName="설문지 -> 설문응답" physicalName="FK_quest_TO_questres" derivedPhysicalName="true" derivedLogicalName="true">
             <physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_ZOikgKHaEeezKcp9Kzxyag"/>
-          </foreignKeyConstraint>
-        </columnGroups>
-        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_Rbccx6HPEeezKcp9Kzxyag" logicalName="회원 -> 설문응답" physicalName="FK_member_TO_questres" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_Rbb1kqHPEeezKcp9Kzxyag">
-          <foreignKeyConstraint UUID="FKConstraint_RbccyKHPEeezKcp9Kzxyag" logicalName="회원 -> 설문응답" physicalName="FK_member_TO_questres" derivedPhysicalName="true" derivedLogicalName="true">
-            <physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_ZOikgaHaEeezKcp9Kzxyag"/>
           </foreignKeyConstraint>
         </columnGroups>
         <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_RbccyaHPEeezKcp9Kzxyag" logicalName="설문응답 기본키" physicalName="PK_questres" derivedPhysicalName="true" derivedLogicalName="true">
@@ -256,13 +245,10 @@
         <columns UUID="Column_71UIFKHWEeezKcp9Kzxyag" logicalName="마감일" physicalName="schedule_end" dataType="DATETIME" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOikiKHaEeezKcp9Kzxyag"/>
         </columns>
-        <columns UUID="Column_71UIFaHWEeezKcp9Kzxyag" logicalName="종일여부" physicalName="schedule_allday" dataType="BOOLEAN" notNull="TRUE">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOikiaHaEeezKcp9Kzxyag"/>
-        </columns>
-        <columns UUID="Column_71UIFqHWEeezKcp9Kzxyag" logicalName="대상" physicalName="schedule_type" dataType="VARCHAR(10)" notNull="TRUE">
+        <columns UUID="Column_71UIFqHWEeezKcp9Kzxyag" logicalName="대상" physicalName="schedule_target" dataType="VARCHAR(10)" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOikiqHaEeezKcp9Kzxyag"/>
         </columns>
-        <columns UUID="Column_71UIF6HWEeezKcp9Kzxyag" logicalName="주제" physicalName="schedule_subject" dataType="VARCHAR(50)" notNull="TRUE">
+        <columns UUID="Column_71UIF6HWEeezKcp9Kzxyag" logicalName="유형" physicalName="schedule_type" dataType="VARCHAR(50)" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOiki6HaEeezKcp9Kzxyag"/>
         </columns>
         <columns UUID="Column_71UIGKHWEeezKcp9Kzxyag" logicalName="내용" physicalName="schedule_desc" dataType="TEXT" notNull="TRUE">
@@ -297,29 +283,21 @@
             <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_ZOjLkqHaEeezKcp9Kzxyag" group="PKCGroup_ZOjLmaHaEeezKcp9Kzxyag" entryIndex="0"/>
           </memberships>
         </columns>
-        <columns UUID="Column_iYkLeKHXEeezKcp9Kzxyag" logicalName="회원번호" physicalName="alarm_to" derivedLogicalName="true" dataType="BIGINT" notNull="TRUE">
-          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLk6HaEeezKcp9Kzxyag"/>
-          <memberships UUID="MEntry_iYkLeaHXEeezKcp9Kzxyag" key="FKCGroup_iYkygKHXEeezKcp9Kzxyag">
-            <value xsi:type="e:ColumnReference" UUID="CReference_iYkLeqHXEeezKcp9Kzxyag" group="FKCGroup_iYkygKHXEeezKcp9Kzxyag" parentColumn="Column_cKN-Z6HNEeezKcp9Kzxyag"/>
-          </memberships>
-        </columns>
         <columns UUID="Column_ZOTbV6HXEeezKcp9Kzxyag" logicalName="제목" physicalName="alarm_title" dataType="VARCHAR(100)" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLlKHaEeezKcp9Kzxyag"/>
         </columns>
         <columns UUID="Column_ZOTbWKHXEeezKcp9Kzxyag" logicalName="내용" physicalName="alarm_msg" dataType="TEXT" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLlaHaEeezKcp9Kzxyag"/>
         </columns>
-        <columns UUID="Column_ZOTbWaHXEeezKcp9Kzxyag" logicalName="날짜" physicalName="alarm_date" dataType="DATETIME" notNull="TRUE">
+        <columns UUID="Column_ZOTbWaHXEeezKcp9Kzxyag" logicalName="날짜" physicalName="alarm_date" dataType="DATETIME" defaultValue="CURRENT_TIMESTAMP" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLlqHaEeezKcp9Kzxyag"/>
         </columns>
         <columns UUID="Column_ZOTbWqHXEeezKcp9Kzxyag" logicalName="성공여부" physicalName="alarm_check" dataType="BOOLEAN" notNull="TRUE">
           <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_ZOjLl6HaEeezKcp9Kzxyag"/>
         </columns>
-        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_iYkygKHXEeezKcp9Kzxyag" logicalName="회원 -> 알림" physicalName="FK_member_TO_alarm" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_Rbb1kqHPEeezKcp9Kzxyag">
-          <foreignKeyConstraint UUID="FKConstraint_iYkygaHXEeezKcp9Kzxyag" logicalName="회원 -> 알림" physicalName="FK_member_TO_alarm" derivedPhysicalName="true" derivedLogicalName="true">
-            <physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_ZOjLmKHaEeezKcp9Kzxyag"/>
-          </foreignKeyConstraint>
-        </columnGroups>
+        <columns UUID="Column_Pc8gsLU4EeeBoPCfGJOeOA" logicalName="대상(학번)" physicalName="alarm_to" dataType="VARCHAR(10)" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Pc9HwLU4EeeBoPCfGJOeOA"/>
+        </columns>
         <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_ZOjLmaHaEeezKcp9Kzxyag" logicalName="알림 기본키" physicalName="PK_alarm" derivedPhysicalName="true" derivedLogicalName="true">
           <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_c_uRgKdIEeeWzp2XRUb5fQ"/>
           <primaryKeyConstraint UUID="PKConstraint_ZOjLmqHaEeezKcp9Kzxyag" logicalName="알림 기본키" physicalName="PK_alarm" derivedPhysicalName="true" derivedLogicalName="true"/>
