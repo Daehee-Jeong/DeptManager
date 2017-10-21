@@ -12,22 +12,27 @@
   content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
   name="viewport">
 <!-- Bootstrap 3.3.7 -->
-<link rel="stylesheet"
-  href="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet"
-  href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
+
 <!-- Font Awesome -->
-<link rel="stylesheet"
-  href="/resources/bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/bower_components/font-awesome/css/font-awesome.min.css">
+
 <!-- Ionicons -->
-<link rel="stylesheet"
-  href="/resources/bower_components/Ionicons/css/ionicons.min.css">
+<link rel="stylesheet" href="/resources/bower_components/Ionicons/css/ionicons.min.css">
+
 <!-- Theme style -->
 <link rel="stylesheet" href="/resources/dist/css/AdminLTE.min.css">
-<!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet"
-  href="/resources/dist/css/skins/_all-skins.min.css">
+
+<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="/resources/dist/css/skins/_all-skins.min.css">
+
+<!-- Date Picker  -->
+<link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="/resources/bower_components/select-picker-master/dist/picker.css">
+<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-switch.css">
+  
+  
   
 <script type="text/javascript" src="../resources/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="../resources/bower_components/ckeditor/ckeditor.js"></script>
@@ -67,8 +72,9 @@ textarea{
       <section class="content-header">
       
         <h1>
-          Timeline <small>example</small>
+          				공지
         </h1>
+        
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li><a href="#">UI</a></li>
@@ -76,12 +82,59 @@ textarea{
         </ol>
       </section>
       
-      <!--  Modal  -->
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                Launch Default Modal
-      </button>
+      <!-- < Modal  
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                			공지 작성
+      </button> -->
+      		
+      <!-- row -->
+        <div class="row">
+          <div class="col-md-12">
+        		<div class="modal-content"  style="background-color: rgba( 255, 255, 255, 0.5 );">
+              <div class="modal-header">
+                   
+               
+               <div class="form-inline">
+                   <input type="text" id="title" title="제목이 빈칸일 수 없습니다." style="width:30%" class="form-control col-md-3" placeholder="공지 이름입력" required>
+                   	<input type="hidden" value="0">
+												<div style="text-align: right">                   
+	                   <input type="checkbox" name="my-checkbox" data-label-text="일정과 함께 등록하기"  data-label-width="140">
+	                		<input type="text" id="datepicker" class="form-control" style="width:30%; display:none"/>
+                		</div>
+                </div>
+      								
+      								
+      								
+      								
+              </div>
+              <div class="modal-body">
+                <p id="tootlip-contents" title="내용이 빈칸일 수 없습니다."> <textarea name="contents" id="contents" style="width: 90%; height: 700px;"></textarea></p>
+              </div>
+              <div class="modal-footer">
+                <select id="type" name="sel1" class="selectpicker1" data-style="btn-info">
+                     <option selected data-content="<span class='glyphicon glyphicon-envelope'></span>" value="1">일반</option>
+                      <option data-content="<span class='glyphicon glyphicon-warning-sign'></span>" value="2">학사</option>
+                      <option data-content="<span class='glyphicon glyphicon-education'></span>" value="3">긴급</option>
+                    </select>
+                    
+                    <select id="target" name="sel2" class="selectpicker1" data-style="btn-primary">
+                      <option selected value="0">전체</option>
+                      <option value="1">1학년</option>
+                      <option value="2">2학년</option>
+                      <option value="3">3학년</option>
+                      <option value="4">4학년</option>
+                      <option value="5">대학원</option>
+                     </select>
+                <button id="create-btn" type="button" data-dismiss="modal" class="btn btn-primary">공지 등록</button>
+                
+              </div>
+            				</div>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
       
-       <div class="modal fade" id="modal-default">
+      <%--  <div class="modal fade" id="modal-default">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -96,13 +149,13 @@ textarea{
                   <div class="input-group" style="padding:10px;"> 
                    
                     
-                    <select id="type" name="sel1" class="selectpicker" data-style="btn-info">
+                    <select id="type" name="sel1" class="selectpicker1" data-style="btn-info">
                      <option selected data-content="<span class='glyphicon glyphicon-envelope'></span>" value="1">일반</option>
                       <option data-content="<span class='glyphicon glyphicon-warning-sign'></span>" value="2">학사</option>
                       <option data-content="<span class='glyphicon glyphicon-education'></span>" value="3">긴급</option>
                     </select>
                     
-                    <select id="target" name="sel2" class="selectpicker" data-style="btn-primary">
+                    <select id="target" name="sel2" class="selectpicker1" data-style="btn-primary">
                       <option selected value="0">전체</option>
                       <option value="1">1학년</option>
                       <option value="2">2학년</option>
@@ -110,6 +163,8 @@ textarea{
                       <option value="4">4학년</option>
                       <option value="5">대학원</option>
                      </select>
+                     
+                     
                      <!-- HTML to write -->
 
                      
@@ -128,11 +183,9 @@ textarea{
                 
               </div>
             </div>
-            <!-- /.modal-content -->
           </div>
-          <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal -->
+    			--%>
 
      
 
@@ -178,15 +231,73 @@ textarea{
   <script src="/resources/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/resources/dist/js/demo.js"></script>
-<script type="text/javascript" src="../resources/bower_components/bootstrap/js/bootstrap-select.js"></script>
-  <script type="text/javascript">
-   var scrollCount = 1; 
+<script type="text/javascript" src="/resources/bower_components/bootstrap/js/bootstrap-select.js"></script>
+<script type="text/javascript" src="/resources/bower_components/select-picker-master/dist/picker.min.js"></script>
+<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/resources/bower_components/bootstrap/js/bootstrap-switch.js"></script>
+
+<script>
+  var scrollCount = 1; 
 	var preDate = '';
 	var ul;
-	
+	function callback() {
+	      setTimeout(function() {
+	        $( "#datepicker" ).removeAttr( "style" ).fadeOut();
+	      }, 1000 );
+	    };
 	
 	$(document).ready(function() {
-		$(".selectpicker").selectpicker();
+		$(".selectpicker1").picker();
+		$("[name='my-checkbox']").bootstrapSwitch();
+		$('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			 $( "#datepicker" ).toggle(800);
+	   });
+		$(document).tooltip();
+		$('#datepicker').daterangepicker({
+		    "timePicker": true,
+		    "timePickerIncrement": 30,
+		    "startDate": "2017/10/15",
+		    "endDate": "2017/10/20",
+		    "opens": "center",
+		    locale: {
+	            "format": "YYYY/MM/DD h:mm",
+	            "separator": " - ",
+	            "applyLabel": "적용",
+	            "cancelLabel": "취소",
+	            "fromLabel": "From",
+	            "toLabel": "To",
+	            "customRangeLabel": "사용자 설정",
+	            "weekLabel": "주",
+	            "daysOfWeek": [
+	                "일",
+	                "월",
+	                "화",
+	                "수",
+	                "목",
+	                "금",
+	                "토"
+	            ],
+	            "monthNames": [
+	                "1월",
+	                "2월",
+	                "3월",
+	                "4월",
+	                "5월",
+	                "6월",
+	                "7월",
+	                "8월",
+	                "9월",
+	                "10월",
+	                "11월",
+	                "12월"
+	            ],
+	            "firstDay": 1
+	        }
+		}, function(start, end, label) {
+		  console.log("New date range selected: " + start.format('YYYY-MM-DD h:mm A') + ' to ' + end.format('YYYY-MM-DD h:mm A') + " (predefined range: " + label + ")");
+		});
+		
+		
 		CKEDITOR.replace(
 				'contents',
 				{
@@ -196,8 +307,6 @@ textarea{
 		$("#create-btn").click(createButtonEvent);
 	
 		loadPage();
-		
-		console.log($('.timeline-footer').child);
 		
 		$(document).scroll(function() {
 			maxHeight = $(document).height();
@@ -213,66 +322,72 @@ textarea{
 	});
 	
 	loadPage = function() {
-		console.log(scrollCount);
-  		var notice = $("#notice");
-
-  		$.ajax({
-  			type : 'POST',
-  			url : '/notice/selectNoticeListProc.do',
-  			data : {
+  	var notice = $("#notice");
+  		
+  	$.ajax({
+ 			type : 'POST',
+ 			url : '/notice/selectNoticeListProc.do',
+  		data : {
   				"page" : String(scrollCount),
   			},
-  			dataType : 'json',
-  			success : function(data) {
-  				if (data.result == 'success') {
-        				console.log(data);
-        				
-        				var list = data.mList;
-        				
-        				for(var i in list) {
-        					var noticeDate = list[i].noticeDate.split(' ');
-
-        					var date = noticeDate[0];
-        					var time = noticeDate[1];
+  		dataType : 'json',
+  		success : function(data) {
+  			if (data.result == 'success') {
+       				console.log(data);
+        			
+       				var list = data.mList;
+        			
+       				for(var i in list) {
+   
+       					var noticeDate = list[i].noticeDate.split(' ');
+       					var date = noticeDate[0];
+       					var time = noticeDate[1];
+       							
+        				if(date != preDate) {
+        					notice.append(createTimeLine(date));
+        					preDate = date;
         							
-        					if(date != preDate) {
-        						notice.append(createTimeLine(date));
-        						preDate = date;
-        								
-        						if(ul != undefined) ul = ul.next();
-        						else ul=$("#notice").children().first();
-        					}
-        						
-        					ul.append(createLabel(list[i].noticeNo, time, list[i].noticeTitle, list[i].noticeContent, list[i].noticeType, list[i].noticeTarget));
+        					if(ul != undefined) ul = ul.next();
+       						else ul=$("#notice").children().first();
+        						}
         				
-        					$('button[type="button"]').on("click", function(event) {
-        						 event.preventDefault();
-        						 console.log(event);
+	       		  var noticeObj = {
+								no : list[i].noticeNo,
+								time : time,
+								title : list[i].noticeTitle,
+								content : list[i].noticeContent,
+								target : list[i].noticeTarget,
+								type : list[i].noticeType
+	        		  		}
+	        		  				
+        			ul.append(createLabelByObj(noticeObj));
+  					 
+	       		  $('button[type="button"]').on("click", function(event) {
+        				 event.preventDefault();
         					})
         				}
         				
-        				$('button[name="delete"]').click(function(event) {
-        					var no = $(this).attr("id");
+        		$('button[name="delete"]').click(function(event) {
+        			var no = $(this).attr("id");
         					
-        				 	$.ajax({
-        			  			type : 'POST',
-        			  			url : '/notice/deleteNoticeProc.do',
-        			  			data : {
-        			  				"noticeNo" : no
+        			$.ajax({
+        				type : 'POST',
+        				url : '/notice/deleteNoticeProc.do',
+        			 	data : {
+        			  	"noticeNo" : no
         			  			},
-        			  			dataType : 'json',
-        			  			success : function(data) {
-        			  				console.log(data);
-        			  				$("#"+no).parent().parent().parent().hide();
+        			  dataType : 'json',
+        			 	success : function(data) {
+        					console.log(data);
+        		 			$("#"+no).parent().parent().parent().hide();
         			  			}
         					}); 
         				})
   				}
   					
-  				else {
-  					alert("endPage")
+  			else {
+  				alert("endPage")
   				} 
-  				
 			},
 			error : function(xhr, status, error) {
 				console.log(xhr);
@@ -281,6 +396,14 @@ textarea{
 				}
 		});
 	}
+	
+	/* 
+		notice Object를 이용하여 crateLabel 호출
+	*/
+	createLabelByObj = function(notice) {
+		return createLabel(notice.no, notice.time, notice.title, notice.content, notice.type, notice.target);
+	}
+	
 	
 	/* TimeLine 소속되는 Label을 만드는 메소드
 	 * Label -> 하나의 공지
@@ -301,10 +424,10 @@ textarea{
 			typeIcon = "fa fa-envelope bg-blue";
 			break;
 		case '2':
-			typeIcon = "fa fa-warning bg-red";
+			typeIcon = "fa fa-mortar-board bg-black";
 			break;
 		case '3':
-			typeIcon = "fa fa-mortar-board bg-black";
+			typeIcon = "fa fa-warning bg-red";
 			break;
 		default:
 			typeIcon = "fa fa-envelope bg-blue";
@@ -349,7 +472,10 @@ textarea{
 		return str;
 	}
 	
+	
+	/* 등록 버튼 이벤트 함수 */
 	createButtonEvent = function() {
+		
 		if($("#title").val().length < 1) {
 			$("#title").tooltip('show');
 			
@@ -371,9 +497,17 @@ textarea{
 			return false;
 		}
 		
-		console.log( $("#target").val());
-		console.log( $("#type").val()); 
 		
+		var state = $('input[name="my-checkbox"]').bootstrapSwitch('state');
+		if(state) insertSchedule();
+		
+		insertNotice();
+	}
+		
+	
+	
+	
+	insertNotice = function() {
 		$.ajax({
   			type : 'POST',
   			url : '/notice/insertNoticeProc.do',
@@ -386,43 +520,28 @@ textarea{
   			dataType : 'json',
   			success : function(data) {
   				if (data.result == 'success') {
-        				console.log(data);
-        				var today = moment().format("YYYY-MM-DD");
-        				
-        				if($("#"+today) == undefined) {
-        					createTimeLine(today);
+        		console.log(data);
+        		var today = moment().format("YYYY-MM-DD");
+        		
+       			if($("#"+today) == undefined) {
+      					createTimeLine(today);
         				}
         				
+      			var noticeObj = {
+          		no : data.noticeNo,
+            	time : "방금",
+            	title : $("#title").val(),
+            	content : CKEDITOR.instances.contents.getData(),
+            	type : $("#type").val(),
+            	target : $("#target").val()
+            			}
         				
-        				$(createLabel("방금", $("#title").val(), CKEDITOR.instances.contents.getData(), $("#type").val(), $("#target").val())).insertAfter("#"+today+ " li:nth-child(1)");
+        		$(createLabelByObj(noticeObj)).insertAfter("#"+today+ " li:nth-child(1)");
         				
-        				$("#title").val("");
-        				CKEDITOR.instances.contents.setData("");
-        				$('select[name=sel1]').val(1);
-        				$('select[name=sel2]').val(0);
-        				$('.selectpicker').selectpicker('refresh')
-        				
-        				
-        				
-        				/* var list = data.mList;
-        				
-        				for(var i in list) {
-        					var noticeDate = list[i].noticeDate.split(' ');
-        							
-        					var date = noticeDate[0];
-        					var time = noticeDate[1];
-        							
-        					if(date != preDate) {
-        						notice.append(createTimeLine(date));
-        						preDate = date;
-        								
-        						if(ul != undefined) ul = ul.next();
-        						else ul=$("#notice").children().first();
-        					}
-        						
-        					console.log($("#notice").children().first());
-        					ul.append(createLabel(time, list[i].noticeTitle, list[i].noticeContent, list[i].noticeType, list[i].noticeTarget)); */
-        				
+        		$("#title").val("");
+        		CKEDITOR.instances.contents.setData("");
+        		$('select[name=sel1]').val(1);
+        		$('select[name=sel2]').val(0);
   				}	
 			},
 			error : function(xhr, status, error) {
@@ -430,13 +549,65 @@ textarea{
 				alert("error\nxhr : " + xhr + ", status : " + status
 						+ ", error : " + error);
 				}
-		});
+		}); 
 	}
-		
+	
+	
 	deleteBtnEvent = function(event) {
 		console.log("event");
 		console.log(this);
 	}
+	
+	
+	
+	/* 
+		공지와 함께 일정도 등록 시에 일정에 동시 등록하는 메소드 
+		Parameter -> schedule Object
+		schedule {
+			scheduleTitle : title,
+			  scheduleStart : startDate,
+			  scheduleEnd : endDate,
+			  scheduleType : type,
+			  scheduleTarget : target,
+			  scheduleDesc : desc
+		}
+	*/
+	insertSchedule = function() {
+		var title = $("#title").val();
+		var startDate = $("#datepicker").val().split("-")[0].trim();
+		var endDate = $("#datepicker").val().split("-")[1].trim();
+		var target = $("#target").val();
+		var type = $("#type").val();
+		var desc = CKEDITOR.instances.contents.getData();
+		alert(endDate)
+		if(target == undefined) target = 0;
+		if(type == undefined) type = 1;
+		
+		$.ajax({
+			  url : '/schedule/insertScheduleProc.do',
+			  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			  type : "POST",
+			  data : {
+				  scheduleTitle : title,
+				  scheduleStart : startDate,
+				  scheduleEnd : endDate,
+				  scheduleType : type,
+				  scheduleTarget : target,
+				  scheduleDesc : desc
+			  },
+			  
+			  success : function(msg) {
+				 console.log(msg); 
+			  },
+			  error : function(xhr, status, error) {
+				  console.log(xhr);
+				  console.log(status);
+				  console.log(error);
+			  }
+		  }); 
+	}
+	
+	
 </script>
 </body>
 </html>

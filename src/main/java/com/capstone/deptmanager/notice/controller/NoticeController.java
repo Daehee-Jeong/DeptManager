@@ -41,19 +41,19 @@ public class NoticeController {
 	
 	@RequestMapping("/notice/insertNoticeProc")
 	@ResponseBody
-	public Map<String, Object> insertNotice(NoticeBean bean) throws Exception {
+	public Map<String, Object> insertNoticeProc(NoticeBean bean) throws Exception {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
 		resMap.put(Constants.RESULT_MSG, "공지 등록에 실패했습니다.");
 		
 		try {
-			System.out.println(bean.getNoticeTitle());
-			int res = noticeService.insertNotice(bean);
-			System.out.println("res 값:" + res);
+			int res = noticeService.insertNoticeProc(bean);
+
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
 				resMap.put(Constants.RESULT_MSG, "공지 등록에 성공했습니다.");
+				resMap.put("noticeNo", bean.getNoticeNo());
 			}
 		}catch (Exception e) {
 			
@@ -63,16 +63,16 @@ public class NoticeController {
 	
 	@RequestMapping("/notice/deleteNoticeProc")
 	@ResponseBody
-	public Map<String, Object> deleteNotice(NoticeBean bean) throws Exception {
+	public Map<String, Object> deleteNoticeProc(NoticeBean bean) throws Exception {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
 		resMap.put(Constants.RESULT_MSG, "공지 삭제에 실패했습니다.");
 		
 		try {
-			System.out.println(bean.getNoticeNo());
-			int res = noticeService.deleteNotice(bean);
-			System.out.println("res 값:" + res);
+
+			int res = noticeService.deleteNoticeProc(bean);
+
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
 				resMap.put(Constants.RESULT_MSG, "공지 삭제에 성공했습니다.");
@@ -130,7 +130,7 @@ public class NoticeController {
 		resMap.put(Constants.RESULT_MSG, "공지를 읽어 오는데 실패했습니다.");
 
 		try {
-			List<NoticeBean> noticeList = noticeService.selectNoticeList(bean);
+			List<NoticeBean> noticeList = noticeService.selectNoticeListProc(bean);
 
 			System.out.println(noticeList);
 

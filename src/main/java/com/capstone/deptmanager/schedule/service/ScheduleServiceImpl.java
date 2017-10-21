@@ -39,9 +39,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public int deleteSchedule(ScheduleBean bean) {
+	public int deleteScheduleProc(ScheduleBean bean) {
 		// TODO Auto-generated method stub
-		return scheduleDao.deleteSchedule(bean);
+		return scheduleDao.deleteScheduleProc(bean);
 	}
 
 }

@@ -14,5 +14,5 @@ public int insertScheduleProc(ScheduleBean bean);
 	
 	public List<ScheduleBean> selectScheduleListProc();
 	
-	public int deleteSchedule(ScheduleBean bean);
+	public int deleteScheduleProc(ScheduleBean bean);
 }

@@ -4,7 +4,6 @@ public class ScheduleBean {
 	
 	int scheduleNo;
 	int scheduleNotice;
-	int scheduleAllday;
 	String scheduleTitle;
 	String scheduleStart;
 	String scheduleEnd;
@@ -13,17 +12,15 @@ public class ScheduleBean {
 	String scheduleDesc;
 	
 	
-	
 	public ScheduleBean() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ScheduleBean(int scheduleNo, int scheduleNotice, int scheduleAllday, String scheduleTitle,
+	public ScheduleBean(int scheduleNo, int scheduleNotice, String scheduleTitle,
 			String scheduleStart, String scheduleEnd, String scheduleType, String scheduleTarget, String scheduleDesc) {
 		super();
 		this.scheduleNo = scheduleNo;
 		this.scheduleNotice = scheduleNotice;
-		this.scheduleAllday = scheduleAllday;
 		this.scheduleTitle = scheduleTitle;
 		this.scheduleStart = scheduleStart;
 		this.scheduleEnd = scheduleEnd;
@@ -36,9 +33,6 @@ public class ScheduleBean {
 	}
 	public int getScheduleNotice() {
 		return scheduleNotice;
-	}
-	public int getScheduleAllday() {
-		return scheduleAllday;
 	}
 	public String getScheduleTitle() {
 		return scheduleTitle;
@@ -64,9 +58,6 @@ public class ScheduleBean {
 	public void setScheduleNotice(int scheduleNotice) {
 		this.scheduleNotice = scheduleNotice;
 	}
-	public void setScheduleAllday(int scheduleAllday) {
-		this.scheduleAllday = scheduleAllday;
-	}
 	public void setScheduleTitle(String scheduleTitle) {
 		this.scheduleTitle = scheduleTitle;
 	}
@@ -87,8 +78,7 @@ public class ScheduleBean {
 	}
 	@Override
 	public String toString() {
-		return "ScheduleBean [scheduleNo=" + scheduleNo + ", scheduleNotice=" + scheduleNotice + ", scheduleAllday="
-				+ scheduleAllday + ", scheduleTitle=" + scheduleTitle + ", scheduleStart=" + scheduleStart
+		return "ScheduleBean [scheduleNo=" + scheduleNo + ", scheduleNotice=" + scheduleNotice + ", scheduleTitle=" + scheduleTitle + ", scheduleStart=" + scheduleStart
 				+ ", scheduleEnd=" + scheduleEnd + ", scheduleType=" + scheduleType + ", scheduleTarget="
 				+ scheduleTarget + ", scheduleDesc=" + scheduleDesc + "]";
 	}

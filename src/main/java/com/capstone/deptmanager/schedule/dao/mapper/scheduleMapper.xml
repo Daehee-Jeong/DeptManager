@@ -6,13 +6,12 @@
     <sql id="scheduleColumns">
     	schedule_no AS scheduleNo,
     	schedule_notice AS scheduleNotice,
-		schedule_title AS scheduleTitle,
-		DATE_FORMAT(schedule_start, '%Y/%m/%d %H:%i') AS scheduleStart,
-		DATE_FORMAT(schedule_end, '%Y/%m/%d %H:%i') AS scheduleEnd,
-		schedule_allday AS scheduleAllday,
-		schedule_type AS scheduleType,
-		schedule_target AS scheduleTarget,
-		schedule_desc AS scheduleDesc
+			schedule_title AS scheduleTitle,
+			DATE_FORMAT(schedule_start, '%Y/%m/%d %H:%i') AS scheduleStart,
+			DATE_FORMAT(schedule_end, '%Y/%m/%d %H:%i') AS scheduleEnd,
+			schedule_type AS scheduleType,
+			schedule_target AS scheduleTarget,
+			schedule_desc AS scheduleDesc
     </sql>
     
     
@@ -24,7 +23,6 @@
 			schedule_title,
 			schedule_start,
 			schedule_end,
-			schedule_allday,
 			schedule_type,
 			schedule_target,
 			schedule_desc
@@ -35,12 +33,11 @@
  			#{scheduleTitle}, 
  			#{scheduleStart}, 
  			#{scheduleEnd},
- 			#{scheduleAllday},
  			#{scheduleType},
  			#{scheduleTarget},
  			#{scheduleDesc}
  		)
- 		<selectKey order="AFTER" keyProperty="no" resultType="string">
+ 		<selectKey order="AFTER" keyProperty="scheduleNo" resultType="int">
 	   		SELECT LAST_INSERT_ID()        
 		</selectKey>
 	</insert>
@@ -90,7 +87,7 @@
 	</update> -->
 	
 	<!-- 회원정보 삭제 -->
-	<delete id="deleteSchedule" parameterType="scheduleBean">
+	<delete id="deleteScheduleProc" parameterType="scheduleBean">
 	    DELETE FROM
 	    		schedule
 	    WHERE

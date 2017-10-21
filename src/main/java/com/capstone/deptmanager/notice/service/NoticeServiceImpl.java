@@ -23,32 +23,32 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	// 공지 등록
 	@Override
-	public int insertNotice(NoticeBean bean) throws Exception {
-		return noticeDao.insertNotice(bean);
+	public int insertNoticeProc(NoticeBean bean) throws Exception {
+		return noticeDao.insertNoticeProc(bean);
 	}
 	
 	// 회원정보 1건 조회
 	@Override
-	public NoticeBean selectNotice(NoticeBean bean) throws Exception {
-		return noticeDao.selectNotice(bean);
+	public NoticeBean selectNoticeProc(NoticeBean bean) throws Exception {
+		return noticeDao.selectNoticeProc(bean);
 	}
 	
 	// 공지 수정
 	@Override
-	public int updateNotice(NoticeBean bean) throws Exception {
-		return noticeDao.updateNotice(bean);
+	public int updateNoticeProc(NoticeBean bean) throws Exception {
+		return noticeDao.updateNoticeProc(bean);
 	}
 	
 	// 공지 삭제
 	@Override
-	public int deleteNotice(NoticeBean bean) throws Exception {
-		return noticeDao.deleteNotice(bean);
+	public int deleteNoticeProc(NoticeBean bean) throws Exception {
+		return noticeDao.deleteNoticeProc(bean);
 	}
 	
 	// 공지 리스트 조회
 	@Override
-	public List<NoticeBean> selectNoticeList(PageBean bean) throws Exception {
-		return noticeDao.selectNoticeList(bean);
+	public List<NoticeBean> selectNoticeListProc(PageBean bean) throws Exception {
+		return noticeDao.selectNoticeListProc(bean);
 	}
 	
 } // end of class

@@ -36,6 +36,28 @@
 </head>
 
 <body>
+
+<!-- Click Event Modal -->
+<div class="modal fade" id="clickModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">일정 상세보기</h4>
+      </div>
+      <div id="modalBody" class="modal-body">
+        	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        <button type="button" data-dismiss="modal" id="delete" class="btn btn-danger">일정 지우기 </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -67,8 +89,8 @@
                 <input type="hidden" id="type-value" val="0">
                 <ul class="fc-color-picker" id="color-chooser">
                   <li><a class="text-blue" href="#" value="1"><span class="fa fa-envelope bg-blue fa-fw"></span></a></li>
-                  <li><a class="text-red" href="#" value="2"><span class="fa fa-warning bg-red fa-fw"></span></a></li>
-                  <li><a class="text-black" href="#" value="3"><span class="fa fa-mortar-board bg-black fa-fw"></span></a></li>
+                  <li><a class="text-black" href="#" value="2"><span class="fa fa-mortar-board bg-black fa-fw"></span></a></li>
+                  <li><a class="text-red" href="#" value="3"><span class="fa fa-warning bg-red fa-fw"></span></a></li>
                 </ul>
                </div>
                <div class=input-group>
@@ -99,13 +121,13 @@
               <input type="text" id="datepicker" class="form-control"/>
               </div>
               <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-                
-                <div class="input-group-btn">
-                  <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                </div>
+                <input id="new-event" type="text" class="form-control" placeholder="일정 이름">
+                <textarea id="event-desc" class="form-control" placeholder="일정 설명"></textarea>
                 <!-- /btn-group -->
               </div>
+              <div class="input-group-btn">
+                  <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
+                </div>
               <!-- /input-group -->
             </div>
           </div>
@@ -158,9 +180,9 @@
 	  moment.updateLocale('ko', lang);
 
 	  $("#add-new-event").click(createEvent);
-	  
+		$("#delete").click(deleteEvent);
+		
 	  initializeCalendar();
-
 	  loadScheduleList();
 	  
 	  $('#calendar').fullCalendar('rerenderEvents');
@@ -209,10 +231,55 @@
 		  console.log("New date range selected: " + start.format('YYYY-MM-DD h:mm A') + ' to ' + end.format('YYYY-MM-DD h:mm A') + " (predefined range: " + label + ")");
 		});
 })
+
+clickEvent = function(event) {
+	console.log(event.id);
+	
+	$.ajax({
+		url : '/schedule/selectScheduleProc.do',
+		data : {
+			scheduleNo : event.id
+		},
+		success : function(msg) {
+			console.log(msg);
+			
+			var body = "";
+			body += 'title : ' + msg.schedule.scheduleTitle;
+			body += '<br>startDate : ' + msg.schedule.scheduleStart;
+			body += '<br>endDate : ' + msg.schedule.scheduleEnd;
+			body += '<br>desc : ' + msg.schedule.scheduleDesc;
+			
+			$("#modalBody").html(body);
+			$("#delete").attr("value", msg.schedule.scheduleNo);
+		}
+	})
+}
+  
+deleteEvent = function(event) {
+	console.log(event);
+	
+	var no = $(this).attr("value");
+	
+	$.ajax({
+		url : '/schedule/deleteScheduleProc.do',
+		data : {
+			scheduleNo : no
+		},
+		success : function(msg) {
+			console.log(msg);
+			$('#calendar').fullCalendar('removeEvents', no);
+			$("#clickModal").hide();
+		},
+		error : function(xhr, status, error) {
+			  console.log(xhr);
+			  console.log(status);
+			  console.log(error);
+		  }
+	})
+}
 	  
 initializeCalendar = function() {
 
-	  
    /* initialize the calendar */
    $('#calendar').fullCalendar({
    	locale : "ko",
@@ -229,7 +296,10 @@ initializeCalendar = function() {
      },
      //Random default events
      'events'    : [],
-    
+     'eventClick' : function(event) {
+    		clickEvent(event);
+    	 	$("#clickModal").modal('show');
+     	}
      })
      
     
@@ -286,15 +356,15 @@ createEvent = function(event) {
 	var endDate = $("#datepicker").val().split("-")[1].trim();
 	var target = $('input[type="radio"]:checked').val();
 	var type = $('#add-new-event').attr("value");
+	var desc = $("#event-desc").val();
 	
-	 var event = {
-		  'title' : title,
-		  'start' : startDate,
-		  'end' : endDate,
-		  'color' :  $('#add-new-event').css('background-color')
-	  }
+	if(target == undefined) target = 0;
+	if(type == undefined) type = 1;
 
-	  $.ajax({
+	$("#new-event").val("");
+	$("#event-desc").val("");
+
+	$.ajax({
 		  url : '/schedule/insertScheduleProc.do',
 		  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		  type : "POST",
@@ -304,10 +374,19 @@ createEvent = function(event) {
 			  scheduleEnd : endDate,
 			  scheduleType : type,
 			  scheduleTarget : target,
-			  
+			  scheduleDesc : desc
 		  },
+		  
 		  success : function(msg) {
-			 console.log(msg); 
+				console.log(msg);
+				var event = {
+					'id' : msg.scheduleNo,
+				  'title' : title,
+				  'start' : startDate,
+				  'end' : endDate,
+				  'color' :  $('#add-new-event').css('background-color')
+				 }
+				
 			  $('#calendar').fullCalendar('renderEvent', event )
 		  },
 		  error : function(xhr, status, error) {
@@ -372,6 +451,7 @@ loadScheduleList = function() {
         				for(var i in list) {
         					
         					var event = {
+        						'id' : list[i].scheduleNo,
         						'title' : list[i].scheduleTitle,
         						'start' : list[i].scheduleStart,
         						'end' : list[i].scheduleEnd,
@@ -401,9 +481,9 @@ loadScheduleList = function() {
 	 case "1":
 		 return "rgb(0, 115, 183)" // Blue
 	 case "2":
-		 return "rgb(221, 75, 57)" // Red
-	 case "3":
 		 return "rgb(17, 17, 17)"	// Black
+	 case "3":
+		 return "rgb(221, 75, 57)" // Red
 	default:
 		return "rgb(0, 115, 183)" // Blue
 	 }
