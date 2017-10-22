@@ -13,7 +13,7 @@
     </sql>
     
     <!-- 공지 작성 -->
-	<insert id="insertNoticeProc" parameterType="noticeBean">
+	<insert id="insertNotice" parameterType="noticeBean">
 	    INSERT INTO notice
  		(
 			notice_title,
@@ -35,7 +35,7 @@
 	</insert>
 	
 	<!-- 공지 1건 조회 -->
-	<select id="selectNoticeProc" resultType="noticeBean" parameterType="noticeBean">
+	<select id="selectNotice" resultType="noticeBean" parameterType="noticeBean">
 	    SELECT
 	    		<include refid="noticeColumns"/>
 	    FROM
@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 공지 수정 -->
-	<update id="updateNoticeProc" parameterType="noticeBean">
+	<update id="updateNotice" parameterType="noticeBean">
 		UPDATE notice SET
 			notice_no = #{noticeNo}
 			<if test="noticeTitle != null and noticeTitle != ''">
@@ -65,7 +65,7 @@
 	</update>
 	
 	<!-- 공지 삭제 -->
-	<delete id="deleteNoticeProc" parameterType="noticeBean">
+	<delete id="deleteNotice" parameterType="noticeBean">
 	    DELETE FROM
 	    		notice
 	    WHERE

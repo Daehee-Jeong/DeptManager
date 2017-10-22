@@ -5,50 +5,53 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageBean {
 	private String CKEditorFuncNum;
 	private MultipartFile upload;
-	private String newFileName;
-	private String imageUrl;
+	private String fileName;
+	private String attach_path;
+	
+	
+	
 	
 	public ImageBean() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ImageBean(String cKEditorFuncNum, MultipartFile upload, String newFileName, String imageUrl) {
+	public ImageBean(String cKEditorFuncNum, MultipartFile upload, String fileName, String attach_path) {
 		super();
 		CKEditorFuncNum = cKEditorFuncNum;
 		this.upload = upload;
-		this.newFileName = newFileName;
-		this.imageUrl = imageUrl;
+		this.fileName = fileName;
+		this.attach_path = attach_path;
 	}
 	public String getCKEditorFuncNum() {
 		return CKEditorFuncNum;
 	}
-	public MultipartFile getUpload() {
-		return upload;
-	}
-	public String getNewFileName() {
-		return newFileName;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
 	public void setCKEditorFuncNum(String cKEditorFuncNum) {
 		CKEditorFuncNum = cKEditorFuncNum;
+	}
+	public MultipartFile getUpload() {
+		return upload;
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
 	}
-	public void setNewFileName(String newFileName) {
-		this.newFileName = newFileName;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
-	@Override
-	public String toString() {
-		return "ImageBean [CKEditorFuncNum=" + CKEditorFuncNum + ", upload=" + upload + ", newFileName=" + newFileName
-				+ ", imageUrl=" + imageUrl + "]";
+	public String getAttach_path() {
+		return attach_path;
+	}
+	public void setAttach_path(String attach_path) {
+		this.attach_path = attach_path;
 	}
 	
+	@Override
+	public String toString() {
+		return "ImageBean [CKEditorFuncNum=" + CKEditorFuncNum + ", upload=" + upload + ", fileName=" + fileName
+				+ ", attach_path=" + attach_path + "]";
+	}
 	
 	
 }

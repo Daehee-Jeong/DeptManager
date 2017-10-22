@@ -15,7 +15,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleDao scheduleDao;
 	
 	@Override
-	public int insertScheduleProc(ScheduleBean bean) {
+	public int insertSchedule(ScheduleBean bean) {
 		// TODO Auto-generated method stub
 		return scheduleDao.insertSchedule(bean);
 	}
@@ -27,21 +27,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ScheduleBean selectScheduleProc(ScheduleBean bean) {
+	public ScheduleBean selectSchedule(ScheduleBean bean) {
 		// TODO Auto-generated method stub
 		return scheduleDao.selectSchedule(bean);
 	}
 
 	@Override
-	public List<ScheduleBean> selectScheduleListProc() {
+	public List<ScheduleBean> selectScheduleList() {
 		// TODO Auto-generated method stub
 		return scheduleDao.selectScheduleList();
 	}
 
 	@Override
-	public int deleteScheduleProc(ScheduleBean bean) {
+	public int deleteSchedule(ScheduleBean bean) {
 		// TODO Auto-generated method stub
-		return scheduleDao.deleteScheduleProc(bean);
+		return scheduleDao.deleteSchedule(bean);
 	}
 
 }

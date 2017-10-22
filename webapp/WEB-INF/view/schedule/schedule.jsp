@@ -241,7 +241,21 @@ clickEvent = function(event) {
 			scheduleNo : event.id
 		},
 		success : function(msg) {
-			console.log(msg);
+			var modalType = "";
+			
+			switch(msg.schedule.scheduleType) {
+			case "1":
+				modalType = 'modal modal-primary fade';
+				break;
+			case "2":
+				modalType = 'modal modal-success fade';
+				break;
+			case "3":
+				modalType = 'modal modal-danger fade';
+				break;
+			}
+			
+			$("#clickModal").attr("class", modalType);
 			
 			var body = "";
 			body += 'title : ' + msg.schedule.scheduleTitle;

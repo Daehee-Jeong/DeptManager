@@ -87,7 +87,7 @@
 	</update> -->
 	
 	<!-- 회원정보 삭제 -->
-	<delete id="deleteScheduleProc" parameterType="scheduleBean">
+	<delete id="deleteSchedule" parameterType="scheduleBean">
 	    DELETE FROM
 	    		schedule
 	    WHERE

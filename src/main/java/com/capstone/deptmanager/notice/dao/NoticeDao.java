@@ -16,17 +16,17 @@ import com.capstone.deptmanager.notice.bean.PageBean;
 public interface NoticeDao {
 
 	/** 공지 생성 */
-	public int insertNoticeProc(NoticeBean bean);
+	public int insertNotice(NoticeBean bean);
 	
 	/** 공지 읽기 */
-	public NoticeBean selectNoticeProc(NoticeBean bean);
+	public NoticeBean selectNotice(NoticeBean bean);
 	
 	/** 공지 페이징 출력 */
-	public List<NoticeBean> selectNoticeListProc(PageBean bean);
+	public List<NoticeBean> selectNoticeList(PageBean bean);
 	
 	/** 공지 수정 */
-	public int updateNoticeProc(NoticeBean bean);
+	public int updateNotice(NoticeBean bean);
 	
 	/** 공지 삭제 */
-	public int deleteNoticeProc(NoticeBean bean);
+	public int deleteNotice(NoticeBean bean);
 }

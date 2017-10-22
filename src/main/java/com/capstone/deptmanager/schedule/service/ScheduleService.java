@@ -6,13 +6,13 @@ import com.capstone.deptmanager.schedule.bean.ScheduleBean;
 
 public interface ScheduleService {
 
-public int insertScheduleProc(ScheduleBean bean);
+public int insertSchedule(ScheduleBean bean);
 	
 	public int updateSchedule(ScheduleBean bean);
 	
-	public ScheduleBean selectScheduleProc(ScheduleBean bean);
+	public ScheduleBean selectSchedule(ScheduleBean bean);
 	
-	public List<ScheduleBean> selectScheduleListProc();
+	public List<ScheduleBean> selectScheduleList();
 	
-	public int deleteScheduleProc(ScheduleBean bean);
+	public int deleteSchedule(ScheduleBean bean);
 }

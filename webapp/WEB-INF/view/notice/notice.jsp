@@ -92,23 +92,24 @@ textarea{
           <div class="col-md-12">
         		<div class="modal-content"  style="background-color: rgba( 255, 255, 255, 0.5 );">
               <div class="modal-header">
-                   
+                
+                <!-- Validation Alert  -->
+                <div class="alert alert-warning" role="alert" style="display : none">
+									<strong>경고!</strong> 제목과 내용은 빈칸일 수 없습니다!
+								</div>
+               	<!-- End Validation  -->
                
                <div class="form-inline">
-                   <input type="text" id="title" title="제목이 빈칸일 수 없습니다." style="width:30%" class="form-control col-md-3" placeholder="공지 이름입력" required>
+                   <input type="text" id="title" style="width:30%" class="form-control col-md-3" placeholder="공지 이름입력" required>
                    	<input type="hidden" value="0">
 												<div style="text-align: right">                   
 	                   <input type="checkbox" name="my-checkbox" data-label-text="일정과 함께 등록하기"  data-label-width="140">
 	                		<input type="text" id="datepicker" class="form-control" style="width:30%; display:none"/>
                 		</div>
                 </div>
-      								
-      								
-      								
-      								
               </div>
               <div class="modal-body">
-                <p id="tootlip-contents" title="내용이 빈칸일 수 없습니다."> <textarea name="contents" id="contents" style="width: 90%; height: 700px;"></textarea></p>
+                <textarea name="contents" id="contents" style="width: 90%; height: 700px;"></textarea></p>
               </div>
               <div class="modal-footer">
                 <select id="type" name="sel1" class="selectpicker1" data-style="btn-info">
@@ -240,19 +241,18 @@ textarea{
   var scrollCount = 1; 
 	var preDate = '';
 	var ul;
-	function callback() {
-	      setTimeout(function() {
-	        $( "#datepicker" ).removeAttr( "style" ).fadeOut();
-	      }, 1000 );
-	    };
-	
+
 	$(document).ready(function() {
 		$(".selectpicker1").picker();
+		
 		$("[name='my-checkbox']").bootstrapSwitch();
 		$('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
 			 $( "#datepicker" ).toggle(800);
-	   });
-		$(document).tooltip();
+	   	});
+		
+		$(document).on('click', 'button[name="delete"]', deleteEvent);
+		$("#create-btn").click(createButtonEvent);
+		
 		$('#datepicker').daterangepicker({
 		    "timePicker": true,
 		    "timePickerIncrement": 30,
@@ -301,11 +301,13 @@ textarea{
 		CKEDITOR.replace(
 				'contents',
 				{
-					'filebrowserUploadUrl' : '${contextPath}/notice/imageUpload.do'
+					uiColor: '#9AB8F3',
+					filebrowserUploadUrl : '/notice/imageUpload.do',
+					resize_enabled : false, // 에디터 크기를 조절하지 않음,
+					removePlugins : "elementspath", // DOM 출력하지 않음
+					
 				});
-		
-		$("#create-btn").click(createButtonEvent);
-	
+			
 		loadPage();
 		
 		$(document).scroll(function() {
@@ -366,23 +368,6 @@ textarea{
         				 event.preventDefault();
         					})
         				}
-        				
-        		$('button[name="delete"]').click(function(event) {
-        			var no = $(this).attr("id");
-        					
-        			$.ajax({
-        				type : 'POST',
-        				url : '/notice/deleteNoticeProc.do',
-        			 	data : {
-        			  	"noticeNo" : no
-        			  			},
-        			  dataType : 'json',
-        			 	success : function(data) {
-        					console.log(data);
-        		 			$("#"+no).parent().parent().parent().hide();
-        			  			}
-        					}); 
-        				})
   				}
   					
   			else {
@@ -477,20 +462,20 @@ textarea{
 	createButtonEvent = function() {
 		
 		if($("#title").val().length < 1) {
-			$("#title").tooltip('show');
+			$( ".alert" ).toggle(800);
 			
 			setTimeout(function() {
-				$("#title").tooltip('destroy');
+				$( ".alert" ).toggle(800);
 				},2000)
 			
 			return false;
 		}
 		
 		if(CKEDITOR.instances.contents.getData().trim().length < 1) {
-			$("#tootlip-contents").tooltip("show");
+			$( ".alert" ).toggle(800);
 			
 			setTimeout(function() {
-				$("#tootlip-contents").tooltip('destroy');
+				$( ".alert" ).toggle(800);
 				},2000)
 
 			
@@ -553,9 +538,23 @@ textarea{
 	}
 	
 	
-	deleteBtnEvent = function(event) {
-		console.log("event");
-		console.log(this);
+	deleteEvent = function(event) {
+		
+		var no = $(this).attr("id");
+					
+		$.ajax({
+			type : 'POST',
+			url : '/notice/deleteNoticeProc.do',
+			data : {
+			 "noticeNo" : no
+			 },
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+		 		$("#"+no).parent().parent().parent().hide();
+			 }
+		}); 
+				
 	}
 	
 	
@@ -579,7 +578,7 @@ textarea{
 		var target = $("#target").val();
 		var type = $("#type").val();
 		var desc = CKEDITOR.instances.contents.getData();
-		alert(endDate)
+
 		if(target == undefined) target = 0;
 		if(type == undefined) type = 1;
 		

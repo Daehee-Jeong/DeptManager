@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,9 @@ import com.capstone.deptmanager.notice.service.NoticeService;
 
 @Controller
 public class NoticeController {
-
+	
+	Logger logger = Logger.getLogger(NoticeController.class);
+	
 	// 파일 업로드 저장경로
 	@Value("#{config['file.upload.path']}")
 	private String FILE_UPLOAD_PATH;
@@ -36,19 +39,19 @@ public class NoticeController {
 
 	@RequestMapping("/notice/noticeForm")
 	public String noticeForm() {
-		return "/notice/noticeForm";
+		return "/notice/notice";
 	}
 	
 	@RequestMapping("/notice/insertNoticeProc")
 	@ResponseBody
-	public Map<String, Object> insertNoticeProc(NoticeBean bean) throws Exception {
+	public Map<String, Object> insertNotice(NoticeBean bean) throws Exception {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
 		resMap.put(Constants.RESULT_MSG, "공지 등록에 실패했습니다.");
 		
 		try {
-			int res = noticeService.insertNoticeProc(bean);
+			int res = noticeService.insertNotice(bean);
 
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
@@ -63,7 +66,7 @@ public class NoticeController {
 	
 	@RequestMapping("/notice/deleteNoticeProc")
 	@ResponseBody
-	public Map<String, Object> deleteNoticeProc(NoticeBean bean) throws Exception {
+	public Map<String, Object> deleteNotice(NoticeBean bean) throws Exception {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
@@ -71,7 +74,7 @@ public class NoticeController {
 		
 		try {
 
-			int res = noticeService.deleteNoticeProc(bean);
+			int res = noticeService.deleteNotice(bean);
 
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
@@ -84,12 +87,20 @@ public class NoticeController {
 	}
 
 
+	
+	/*
+	 * 1. FileUpload -> pom.xml add(dependency)
+	 * 2. bean add(id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver)
+	 * 
+	 */
 	@RequestMapping("/notice/imageUpload")
 	public String imageUpload(ImageBean bean, HttpServletRequest request, Model model) {
 
+		logger.info(bean);
+		
 		HttpSession session = request.getSession();
-		String root_path = session.getServletContext().getRealPath("/");
-		String attach_path = "resources/image";
+		String root_path = "/home/jaehyun/github/DeptManager/webapp";
+		String attach_path = "/resources/image/";
 		MultipartFile upload = bean.getUpload();
 		
 		String filename = "";
@@ -97,13 +108,14 @@ public class NoticeController {
 		
 		if (upload != null) {
 			filename = upload.getOriginalFilename();
-			bean.setNewFileName(filename);
+			bean.setFileName(filename);
 			
 			CKEditorFuncNum = bean.getCKEditorFuncNum();
 			
 			try {
 				File file = new File(root_path + attach_path + filename);
-				System.out.println(root_path + attach_path + filename);
+				logger.info(attach_path + filename);
+				
 				
 				upload.transferTo(file);
 			} catch (IOException e) {
@@ -111,18 +123,18 @@ public class NoticeController {
 			}
 		}
 		
-		String file_path = root_path + attach_path + filename;
+		String file_path = attach_path + filename;
 		
 		model.addAttribute("file_path", file_path);
 		model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
 		
-		return "/notice/upload";
+		return "notice/upload";
 	}
 
 	// 공지 리스트 페이징 처리
 	@RequestMapping("/notice/selectNoticeListProc")
 	@ResponseBody
-	public Map<String, Object> selectNoticeListProc(PageBean bean) {
+	public Map<String, Object> selectNoticeList(PageBean bean) {
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 
@@ -130,7 +142,7 @@ public class NoticeController {
 		resMap.put(Constants.RESULT_MSG, "공지를 읽어 오는데 실패했습니다.");
 
 		try {
-			List<NoticeBean> noticeList = noticeService.selectNoticeListProc(bean);
+			List<NoticeBean> noticeList = noticeService.selectNoticeList(bean);
 
 			System.out.println(noticeList);
 

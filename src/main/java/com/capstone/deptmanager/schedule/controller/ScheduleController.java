@@ -31,7 +31,7 @@ public class ScheduleController {
 	// 일정 화면
 	@RequestMapping("/schedule/scheduleForm")
 	public String scheduleForm() {
-		return "/schedule/scheduleForm";
+		return "/schedule/schedule";
 	} 
 	
 	@RequestMapping("/schedule/selectScheduleProc")
@@ -44,7 +44,7 @@ public class ScheduleController {
 		
 		Logger logger = Logger.getLogger(this.getClass());
 		try {
-			ScheduleBean schedule = scheduleService.selectScheduleProc(bean);
+			ScheduleBean schedule = scheduleService.selectSchedule(bean);
 			
 			if(schedule != null){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
@@ -79,7 +79,7 @@ public class ScheduleController {
 		logger.info(bean.toString());
 		
 		try {
-			int res = scheduleService.insertScheduleProc(bean);
+			int res = scheduleService.insertSchedule(bean);
 			logger.debug("res : " + res);
 			logger.info("no : " + bean.getScheduleNo());
 			if(res > 0){
@@ -104,7 +104,7 @@ public class ScheduleController {
 		
 		Logger logger = Logger.getLogger(this.getClass());
 		try {
-			List<ScheduleBean> schedules = scheduleService.selectScheduleListProc();
+			List<ScheduleBean> schedules = scheduleService.selectScheduleList();
 			
 			if(schedules != null || schedules.size() > 1){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
@@ -129,7 +129,7 @@ public class ScheduleController {
 		
 		Logger logger = Logger.getLogger(this.getClass());
 		try {
-			int res = scheduleService.deleteScheduleProc(bean);
+			int res = scheduleService.deleteSchedule(bean);
 			
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);

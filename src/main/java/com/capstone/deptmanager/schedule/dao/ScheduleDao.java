@@ -14,5 +14,5 @@ public interface ScheduleDao {
 	
 	public List<ScheduleBean> selectScheduleList();
 	
-	public int deleteScheduleProc(ScheduleBean bean);
+	public int deleteSchedule(ScheduleBean bean);
 }
