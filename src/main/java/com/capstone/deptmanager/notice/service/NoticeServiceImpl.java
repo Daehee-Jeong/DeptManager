@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.deptmanager.notice.bean.NoticeBean;
-import com.capstone.deptmanager.notice.bean.PageBean;
 import com.capstone.deptmanager.notice.dao.NoticeDao;
 
 @Service
@@ -47,8 +46,8 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	// 공지 리스트 조회
 	@Override
-	public List<NoticeBean> selectNoticeList(PageBean bean) throws Exception {
-		return noticeDao.selectNoticeList(bean);
+	public List<NoticeBean> selectNoticeList(int page) throws Exception {
+		return noticeDao.selectNoticeList(page);
 	}
 	
 } // end of class

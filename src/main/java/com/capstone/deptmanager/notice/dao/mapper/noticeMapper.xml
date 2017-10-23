@@ -73,7 +73,7 @@
 	</delete>
 	
 	<!-- 공지 List 조회 -->
-	<select id="selectNoticeList" resultType="noticeBean" parameterType="pageBean">
+	<select id="selectNoticeList" resultType="noticeBean" parameterType="int">
 	   
 	    SELECT <include refid="noticeColumns"/>
 			FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, 

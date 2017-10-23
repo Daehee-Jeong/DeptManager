@@ -227,7 +227,8 @@ textarea{
     src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- FastClick -->
   <script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
-    <script src="/resources/bower_components/moment/moment.js"></script>
+<script src="/resources/bower_components/moment/moment.js"></script>
+<script src="/resources/bower_components/moment/locale/ko.js"></script> 
   <!-- AdminLTE App -->
   <script src="/resources/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
@@ -244,6 +245,7 @@ textarea{
 
 	$(document).ready(function() {
 		$(".selectpicker1").picker();
+		moment.updateLocale('ko', lang);
 		
 		$("[name='my-checkbox']").bootstrapSwitch();
 		$('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
@@ -355,7 +357,7 @@ textarea{
         				
 	       		  var noticeObj = {
 								no : list[i].noticeNo,
-								time : time,
+								time : list[i].noticeDate,
 								title : list[i].noticeTitle,
 								content : list[i].noticeContent,
 								target : list[i].noticeTarget,
@@ -399,7 +401,7 @@ textarea{
 		var typeIcon;
 		var targetIcon;
 		 
-		 
+		
 		/* 1 -> 일반 메세지 모양 
 		 * 2 -> 학사모 모양
 		 * 3 -> 
@@ -427,7 +429,7 @@ textarea{
 		"              <i class=\"" + typeIcon + "\"></i>\r\n" + 
 		"\r\n" + 
 		"              <div class=\"timeline-item\">\r\n" + 
-		"                <span class=\"time\"><i class=\"fa fa-clock-o\"></i>"+ time.split(".")[0] + "</span>\r\n" + 
+		"                <span class=\"time\"><i class=\"fa fa-clock-o\"></i>  "+ calulateTime(time) + "</span>\r\n" + 
 		"\r\n" + 
 		"                <h3 class=\"timeline-header\">" + title + "</h3>\r\n" + 
 		"\r\n" + 
@@ -455,6 +457,17 @@ textarea{
 					"</ul>";
 							
 		return str;
+	}
+	
+	
+	calulateTime = function(time) {
+		var today = moment().format('YYYY-MM-DD h:mm A');
+
+		if(time.split(" ")[0] == today.split(" ")[0])
+			return moment(time, 'YYYY-MM-DD h:mm A').fromNow();
+		
+		else 
+			return time.split(" ")[1];
 	}
 	
 	
@@ -505,28 +518,28 @@ textarea{
   			dataType : 'json',
   			success : function(data) {
   				if (data.result == 'success') {
-        		console.log(data);
-        		var today = moment().format("YYYY-MM-DD");
-        		
-       			if($("#"+today) == undefined) {
-      					createTimeLine(today);
-        				}
-        				
-      			var noticeObj = {
-          		no : data.noticeNo,
-            	time : "방금",
-            	title : $("#title").val(),
-            	content : CKEDITOR.instances.contents.getData(),
-            	type : $("#type").val(),
-            	target : $("#target").val()
-            			}
-        				
-        		$(createLabelByObj(noticeObj)).insertAfter("#"+today+ " li:nth-child(1)");
-        				
-        		$("#title").val("");
-        		CKEDITOR.instances.contents.setData("");
-        		$('select[name=sel1]').val(1);
-        		$('select[name=sel2]').val(0);
+          			console.log(data);
+          			var today = moment().format("YYYY-MM-DD");
+          		
+         			if($("#"+today) == undefined) {
+        					createTimeLine(today);
+          			}
+          				
+        			var noticeObj = {
+                  		no : data.noticeNo,
+                    	time : moment(),
+                    	title : $("#title").val(),
+                    	content : CKEDITOR.instances.contents.getData(),
+                    	type : $("#type").val(),
+              			target : $("#target").val()
+              		}
+          				
+            		$(createLabelByObj(noticeObj)).insertAfter("#"+today+ " li:nth-child(1)");
+            				
+            		$("#title").val("");
+            		CKEDITOR.instances.contents.setData("");
+            		$('select[name=sel1]').val(1);
+            		$('select[name=sel2]').val(0);
   				}	
 			},
 			error : function(xhr, status, error) {
@@ -605,6 +618,43 @@ textarea{
 			  }
 		  }); 
 	}
+	
+	 var lang = {
+		        months: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
+		        monthsShort: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
+		        weekdays: "일요일_월요일_화요일_수요일_목요일_금요일_토요일".split("_"),
+		        weekdaysShort: "일_월_화_수_목_금_토".split("_"),
+		        longDateFormat: {
+		            L: "YYYY.MM.DD",
+		            LL: "YYYY년 MMMM D일",
+		            LLL: "YYYY년 MMMM D일 A h시 mm분",
+		            LLLL: "YYYY년 MMMM D일 dddd A h시 mm분"
+		        },
+		        meridiem: {
+		            AM: '오전',
+		            am: '오전',
+		            PM: '오후',
+		            pm: '오후'
+		        },
+		        relativeTime: {
+		            future: "%s 후",
+		            past: "%s 전",
+		            s: "몇초",
+		            ss: "%d초",
+		            m: "일분",
+		            mm: "%d분",
+		            h: "한시간",
+		            hh: "%d시간",
+		            d: "하루",
+		            dd: "%d일",
+		            M: "한달",
+		            MM: "%d달",
+		            y: "일년",
+		            yy: "%d년"	        },
+			        ordinal: function(number) {
+			           return '일';
+			       }
+		}
 	
 	
 </script>

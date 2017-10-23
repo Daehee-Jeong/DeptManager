@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.capstone.deptmanager.common.Constants;
 import com.capstone.deptmanager.notice.bean.ImageBean;
 import com.capstone.deptmanager.notice.bean.NoticeBean;
-import com.capstone.deptmanager.notice.bean.PageBean;
 import com.capstone.deptmanager.notice.service.NoticeService;
 
 @Controller
@@ -52,6 +51,7 @@ public class NoticeController {
 		
 		try {
 			int res = noticeService.insertNotice(bean);
+			logger.info(bean);
 
 			if(res > 0){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
@@ -99,22 +99,22 @@ public class NoticeController {
 		logger.info(bean);
 		
 		HttpSession session = request.getSession();
-		String root_path = "/home/jaehyun/github/DeptManager/webapp";
-		String attach_path = "/resources/image/";
+		String rootPath = "C:\\Users\\kosta\\Documents\\DeptManager\\webapp";
+		String attachPath = "/resources/image/";
 		MultipartFile upload = bean.getUpload();
 		
-		String filename = "";
+		String fileName = "";
 		String CKEditorFuncNum = "";
 		
 		if (upload != null) {
-			filename = upload.getOriginalFilename();
-			bean.setFileName(filename);
+			fileName = upload.getOriginalFilename();
+			bean.setFileName(fileName);
 			
 			CKEditorFuncNum = bean.getCKEditorFuncNum();
 			
 			try {
-				File file = new File(root_path + attach_path + filename);
-				logger.info(attach_path + filename);
+				File file = new File(rootPath + attachPath + fileName);
+				logger.info(attachPath + fileName);
 				
 				
 				upload.transferTo(file);
@@ -123,9 +123,9 @@ public class NoticeController {
 			}
 		}
 		
-		String file_path = attach_path + filename;
+		String filePath = attachPath + fileName;
 		
-		model.addAttribute("file_path", file_path);
+		model.addAttribute("file_path", filePath);
 		model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
 		
 		return "notice/upload";
@@ -134,7 +134,7 @@ public class NoticeController {
 	// 공지 리스트 페이징 처리
 	@RequestMapping("/notice/selectNoticeListProc")
 	@ResponseBody
-	public Map<String, Object> selectNoticeList(PageBean bean) {
+	public Map<String, Object> selectNoticeList(int page) {
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 
@@ -142,7 +142,7 @@ public class NoticeController {
 		resMap.put(Constants.RESULT_MSG, "공지를 읽어 오는데 실패했습니다.");
 
 		try {
-			List<NoticeBean> noticeList = noticeService.selectNoticeList(bean);
+			List<NoticeBean> noticeList = noticeService.selectNoticeList(page);
 
 			System.out.println(noticeList);
 
