@@ -14,6 +14,9 @@
   		<pattern>/index*</pattern>
   		<pattern>/quest/*</pattern>
   		<pattern>/questres/*</pattern>
+  		<pattern>/notice/*</pattern>
+  		<pattern>/schedule/*</pattern>
+  		
  	</decorator>
  	
  	<!-- 예외 URL - 자식창 -->

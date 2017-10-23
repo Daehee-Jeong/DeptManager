@@ -172,8 +172,14 @@
 				<ul class="sidebar-menu" data-widget="tree">
 					<li class="header">HEADER</li>
 					<!-- Optionally, you can add icons to the links -->
-					<li class="active"><a href="/notice/notice.do"><i class="fa fa-link"></i>
+					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">
+					<li class="active"><a href="/notice/selectNoticeForm.do"><i class="fa fa-link"></i>
 							<span>공지사항</span></a></li>
+					</c:if>
+					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">
+					<li class="active"><a href="/notice/selectNoticeStudentForm.do"><i class="fa fa-link"></i>
+							<span>공지사항</span></a></li>
+					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">		
 					<li><a href="/quest/selectQuestListForm.do"><i class="fa fa-link"></i> 
 							<span>설문목록</span></a></li>
@@ -181,15 +187,15 @@
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">		
 					<li><a href="/quest/selectQuestListStudentForm.do"><i class="fa fa-link"></i> 
 							<span>설문목록</span></a></li>
-					</c:if>		
-					<li class="treeview"><a href="#"><i class="fa fa-link"></i>
-							<span>일정</span> <span class="pull-right-container">
-								<i class="fa fa-angle-left pull-right"></i>
-						</span> </a>
-						<ul class="treeview-menu">
-							<li><a href="#">Link in level 2</a></li>
-							<li><a href="#">Link in level 2</a></li>
-						</ul></li>
+					</c:if>
+					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">		
+					<li><a href="/schedule/selectScheduleForm.do"><i class="fa fa-link"></i>
+							<span>일정</span></a></li>
+					</c:if>
+					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">		
+					<li><a href="/schedule/selectScheduleStudentForm.do"><i class="fa fa-link"></i>
+							<span>일정</span></a></li>
+					</c:if>
 					<li><a href="#"><i class="fa fa-link"></i> 
 							<span>알림</span></a></li>
 				</ul>
