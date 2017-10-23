@@ -33,7 +33,7 @@
 			/>
 		<!--  -->
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="wjdeogml1!" />
 		<!-- TODO : Service -> ServiceImpl 기능 수행시 에러로그 없이 응답없는 경우 DB 설정 확인 -->
 	</bean>
 
@@ -91,6 +91,7 @@
 	        <mvc:exclude-mapping path="/member/insertMember*"/>
 	        <mvc:exclude-mapping path="/member/findMember*"/>
 	        <mvc:exclude-mapping path="/member/authMember*"/>
+	        <mvc:exclude-mapping path="/member/updateMemberProc*"/>
 	         
 	        <bean class="com.capstone.deptmanager.common.SessionInterceptor" />
 	        

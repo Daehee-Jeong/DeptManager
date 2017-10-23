@@ -58,7 +58,7 @@
 				<div class="row">
 					<div class="col-xs-8">
 						<div class="checkbox icheck"> 
-							<label> <input type="checkbox" onchange="onCheckChanged();">&nbsp;&nbsp;자동 로그인
+							<label> <input type="checkbox" id="mycheck">&nbsp;&nbsp;자동 로그인
 							</label>
 						</div>
 					</div>
@@ -85,53 +85,63 @@
 <!-- iCheck -->
 <script src="/resources/plugins/iCheck/icheck.min.js"></script>
 <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-    
-  });
   
-  // 로그인 버튼 이벤트
-  $("#btn-login").click(function() {
-	  
-	  if($('#memberPw').val() == '' || $('#memberPw').val() == null){
-		  alert("비밀번호를 입력해주세요.");
-		  return;
-	  }
-	  
-		$.ajax({
-			type : 'POST',
-			url: '/member/loginMemberProc.do',
-			data : {
-				"memberId" : $('#memberId').val(),
-				"memberPw" : $('#memberPw').val()
-			},
-			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				if (data.result == 'success') {
-					location.replace("/index.do");
-				} else {
-					alert(data.resultMsg);
-				}
-			},
-			error : function(xhr, status, error) {
-				console.log(xhr);
-				alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
-			} 
+	$(function() {
+		$('input').iCheck({
+			checkboxClass : 'icheckbox_square-blue',
+			radioClass : 'iradio_square-blue',
+			increaseArea : '20%' // optional
 		});
-	});
-  
-  	function onCheckChanged() {
-  		try {
-            window.JSInterface.setAutoLogin();
-        } catch(event) {
-            console.log(event);
-        }
-  	}
+
+		// 로그인 버튼 이벤트
+		// 이벤트 함수 레디 함수 안으로 이동.
+		$("#btn-login").click(function() {
+
+			if ($('#memberPw').val() == '' || $('#memberPw').val() == null) {
+				alert("비밀번호를 입력해주세요.");
+				return;
+			}
+
+			$.ajax({
+				type : 'POST',
+				url : '/member/loginMemberProc.do',
+				data : {
+					"memberId" : $('#memberId').val(),
+					"memberPw" : $('#memberPw').val()
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					if (data.result == 'success') {
+						location.replace("/index.do");
+					} else {
+						alert(data.resultMsg);
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : "
+							+ status + ", error : " + error);
+				}
+			});
+		});
+		
+		$('#mycheck').on('ifChecked', function () {
+			onCheckChanged();
+		});
+	}); // end of jQuery Ready
+
+	function onCheckChanged() {
+		console.log('changed');
+		//window.mJSInterface.setSmile("click");
+		
+		try {
+			window.mJSInterface.setAutoLogin($('#memberId').val(), $('#memberPw').val());
+		} catch (event) {
+			window.mJSInterface.setSmile("에러");
+			console.log(event);
+		}
+	}
 </script>
 </body>
 </html>

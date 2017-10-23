@@ -28,4 +28,7 @@ public interface MemberService {
 	/** 회원정보를 조회해서 리스트로 가져온다. **/
 	public List<MemberBean> selectMemberList() throws Exception;
 	
+	/** 학번이 주입된 MemberBean List를 넘겨받아 앱토큰을 포함한 MemberBean List 로 리턴 **/
+	public List<MemberBean> selectMemberBeanWithTokenList(List<MemberBean> memberBeanList) throws Exception;
+	
 }

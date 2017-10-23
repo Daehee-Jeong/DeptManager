@@ -110,6 +110,8 @@ public class FCMSender {
 				respStr.append(line);
 	        }
 			
+			System.out.println("respStr : " + respStr);
+			
 			/*
 			 * 푸시알림 성공 여부를 확인하기위한 소스 추가
 			 */

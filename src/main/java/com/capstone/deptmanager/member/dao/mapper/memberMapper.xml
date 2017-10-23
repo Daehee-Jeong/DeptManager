@@ -114,4 +114,26 @@
 	    		member
 	</select>
 	
+	<!-- 학번이 주입된 MemberBean List를 넘겨받아 앱토큰을 포함한 MemberBean List 로 리턴   -->
+	<select id="selectMemberBeanWithTokenList" resultType="memberBean" parameterType="memberBean">
+		SELECT
+			member_id AS memberId,
+			member_token AS memberToken
+		FROM
+			member
+		WHERE
+	    	    member_id in
+	    		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+	            #{item.memberId}
+        		</foreach>
+        		
+	    	<!-- <if test="memberBean != null">
+	    	   	WHERE
+	    	    member_id in
+	    		<foreach collection="memberBeanList" item="item" index="index" separator="," open="(" close=")">
+	            #item.memberId
+        		</foreach>	    
+	    	</if> -->
+	</select>
+	
 </mapper>

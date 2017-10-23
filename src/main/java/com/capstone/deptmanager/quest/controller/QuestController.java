@@ -1,6 +1,7 @@
 package com.capstone.deptmanager.quest.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * DeptManager QuestController
@@ -22,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.capstone.deptmanager.common.Constants;
+import com.capstone.deptmanager.common.FCMSender;
+import com.capstone.deptmanager.common.PushMsgBean;
 import com.capstone.deptmanager.member.bean.MemberBean;
+import com.capstone.deptmanager.member.service.MemberService;
 import com.capstone.deptmanager.quest.bean.QuestBean;
 import com.capstone.deptmanager.quest.service.QuestService;
 import com.capstone.deptmanager.questres.bean.QuestResBean;
@@ -42,6 +46,8 @@ public class QuestController {
 	private QuestService questService;
 	@Autowired
 	private QuestResService questResService;
+	@Autowired
+	private MemberService memberService;
 	
 	// 설문지 등록 화면
 	@RequestMapping("/quest/insertQuestForm")
@@ -75,10 +81,12 @@ public class QuestController {
 
 		}
 		
-		// TODO : 설문지 등록 완료 후 푸쉬 알림
-		
 		System.out.println("JsonArray ToString : " + array.toString());
 		
+		// 설문지 등록 완료 후 푸쉬 알림
+		// MyBatis String 배열을 전달해 foreach 를 사용하여 ID 에 해당하는 토큰 값을 심고, 해당 MemberBean List 를 반환하는 로직 추가 
+		
+		// JSON ID 목록을 가공하여 MemberBean List를 제작한다.
 		List<MemberBean> mBeanList = new ArrayList<>();
 		for (int i = 0; i < array.size(); i++) {
 			MemberBean mBean = new MemberBean();
@@ -87,6 +95,45 @@ public class QuestController {
 			mBeanList.add(mBean);
 			System.out.println("id : " + id);
 		}
+		
+		// 만들어진 MemberBean List 의 무결성 검증
+		if (mBeanList != null && mBeanList.size() > 0) {
+			
+			// ID 가 삽입된 MemberBean List 를 이용하여 각 ID 의 토큰을 조회하여 토큰이담긴 MemberBean List 를 받아낸다 (mBeanTokenList)
+			List<MemberBean> mBeanTokenList = new ArrayList<>();
+			try {
+				mBeanTokenList = memberService.selectMemberBeanWithTokenList(mBeanList);
+				if (mBeanTokenList != null) {
+					System.out.println("mBeanList2.size() -> " + mBeanTokenList.size());
+				} else {
+					System.out.println("mBeanList2 is null");
+				}
+			} catch (Exception e) {
+				System.out.println("Exception mBeanList2");
+				e.printStackTrace();
+			}
+			
+			// 만들어진 MemberBean 토큰 List 를 이용해 PushMsgBean List 를 생성한다.
+			List<PushMsgBean> pushMsgList = new ArrayList<>();
+			for (int i = 0; i < mBeanTokenList.size(); i++) {
+				String token = mBeanTokenList.get(i).getMemberToken();
+				if (token != null && !"".equals(token)) {
+					PushMsgBean pmBean = new PushMsgBean();
+					pmBean.setTo(token);
+					PushMsgBean.Data data = new PushMsgBean.Data();
+					data.setTitle("[새 설문 알림]");
+					data.setMessage(bean.getQuestTitle());
+					data.setTime(System.currentTimeMillis() + "");
+					pmBean.setData(data);
+					pushMsgList.add(pmBean);
+				}
+			} // end of for
+			
+			// 완성된 PushMsgBean List 를 FCMSender Class 에 전달하여 푸시알림 수행
+			// TODO 추후 FCMSender 클래스의 루틴을 스레드로 분기할지에 대한 고민 필요
+			int resVal = FCMSender.sendPushMsgBeanList(pushMsgList);
+			System.out.println("resVal : " + resVal);
+		} // end of if
 		
 		return resMap;
 	} // end of insertQuestProc

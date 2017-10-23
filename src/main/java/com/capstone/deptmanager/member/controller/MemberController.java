@@ -131,6 +131,8 @@ public class MemberController {
 	@ResponseBody
 	public Map<String, Object> updateMemberProc(MemberBean memberBean, HttpServletRequest request){
 		
+		System.out.println("수정 : " + memberBean.getMemberId() + ", " +  memberBean.getMemberToken());
+		
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);

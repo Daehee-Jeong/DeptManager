@@ -50,5 +50,11 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberBean> selectMemberList() throws Exception {
 		return memberDao.selectMemberList();
 	}
+
+	// 학번이 주입된 MemberBean List를 넘겨받아 앱토큰을 포함한 MemberBean List 로 리턴
+	@Override
+	public List<MemberBean> selectMemberBeanWithTokenList(List<MemberBean> memberBeanList) throws Exception {
+		return memberDao.selectMemberBeanWithTokenList(memberBeanList);
+	}
 	
 } // end of class
