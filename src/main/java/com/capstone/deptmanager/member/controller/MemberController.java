@@ -105,6 +105,12 @@ public class MemberController {
 		return resMap;
 	} // end of loginMemberProc
 	
+	// 자동 로그인 처리
+	@RequestMapping("/member/autoLoginMemberForm")
+	public String autoLoginMemberForm(){
+		return "/member/autoLoginMember";
+	} // end of loginMemberForm
+	
 	// 로그아웃 처리
 	@RequestMapping("/member/logoutMemberProc")
 	@ResponseBody

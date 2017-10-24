@@ -412,6 +412,7 @@
 				success : function(data) {
 					console.log(data);
 					if (data.result == 'success') {
+						doLogoutAndroid(); // 서버쪽 로그아웃 처리가 완료되면 안드로이드 네이티브에서도 로그아웃 처리한다.
 						location.replace("/index.do");
 						return;
 					} else {
@@ -423,6 +424,14 @@
 					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 				}
 			});
+		}
+		
+		function doLogoutAndroid() {
+			try {
+				window.mJSInterface.doLogOut();
+			} catch (event) {
+				console.log('doLogoutAndroid() - not an Android');
+			}
 		}
 		
 	</script>
