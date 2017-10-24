@@ -29,9 +29,14 @@ public class ScheduleController {
 	private ScheduleService scheduleService;
 	
 	// 일정 화면
-	@RequestMapping("/schedule/scheduleForm")
+	@RequestMapping("/schedule/selectScheduleForm")
 	public String scheduleForm() {
-		return "/schedule/schedule";
+		return "/schedule/selectSchedule";
+	} 
+	
+	@RequestMapping("/schedule/selectScheduleStudentForm")
+	public String scheduleStudentForm() {
+		return "/schedule/selectScheduleStudent";
 	} 
 	
 	@RequestMapping("/schedule/selectScheduleProc")
