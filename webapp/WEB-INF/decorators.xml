@@ -16,6 +16,7 @@
   		<pattern>/questres/*</pattern>
   		<pattern>/notice/*</pattern>
   		<pattern>/schedule/*</pattern>
+  		<pattern>/member/auto*</pattern>
   		
  	</decorator>
  	

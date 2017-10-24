@@ -85,7 +85,8 @@
 <!-- iCheck -->
 <script src="/resources/plugins/iCheck/icheck.min.js"></script>
 <script>
-  
+  	var isAutoLogin = false;
+  	
 	$(function() {
 		$('input').iCheck({
 			checkboxClass : 'icheckbox_square-blue',
@@ -96,6 +97,16 @@
 		// 로그인 버튼 이벤트
 		// 이벤트 함수 레디 함수 안으로 이동.
 		$("#btn-login").click(function() {
+			
+			// 안드로이드 : 자동로그인 선택시 네이티브앱의 함수 호출을 통해 앱의 변수내 저장한다.
+			// 이후 로그인이 성공할 시, 네이티브 앱에서 해당 변수를 SharedPreference 내부에 저장한다.
+			if (isAutoLogin) {
+				try {
+					window.mJSInterface.setLoginInfo($('#memberId').val(), $('#memberPw').val());
+				} catch (event) {
+					console.log('안드로이드 아니므로 네이티브 함수 호출 에러');
+				}
+			}
 
 			if ($('#memberPw').val() == '' || $('#memberPw').val() == null) {
 				alert("비밀번호를 입력해주세요.");
@@ -127,7 +138,7 @@
 		});
 		
 		$('#mycheck').on('ifChecked', function () {
-			onCheckChanged();
+			isAutoLogin = true;
 		});
 	}); // end of jQuery Ready
 
