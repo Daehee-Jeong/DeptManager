@@ -36,19 +36,9 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
-	@RequestMapping("/notice/selectNoticeForm")
+	@RequestMapping("/notice/noticeForm")
 	public String noticeForm() {
-		return "notice/selectNotice";
-	}
-	
-	@RequestMapping("/notice/selectNoticeStudentForm")
-	public String noticeStudentForm() {
-		return "notice/selectNoticeStudent";
-	}
-	
-	@RequestMapping("/notice/insertNoticeForm")
-	public String insertNoticeForm() {
-		return "notice/insertNotice";
+		return "/notice/notice";
 	}
 	
 	@RequestMapping("/notice/insertNoticeProc")
