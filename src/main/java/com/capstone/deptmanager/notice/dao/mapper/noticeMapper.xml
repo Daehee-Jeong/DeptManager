@@ -88,4 +88,16 @@
 	    ]]> 
 	</select>
 	
+	<!-- 공지 List 조회 (index)-->
+	<select id="selectNoticeIndexList" resultType="noticeBean">
+	    SELECT
+			<include refid="noticeColumns"/>  
+		<![CDATA[
+	    FROM
+	    		notice
+	    	order by notice_date desc
+	    	limit 0, 5;
+		]]>
+	</select>
+	
 </mapper>

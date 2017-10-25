@@ -28,4 +28,7 @@ public interface NoticeDao {
 	
 	/** 공지 삭제 */
 	public int deleteNotice(NoticeBean bean);
+	
+	/** 공지 리스트 조회 (index) */
+	public List<NoticeBean> selectNoticeIndexList();
 }

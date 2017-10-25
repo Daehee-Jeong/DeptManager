@@ -29,4 +29,7 @@ public interface NoticeService {
 	/** 공지 전체 목록 출력 */
 	public List<NoticeBean> selectNoticeList(int page) throws Exception;
 	
+	/** 공지 리스트 조회 (index) */
+	public List<NoticeBean> selectNoticeIndexList() throws Exception;
+	
 }

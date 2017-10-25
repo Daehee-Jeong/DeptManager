@@ -50,4 +50,10 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNoticeList(page);
 	}
 	
+	// 공지 리스트 조회 (index)
+	@Override
+	public List<NoticeBean> selectNoticeIndexList() throws Exception {
+		return noticeDao.selectNoticeIndexList();
+	}
+	
 } // end of class

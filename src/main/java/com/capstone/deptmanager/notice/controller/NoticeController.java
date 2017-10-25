@@ -167,4 +167,30 @@ public class NoticeController {
 		return resMap;
 
 	}
+	
+	// 공지 리스트 페이징 처리
+	@RequestMapping("/notice/selectNoticeIndexListProc")
+	@ResponseBody
+	public Map<String, Object> selectNoticeIndexListProc() {
+
+		Map<String, Object> resMap = new HashMap<String, Object>();
+
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "공지 리스트 조회에 실패했습니다.");
+
+		try {
+			List<NoticeBean> noticeList = noticeService.selectNoticeIndexList();
+
+
+			if (noticeList != null && noticeList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "공지 리스트 조회에 성공 하였습니다.");
+				resMap.put("nList", noticeList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resMap;
+
+	}
 }
