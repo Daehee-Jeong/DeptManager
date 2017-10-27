@@ -148,10 +148,10 @@
 				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
 			} else if (per > 40) {
 				$('#per-text').attr('class', 'badge bg-yellow');
-				$('#per-text').attr('class', 'progress-bar progress-bar-yellow');
+				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
 			} else {
 				$('#per-text').attr('class', 'badge bg-red');
-				$('#per-text').attr('class', 'progress-bar progress-bar-danger');
+				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
 			}
 			
 		} // end of renderCount

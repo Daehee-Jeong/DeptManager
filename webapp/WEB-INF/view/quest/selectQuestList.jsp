@@ -98,7 +98,7 @@
 				            
 				            var str = '';
 							str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
-					        str += '<div class="box-body">'+ obj.questType +'</div>';
+					        str += '<div class="box-body">'+ obj.questDesc +'</div>';
 					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
 							$(".content").append(str);
 							
