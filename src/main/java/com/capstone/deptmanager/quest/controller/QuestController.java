@@ -266,6 +266,29 @@ public class QuestController {
 		return resMap;
 	} // end of selectQuestResultProc
 	
+	// 설문 응답자 수 조회
+	@RequestMapping("/quest/selectQuestSuccessCount")
+	@ResponseBody
+	public Map<String, Object> selectQuestSuccessCount(QuestResBean bean) {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "설문 응답 수 조회에 실패 하였습니다.");
+		
+		try {
+			List<QuestResBean> qrBeanList = questResService.selectQuestResListFromQuestNo(bean);
+			if (qrBeanList != null && qrBeanList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "설문 응답 수 조회에 실패 하였습니다.");
+				resMap.put("count", qrBeanList.size());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resMap;
+	}
+	
 	// [관리자] 설문지 목록 화면
 	@RequestMapping("/quest/selectQuestListForm")
 	public String selectQuestListForm() {

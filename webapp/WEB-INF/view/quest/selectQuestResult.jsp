@@ -47,11 +47,11 @@
 				<div class="box box-default">
 					<div class="box-header with-border">
 						<h3 class="box-title">설문 응답률</h3>
-						<span class="badge bg-red">55%</span>
+						<span id="per-text" class=""></span>
 					</div>
 					<div class="box-body">
 						<div class="progress progress-xs">
-							<div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+							<div id="per-bar" class="progress-bar progress-bar-danger"></div>
 						</div>
 						<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">	
 						<button id="btn-nonResponserSend" type="button" class="btn btn-block btn-primary btn-xs">미응답자 재알림</button>
@@ -65,6 +65,9 @@
 
 	</div>
 	<script>
+	
+		var total = 0;
+		var count = 0;
 	
 		var renderData = [
 			
@@ -82,11 +85,18 @@
 				dataType : 'json',
 				success : function(data) {
 					if (data.result == 'success') {
-						//console.log(data);
+						
+						
+						
+						console.log(data);
+						var arr = JSON.parse(data.qBean.questTo);
+						total = arr.length;
 						
 						var resList = data.resList;
 						//console.log(resList);
 						makeRenderData(resList);
+						
+						getSuccessCnt();
 						
 					} else {
 						alert(data.resultMsg);
@@ -101,7 +111,50 @@
 			$('#btn-nonResponserSend').click(function (){
 				nonResponserSend();
 			});
+			
 		});
+		
+		function getSuccessCnt() {
+			$.ajax({
+				type : 'GET',
+				url: '/quest/selectQuestSuccessCount.do?questResQuest=' + '${param.questNo}',
+				dataType : 'json',
+				success: function(data) {
+					console.log(data);
+					count = data.count;
+					renderCount();
+				},
+				error: function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				},
+				
+			});
+		} // end of getSuccessCnt
+		
+		function renderCount() { // using total, count
+			var per = 0;
+			if (count != 0) {
+				per = count / total * 100;
+			}
+			console.log('total: ' + total);
+			console.log('count: ' + count);
+			console.log('per: ' + per);
+			//$('#per-bar').animate({width: per+'%'}, 1000);
+			$('#per-bar').css('width', per+'%');
+			$('#per-text').text(per+'%');
+			if (per > 80) {
+				$('#per-text').attr('class', 'badge bg-green');
+				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
+			} else if (per > 40) {
+				$('#per-text').attr('class', 'badge bg-yellow');
+				$('#per-text').attr('class', 'progress-bar progress-bar-yellow');
+			} else {
+				$('#per-text').attr('class', 'badge bg-red');
+				$('#per-text').attr('class', 'progress-bar progress-bar-danger');
+			}
+			
+		} // end of renderCount
 		
 		function makeRenderData(resList) {
 			
