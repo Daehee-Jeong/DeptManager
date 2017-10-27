@@ -10,6 +10,7 @@ package com.capstone.deptmanager.notice.service;
 import java.util.List;
 
 import com.capstone.deptmanager.notice.bean.NoticeBean;
+import com.capstone.deptmanager.notice.bean.PageBean;
 
 
 public interface NoticeService {
@@ -28,6 +29,8 @@ public interface NoticeService {
 	
 	/** 공지 전체 목록 출력 */
 	public List<NoticeBean> selectNoticeList(int page) throws Exception;
+
+	public List<NoticeBean> selectNoticeFilterList(PageBean bean) throws Exception;
 	
 	/** 공지 리스트 조회 (index) */
 	public List<NoticeBean> selectNoticeIndexList() throws Exception;

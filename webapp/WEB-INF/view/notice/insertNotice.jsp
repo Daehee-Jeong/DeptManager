@@ -57,7 +57,7 @@
       </button> -->
       		
      <!-- Default box -->
-      <div class="box">
+      <div class="box" style="margin-top : 3%">
         <div class="box-header with-border">
 
             <!-- Validation Alert  -->

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -13,9 +12,6 @@
 <meta
   content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
   name="viewport">
-<!-- Bootstrap 3.3.7 -->
-<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="/resources/bower_components/font-awesome/css/font-awesome.min.css">
@@ -31,13 +27,26 @@
 
 <!-- Date Picker  -->
 <link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-<link rel="stylesheet" href="/resources/bower_components/select-picker-master/dist/picker.css">
 <link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-switch.css">
   
-  
-  
-<script type="text/javascript" src="../resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery 3 -->
+<!-- Bootstrap 3.3.7 -->
 <script type="text/javascript" src="../resources/bower_components/ckeditor/ckeditor.js"></script>
+
+<!-- FastClick -->
+<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
+
+<!-- Moment.js -->
+<script src="/resources/bower_components/moment/moment.js"></script>
+<script src="/resources/bower_components/moment/locale/ko.js"></script> 
+
+<!-- AdminLTE App -->
+<script src="/resources/dist/js/adminlte.min.js"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="/resources/dist/js/demo.js"></script>
+<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/resources/bower_components/bootstrap/js/bootstrap-switch.js"></script>
 
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -48,8 +57,7 @@
   <![endif]-->
 
 <!-- Google Font -->
-<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
 <style>
@@ -60,6 +68,27 @@ textarea{
   border: none;
   resize: none;
   overflow: hidden;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #2e3436;
+  border-color: #2e3436;
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+ color: #fff;
+  background-color: #2e3436;
+  border-color: #2e3436;
 }
 
 </style>
@@ -74,10 +103,12 @@ textarea{
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header bg-blue">
-        <h4 class="modal-title">공지 자세히 보기</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h4 class="modal-title">공지 자세히 보기 
+        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span  style="float: right;" aria-hidden="true">&times;</span>
+        	</button>
+        </h4>
+        
       </div>
       
       <div class="modal-body">
@@ -119,6 +150,47 @@ textarea{
       <!-- Main content -->
       <section class="content">
 
+ 
+	   <div style="margin-bottom : 1%">
+	  	<div class="btn-group" data-toggle="buttons" name="targetFilter">
+			  <label class="btn btn-primary active">
+			    <input type="radio" name="options" option_id="0" autocomplete="off" > 전체
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="1" autocomplete="off"> 1학년
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="2" autocomplete="off"> 2학년
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="3" autocomplete="off"> 3학년
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="4" autocomplete="off"> 4학년
+			  </label>
+			</div>
+			
+			<div class="btn-group" data-toggle="buttons" name="typeFilter">
+			  <label class="btn btn-primary active">
+			    <input type="radio" name="options" option_id="0" autocomplete="off" > 전체
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="1" autocomplete="off"> 일반 공지
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="2" autocomplete="off"> 학사 공지
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="options" option_id="3" autocomplete="off"> 긴급 공지
+			  </label>
+			</div>
+		</div>
+
+
+
+
+
+
         <!-- row -->
         <div class="row">
           <div class="col-md-12" id="notice">
@@ -146,23 +218,6 @@ textarea{
   </div>
   <!-- ./wrapper -->
 
-  <!-- jQuery 3 -->
-  <script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <script
-    src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- FastClick -->
-  <script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
-<script src="/resources/bower_components/moment/moment.js"></script>
-<script src="/resources/bower_components/moment/locale/ko.js"></script> 
-  <!-- AdminLTE App -->
-  <script src="/resources/dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="/resources/dist/js/demo.js"></script>
-<script type="text/javascript" src="/resources/bower_components/bootstrap/js/bootstrap-select.js"></script>
-<script type="text/javascript" src="/resources/bower_components/select-picker-master/dist/picker.min.js"></script>
-<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="/resources/bower_components/bootstrap/js/bootstrap-switch.js"></script>
 
 <script>
   var scrollCount = 1; 
@@ -175,6 +230,8 @@ textarea{
 		
 		$(document).on('click', 'button[name="delete"]', deleteEvent);
 		$(document).on("click", ".btn-xs", readMoreEvent);
+		
+		$("input[type='radio']").change(filterEvent);
 		
 		loadPage();
 		
@@ -194,11 +251,16 @@ textarea{
 	loadPage = function() {
   	var notice = $("#notice");
   		
+  	var type = $("div[name='typeFilter']").children().filter(".active").children().attr("option_id");
+  	var target= $("div[name='targetFilter']").children().filter(".active").children().attr("option_id");	
+
   	$.ajax({
  			type : 'POST',
- 			url : '/notice/selectNoticeListProc.do',
+ 			url : '/notice/selectNoticeListFilterProc.do',
   		data : {
   				"page" : String(scrollCount),
+  				"type" : type,
+  				"target" : target
   			},
   		dataType : 'json',
   		success : function(data) {
@@ -257,7 +319,8 @@ textarea{
 		
 		var title = modalDom.filter("h3").text().trim();
 		var desc = modalDom.filter("div").text().trim();
-		var time = modalDom.filter("span").text().trim();
+		var time = modalDom.filter("span").text().split(" ")[4];
+		var target = modalDom.filter("span").text().split(" ")[0];
 		console.log(modalDom.parent().parent().find("i").attr("class"));
 		var color = modalDom.parent().parent().find("i").attr("class").split(" ")[2];
 		
@@ -287,8 +350,11 @@ textarea{
 	 * target -> 공지대상                                 */
 	createLabel = function(no, time, title, content, type, target) {
 		var typeIcon;
-		var targetIcon;
 		 
+		if(target == 0) 
+			target = "전체";
+		else
+			target = target + "학년";
 		
 		/* 1 -> 일반 메세지 모양 
 		 * 2 -> 학사모 모양
@@ -312,25 +378,24 @@ textarea{
 		
 		 
 		var str = 
-		"            <!-- timeline item -->\r\n" + 
-		"            <li>\r\n" + 
-		"              <i class=\"" + typeIcon + "\"></i>\r\n" + 
-		"\r\n" + 
-		"              <div class=\"timeline-item\">\r\n" + 
-		"                <span class=\"time\"><i class=\"fa fa-clock-o\"></i>  "+ calulateTime(time) + "</span>\r\n" + 
-		"\r\n" + 
-		"                <h3 class=\"timeline-header\">" + title + "</h3>\r\n" + 
-		"\r\n" + 
-		"                <div class=\"timeline-body\">\r\n" + 
-		"                 " + content +   
-		"                </div>\r\n" + 
-		"                <div class=\"timeline-footer\">\r\n" + 
-		"                  <a class=\"btn btn-primary btn-xs\">Read more</a>\r\n" + 
-		"                </div>\r\n" + 
-		"              </div>\r\n" + 
-		"            </li>";
-			
-		return str;
+			"            <!-- timeline item -->\r\n" + 
+			"            <li>\r\n" + 
+			"              <i class=\"" + typeIcon + "\"></i>\r\n" + 
+			"              <div class=\"timeline-item\">\r\n" + 
+			"                <span class=\"time\"><span class=\"label label-info\">"+ target +"</span>    <i class=\"fa fa-clock-o\"></i>" +  calulateTime(time) + "</span>\r\n" +
+			"\r\n" + 
+			"                <h3 class=\"timeline-header\">" + title + "</h3>\r\n" + 
+			"\r\n" + 
+			"                <div class=\"timeline-body\">\r\n" + 
+			"                 " + content +   
+			"                </div>\r\n" + 																																			
+			"                <div class=\"timeline-footer\">\r\n" + 
+			"                  <button type=\"button\" name=\"readmore\" class=\"btn btn-primary btn-xs\">자세히 보기</a>\r\n" + 
+			"                </div>\r\n" + 
+			"              </div>\r\n" + 
+			"            </li>";
+				
+			return str;
 	}
 			
 	createTimeLine = function(date) {
@@ -415,6 +480,17 @@ textarea{
 			       }
 		}
 	
+	 
+	 filterEvent = function(event) {
+			scrollCount = 1;
+			preDate = '';
+			ul = undefined;
+			$("#notice").html("");		 
+			
+			
+			loadPage();
+		 }
+			
 	
 </script>
 </body>

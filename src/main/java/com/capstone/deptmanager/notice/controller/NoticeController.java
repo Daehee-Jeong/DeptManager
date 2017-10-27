@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.capstone.deptmanager.common.Constants;
 import com.capstone.deptmanager.notice.bean.ImageBean;
 import com.capstone.deptmanager.notice.bean.NoticeBean;
+import com.capstone.deptmanager.notice.bean.PageBean;
 import com.capstone.deptmanager.notice.service.NoticeService;
 
 @Controller
@@ -73,6 +74,8 @@ public class NoticeController {
 		}
 		return resMap;
 	}
+	
+	
 	
 	@RequestMapping("/notice/deleteNoticeProc")
 	@ResponseBody
@@ -153,6 +156,34 @@ public class NoticeController {
 
 		try {
 			List<NoticeBean> noticeList = noticeService.selectNoticeList(page);
+
+			System.out.println(noticeList);
+
+			if (noticeList != null && noticeList.size() > 0) {
+				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);
+				resMap.put(Constants.RESULT_MSG, "공지 리스트 조회에 성공 하였습니다.");
+				resMap.put("mList", noticeList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resMap;
+	}
+	
+	// 공지 리스트 페이징 처리
+	@RequestMapping("/notice/selectNoticeListFilterProc")
+	@ResponseBody
+	public Map<String, Object> selectNoticeFilterList(PageBean bean) {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		if(bean.getTarget().equals("0")) bean.setTarget(null);
+		if(bean.getType().equals("0")) bean.setType(null);
+
+		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
+		resMap.put(Constants.RESULT_MSG, "공지를 읽어 오는데 실패했습니다.");
+
+		try {
+			List<NoticeBean> noticeList = noticeService.selectNoticeFilterList(bean);
 
 			System.out.println(noticeList);
 

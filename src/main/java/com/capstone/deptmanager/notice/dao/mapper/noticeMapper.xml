@@ -80,7 +80,35 @@
 																		LISTA.notice_no, LISTA.notice_title, LISTA.notice_content, 
 																		LISTA.notice_date, LISTA.notice_type, LISTA.notice_target
 	  	FROM (SELECT @ROWNUM := 0) R,
-	       (SELECT notice_no, notice_title, notice_content, notice_date, notice_type, notice_target FROM notice ORDER BY notice_date DESC) LISTA
+	       	 (SELECT notice_no, notice_title, notice_content, notice_date, notice_type, notice_target 
+	       	 	FROM notice 
+	       	 	ORDER BY notice_date DESC) LISTA
+		)LISTB
+		<![CDATA[
+		WHERE LISTB.ROWNUM <= (#{page} * 8)
+		AND LISTB.ROWNUM >= ( (#{page}-1) * 8) + 1 ;
+	    ]]> 
+	</select>
+	
+		<!-- 공지 List 조회 -->
+	<select id="selectNoticeFilterList" parameterType="pageBean" resultType="noticeBean" >
+	   
+	    SELECT <include refid="noticeColumns"/>
+			FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, 
+																		LISTA.notice_no, LISTA.notice_title, LISTA.notice_content, 
+																		LISTA.notice_date, LISTA.notice_type, LISTA.notice_target
+	  	FROM (SELECT @ROWNUM := 0) R,
+	       	 (SELECT notice_no, notice_title, notice_content, notice_date, notice_type, notice_target 
+	       	 	FROM notice
+	       	 	WHERE
+	       	 		<if test="target != null and target != ''">
+	       	 			(notice_target = #{target} OR notice_target = 0) AND
+	       	 		</if>	 
+	       	 		<if test="type != null and type != ''">
+	       	 			notice_type = #{type} AND
+	       	 		</if>
+	       	 				1 = 1
+	       	 	ORDER BY notice_date DESC) LISTA
 		)LISTB
 		<![CDATA[
 		WHERE LISTB.ROWNUM <= (#{page} * 8)

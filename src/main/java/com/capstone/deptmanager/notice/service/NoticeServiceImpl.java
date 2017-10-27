@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.deptmanager.notice.bean.NoticeBean;
+import com.capstone.deptmanager.notice.bean.PageBean;
 import com.capstone.deptmanager.notice.dao.NoticeDao;
 
 @Service
@@ -48,6 +49,10 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public List<NoticeBean> selectNoticeList(int page) throws Exception {
 		return noticeDao.selectNoticeList(page);
+	}
+	
+	public List<NoticeBean> selectNoticeFilterList(PageBean bean) throws Exception {
+		return noticeDao.selectNoticeFilterList(bean);
 	}
 	
 	// 공지 리스트 조회 (index)
