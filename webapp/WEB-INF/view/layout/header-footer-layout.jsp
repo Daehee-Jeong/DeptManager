@@ -109,9 +109,19 @@
 									</a>
 							<ul class="dropdown-menu">
 								<!-- The user image in the menu -->
-								<li class="user-header"><img
-									src="/resources/dist/img/daehee2.jpg" class="img-circle"
-									alt="User Image">
+								<li class="user-header">
+									<c:if test="${sessionScope.memberLoginBean.memberId eq '201202002'}">
+									<img src="/resources/dist/img/daehyoung.jpg" class="img-circle" alt="User Image">
+									</c:if>
+									<c:if test="${sessionScope.memberLoginBean.memberId eq '201202023'}">
+									<img src="/resources/dist/img/daehee2.jpg" class="img-circle" alt="User Image">
+									</c:if>
+									<c:if test="${sessionScope.memberLoginBean.memberId eq '201202009'}">
+									<img src="/resources/dist/img/jaesam.jpg" class="img-circle" alt="User Image">
+									</c:if>
+									<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">
+									<img src="/resources/dist/img/ic_launcher.png" class="img-circle" alt="User Image">
+									</c:if>
 									<p>${sessionScope.memberLoginBean.memberName}
 									<small>${sessionScope.memberLoginBean.memberId}</small>
 									</p></li>
@@ -144,8 +154,18 @@
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="/resources/dist/img/daehee2.jpg"
-							class="img-circle" alt="User Image">
+						<c:if test="${sessionScope.memberLoginBean.memberId eq '201202002'}">
+						<img src="/resources/dist/img/daehyoung.jpg" class="img-circle" alt="User Image">
+						</c:if>
+						<c:if test="${sessionScope.memberLoginBean.memberId eq '201202023'}">
+						<img src="/resources/dist/img/daehee2.jpg" class="img-circle" alt="User Image">
+						</c:if>
+						<c:if test="${sessionScope.memberLoginBean.memberId eq '201202009'}">
+						<img src="/resources/dist/img/jaesam.jpg" class="img-circle" alt="User Image">
+						</c:if>
+						<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">
+						<img src="/resources/dist/img/ic_launcher.png" class="img-circle" alt="User Image">
+						</c:if>
 					</div>
 					<div class="pull-left info">
 						<p>${sessionScope.memberLoginBean.memberName}</p>
@@ -173,11 +193,11 @@
 					<li class="header">HEADER</li>
 					<!-- Optionally, you can add icons to the links -->
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">
-					<li class="active"><a href="/notice/selectNoticeForm.do"><i class="fa fa-link"></i>
+					<li><a href="/notice/selectNoticeForm.do"><i class="fa fa-link"></i>
 							<span>공지사항</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">
-					<li class="active"><a href="/notice/selectNoticeStudentForm.do"><i class="fa fa-link"></i>
+					<li><a href="/notice/selectNoticeStudentForm.do"><i class="fa fa-link"></i>
 							<span>공지사항</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">		
