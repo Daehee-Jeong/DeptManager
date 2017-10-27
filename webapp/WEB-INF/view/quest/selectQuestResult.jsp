@@ -50,7 +50,7 @@
 						<span id="per-text" class=""></span>
 					</div>
 					<div class="box-body">
-						<div class="progress progress-xs">
+						<div class="progress progress-xs progress-striped active">
 							<div id="per-bar" class="progress-bar progress-bar-danger"></div>
 						</div>
 						<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">	
@@ -143,15 +143,20 @@
 			//$('#per-bar').animate({width: per+'%'}, 1000);
 			$('#per-bar').css('width', per+'%');
 			$('#per-text').text(per+'%');
-			if (per > 80) {
+			if (per == 100) {
+				$('#per-text').attr('class', 'badge bg-green');
+				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
+				$('#per-bar').parent('class', 'progress progress-xs');
+			}
+			else if (per > 80) {
 				$('#per-text').attr('class', 'badge bg-green');
 				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
 			} else if (per > 40) {
 				$('#per-text').attr('class', 'badge bg-yellow');
-				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
+				$('#per-bar').attr('class', 'progress-bar progress-bar-yellow');
 			} else {
 				$('#per-text').attr('class', 'badge bg-red');
-				$('#per-bar').attr('class', 'progress-bar progress-bar-success');
+				$('#per-bar').attr('class', 'progress-bar progress-bar-danger');
 			}
 			
 		} // end of renderCount
