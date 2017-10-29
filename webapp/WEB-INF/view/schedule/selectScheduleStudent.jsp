@@ -56,8 +56,6 @@
 				<div id="modalBody" class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-					<button type="button" data-dismiss="modal" id="delete"
-						class="btn btn-danger">일정 지우기</button>
 				</div>
 			</div>
 		</div>
@@ -81,69 +79,7 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="row">
-				<div class="col-md-3">
-
-					<!-- /. box -->
-					<div class="box box-solid">
-						<div class="box-header with-border">
-							<h3 class="box-title">일정 등록</h3>
-						</div>
-						<div class="box-body">
-							<div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-								<!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-								<h5>일정 종류 선택</h5>
-								<input type="hidden" id="type-value" val="0">
-								<ul class="fc-color-picker" id="color-chooser">
-									<li><a class="text-blue" href="#" value="1"><span
-											class="fa fa-envelope bg-blue fa-fw"></span></a></li>
-									<li><a class="text-black" href="#" value="2"><span
-											class="fa fa-mortar-board bg-black fa-fw"></span></a></li>
-									<li><a class="text-red" href="#" value="3"><span
-											class="fa fa-warning bg-red fa-fw"></span></a></li>
-								</ul>
-							</div>
-							<div class=input-group>
-								<h5>대상 학년</h5>
-								<label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="inlineRadio0" value="0">
-									전체
-								</label> <label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="inlineRadio1" value="1">
-									1
-								</label> <label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="inlineRadio2" value="2">
-									2
-								</label> <label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="inlineRadio3" value="3">
-									3
-								</label> <label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="inlineRadio4" value="4">
-									4
-								</label>
-							</div>
-
-							<!-- /btn-group -->
-
-							<div class="input-group">
-								<div class="input-group-addon">
-									<i class="fa fa-clock-o"></i>
-								</div>
-								<input type="text" id="datepicker" class="form-control" />
-							</div>
-							<div class="input-group">
-								<input id="new-event" type="text" class="form-control"
-									placeholder="일정 이름">
-								<textarea id="event-desc" class="form-control"
-									placeholder="일정 설명"></textarea>
-								<!-- /btn-group -->
-							</div>
-							<div class="input-group-btn">
-								<button id="add-new-event" type="button" class="btn btn-primary">Add</button>
-							</div>
-							<!-- /input-group -->
-						</div>
-					</div>
-				</div>
+			
 				<!-- /.col -->
 				<div class="col-md-9">
 					<div class="box box-primary">
@@ -172,59 +108,11 @@
 	  /* moment locale 설정 */
 	  moment.updateLocale('ko', lang);
 
-	  $("#add-new-event").click(createEvent);
-		$("#delete").click(deleteEvent);
-		
 	  initializeCalendar();
 	  loadScheduleList();
 	  
-	  $('#calendar').fullCalendar('rerenderEvents');
 	  $('.overlay').remove();
 	  
-	  /* datepicker 로딩 */
-	  $('#datepicker').daterangepicker({
-		    "timePicker": true,
-		    "timePickerIncrement": 30,
-		    "startDate": "2017/10/15",
-		    "endDate": "2017/10/20",
-		    "opens": "center",
-		    locale: {
-	            "format": "YYYY/MM/DD h:mm",
-	            "separator": " - ",
-	            "applyLabel": "적용",
-	            "cancelLabel": "취소",
-	            "fromLabel": "From",
-	            "toLabel": "To",
-	            "customRangeLabel": "사용자 설정",
-	            "weekLabel": "주",
-	            "daysOfWeek": [
-	                "일",
-	                "월",
-	                "화",
-	                "수",
-	                "목",
-	                "금",
-	                "토"
-	            ],
-	            "monthNames": [
-	                "1월",
-	                "2월",
-	                "3월",
-	                "4월",
-	                "5월",
-	                "6월",
-	                "7월",
-	                "8월",
-	                "9월",
-	                "10월",
-	                "11월",
-	                "12월"
-	            ],
-	            "firstDay": 1
-	        }
-		}, function(start, end, label) {
-		  console.log("New date range selected: " + start.format('YYYY-MM-DD h:mm A') + ' to ' + end.format('YYYY-MM-DD h:mm A') + " (predefined range: " + label + ")");
-		});
 })
 
 clickEvent = function(event) {
@@ -240,17 +128,17 @@ clickEvent = function(event) {
 			
 			switch(msg.schedule.scheduleType) {
 			case "1":
-				modalType = 'modal modal-primary fade';
+				modalType = 'modal-header bg-blue';
 				break;
 			case "2":
-				modalType = 'modal modal-success fade';
+				modalType = 'modal-header bg-black';
 				break;
 			case "3":
-				modalType = 'modal modal-danger fade';
+				modalType = 'modal-header bg-red';
 				break;
 			}
 			
-			$("#clickModal").attr("class", modalType);
+			$(".modal-header").attr("class", modalType);
 			
 			var body = "";
 			body += 'title : ' + msg.schedule.scheduleTitle;
@@ -259,33 +147,11 @@ clickEvent = function(event) {
 			body += '<br>desc : ' + msg.schedule.scheduleDesc;
 			
 			$("#modalBody").html(body);
-			$("#delete").attr("value", msg.schedule.scheduleNo);
 		}
 	})
 }
   
-deleteEvent = function(event) {
-	console.log(event);
-	
-	var no = $(this).attr("value");
-	
-	$.ajax({
-		url : '/schedule/deleteScheduleProc.do',
-		data : {
-			scheduleNo : no
-		},
-		success : function(msg) {
-			console.log(msg);
-			$('#calendar').fullCalendar('removeEvents', no);
-			$("#clickModal").hide();
-		},
-		error : function(xhr, status, error) {
-			  console.log(xhr);
-			  console.log(status);
-			  console.log(error);
-		  }
-	})
-}
+
 	  
 initializeCalendar = function() {
 
@@ -355,60 +221,6 @@ initializeCalendar = function() {
 }
    
   
-  
-createEvent = function(event) {
-	var title = decodeURIComponent($("#new-event").val());
-	/* var startDate = parseDate($("#datepicker").val().split("-")[0].trim());
-	var endDate = parseDate($("#datepicker").val().split("-")[1].trim()); */
-	
-	var startDate = $("#datepicker").val().split("-")[0].trim();
-	var endDate = $("#datepicker").val().split("-")[1].trim();
-	var target = $('input[type="radio"]:checked').val();
-	var type = $('#add-new-event').attr("value");
-	var desc = $("#event-desc").val();
-	
-	if(target == undefined) target = 0;
-	if(type == undefined) type = 1;
-
-	$("#new-event").val("");
-	$("#event-desc").val("");
-
-	$.ajax({
-		  url : '/schedule/insertScheduleProc.do',
-		  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		  type : "POST",
-		  data : {
-			  scheduleTitle : title,
-			  scheduleStart : startDate,
-			  scheduleEnd : endDate,
-			  scheduleType : type,
-			  scheduleTarget : target,
-			  scheduleDesc : desc
-		  },
-		  
-		  success : function(msg) {
-				console.log(msg);
-				var event = {
-					'id' : msg.scheduleNo,
-				  'title' : title,
-				  'start' : startDate,
-				  'end' : endDate,
-				  'color' :  $('#add-new-event').css('background-color')
-				 }
-				
-			  $('#calendar').fullCalendar('renderEvent', event )
-		  },
-		  error : function(xhr, status, error) {
-			  console.log(xhr);
-			  console.log(status);
-			  console.log(error);
-		  }
-	  }); 
-	  
-  }
-  
-
-  
  var lang = {
         months: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
         monthsShort: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
@@ -471,7 +283,7 @@ loadScheduleList = function() {
         					events.push(event)
         				}
         				
-        				 $('#calendar').fullCalendar('renderEvents', events );
+        				 $('#calendar').fullCalendar('addEventSource', events );
 						
   				}
   				else {
