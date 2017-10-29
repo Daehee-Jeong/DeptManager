@@ -221,28 +221,30 @@ clickEvent = function(event) {
 			scheduleNo : event.id
 		},
 		success : function(msg) {
+
 			var modalType = "";
-			
+						
 			switch(msg.schedule.scheduleType) {
 			case "1":
-				modalType = 'modal modal-primary fade';
+				modalType = 'modal-header bg-blue';
 				break;
 			case "2":
-				modalType = 'modal modal-success fade';
+				modalType = 'modal-header bg-black';
 				break;
 			case "3":
-				modalType = 'modal modal-danger fade';
+				modalType = 'modal-header bg-red';
 				break;
 			}
-			
-			$("#clickModal").attr("class", modalType);
-			
+						
+			$(".modal-header").attr("class", modalType);
+						
 			var body = "";
+			
 			body += 'title : ' + msg.schedule.scheduleTitle;
 			body += '<br>startDate : ' + msg.schedule.scheduleStart;
 			body += '<br>endDate : ' + msg.schedule.scheduleEnd;
 			body += '<br>desc : ' + msg.schedule.scheduleDesc;
-			
+						
 			$("#modalBody").html(body);
 			$("#delete").attr("value", msg.schedule.scheduleNo);
 		}
@@ -335,8 +337,6 @@ initializeCalendar = function() {
      //Remove event from text input
      $('#new-event').val('')
    })
-   
-	
 }
    
   
@@ -381,7 +381,7 @@ createEvent = function(event) {
 				  'color' :  $('#add-new-event').css('background-color')
 				 }
 				
-			  $('#calendar').fullCalendar('renderEvent', event )
+				 $('#calendar').fullCalendar('addEventSource', events );
 		  },
 		  error : function(xhr, status, error) {
 			  console.log(xhr);
@@ -449,14 +449,56 @@ loadScheduleList = function() {
         						'title' : list[i].scheduleTitle,
         						'start' : list[i].scheduleStart,
         						'end' : list[i].scheduleEnd,
-        						'color' : getColor(list[i].scheduleType)
+        						'color' : getColor(li /* datepicker 로딩 */
+        								  $('#datepicker').daterangepicker({
+        									    "timePicker": true,
+        									    "timePickerIncrement": 30,
+        									    "startDate": "2017/10/15",
+        									    "endDate": "2017/10/20",
+        									    "opens": "center",
+        									    locale: {
+        								            "format": "YYYY/MM/DD h:mm",
+        								            "separator": " - ",
+        								            "applyLabel": "적용",
+        								            "cancelLabel": "취소",
+        								            "fromLabel": "From",
+        								            "toLabel": "To",
+        								            "customRangeLabel": "사용자 설정",
+        								            "weekLabel": "주",
+        								            "daysOfWeek": [
+        								                "일",
+        								                "월",
+        								                "화",
+        								                "수",
+        								                "목",
+        								                "금",
+        								                "토"
+        								            ],
+        								            "monthNames": [
+        								                "1월",
+        								                "2월",
+        								                "3월",
+        								                "4월",
+        								                "5월",
+        								                "6월",
+        								                "7월",
+        								                "8월",
+        								                "9월",
+        								                "10월",
+        								                "11월",
+        								                "12월"
+        								            ],
+        								            "firstDay": 1
+        								        }
+        									}, function(start, end, label) {
+        									  console.log("New date range selected: " + start.format('YYYY-MM-DD h:mm A') + ' to ' + end.format('YYYY-MM-DD h:mm A') + " (predefined range: " + label + ")");
+        									});st[i].scheduleType)
         					};
         					
         					events.push(event)
         				}
         				
-        				 $('#calendar').fullCalendar('renderEvents', events );
-						
+        				 $('#calendar').fullCalendar('addEventSource', events );						
   				}
   				else {
   					console.log(data);
