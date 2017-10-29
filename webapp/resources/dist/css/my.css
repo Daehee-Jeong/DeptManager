@@ -1,0 +1,18 @@
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+  top: 80px;
+}
+
+.fc-center {
+	padding-top: 20px;
+}
+
+.fc-toolbar {
+	padding-bottom: 0;
+}
+
+.content-wrapper {
+	min-height: 720px !important;
+}

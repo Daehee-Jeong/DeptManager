@@ -34,7 +34,13 @@
 			<div class="row">
 				<div class="col-md-12">
 		          <div class="box box-primary">
-		            <div class="box-body no-padding">
+		          	<div class="box-header with-border">
+		              <h3 class="box-title">학부일정</h3>
+		            </div>
+		            <div class="box-body no-padding" style="min-height: 100px">
+		            	  <div class="overlay">
+		                <i class="fa fa-refresh fa-spin"></i>
+		              </div>
 		              <!-- THE CALENDAR -->
 		              <div id="calendar"></div>
 		            </div>
@@ -52,7 +58,7 @@
 			<div class="row">
 				<!-- /.col -->
 		        <div class="col-md-12">
-		          <div class="box box-solid">
+		          <div class="box box-primary">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">설문목록</h3>
 		            </div>
@@ -111,7 +117,7 @@
 			
 				<!-- 공지 목록 -->
 		        <div class="col-md-6">
-		          <div class="box box-solid">
+		          <div class="box box-primary">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">공지사항</h3>
 		            </div>
@@ -183,6 +189,8 @@
 	  loadScheduleList();
 	  
 	  $('#calendar').fullCalendar('rerenderEvents');
+	  $('.overlay').remove();
+	  
 	  /* datepicker 로딩 */
 	  $('#datepicker').daterangepicker({
 		    "timePicker": true,

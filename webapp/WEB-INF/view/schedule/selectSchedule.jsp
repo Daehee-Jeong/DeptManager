@@ -10,21 +10,8 @@
   <title> 일정 </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/resources/bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="/resources/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- fullCalendar -->
-  <link rel="stylesheet" href="/resources/bower_components/fullcalendar/dist/fullcalendar.min.css">
-  <link rel="stylesheet" href="/resources/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+
   <link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,7 +39,7 @@
         	
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        <button id="btn-close-md" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
         <button type="button" data-dismiss="modal" id="delete" class="btn btn-danger">일정 지우기 </button>
       </div>
     </div>
@@ -138,7 +125,10 @@
         <!-- /.col -->
         <div class="col-md-9">
           <div class="box box-primary">
-            <div class="box-body no-padding">
+            <div class="box-body no-padding" style="min-height: 100px">
+            	  <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+              </div>
               <!-- THE CALENDAR -->
               <div id="calendar"></div>
             </div>
@@ -154,22 +144,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-<!-- jQuery 3 -->
-<script src="/resources/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="/resources/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Slimscroll -->
-<script src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
 <!-- fullCalendar -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script> 
 <script src="/resources/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
@@ -189,6 +164,8 @@
 	  loadScheduleList();
 	  
 	  $('#calendar').fullCalendar('rerenderEvents');
+	  $('.overlay').remove();
+	  
 	  /* datepicker 로딩 */
 	  $('#datepicker').daterangepicker({
 		    "timePicker": true,
@@ -504,6 +481,15 @@ loadScheduleList = function() {
 	default:
 		return "rgb(0, 115, 183)" // Blue
 	 }
+ }
+ 
+ function doBack() {
+	 
+	var md_display = $('#clickModal').css('display');
+	window.mJSInterface.setSmile(md_display);
+	if (md_display == 'block')  $('#btn-close-md').click();
+	else window.history.back();
+	
  }
  
  /* initialize the external events

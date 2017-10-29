@@ -33,6 +33,13 @@
 <!-- Slimscroll -->
 	<script
 		src="/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		
+	<!-- 이하는 캘린더 추가를 위한 소 -->
+	<!-- jQuery UI 1.11.4 -->
+	<script src="/resources/bower_components/jquery-ui/jquery-ui.min.js"></script>
+	
+	<!-- FastClick -->
+	<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -47,11 +54,15 @@
 <link rel="stylesheet"
 	href="/resources/bower_components/fullcalendar/dist/fullcalendar.print.min.css"
 	media="print">
-
+	
 <!-- Google Font -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <decorator:head />
+
+<!-- 자체 수정 css -->
+<link rel="stylesheet"
+	href="/resources/dist/css/my.css">
 	
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed"><!-- 상단바 고정을 위해 수정 -->
@@ -178,7 +189,7 @@
 				<form action="#" method="get" class="sidebar-form">
 					<div class="input-group">
 						<input type="text" name="q" class="form-control"
-							placeholder="Search..."> <span class="input-group-btn">
+							placeholder="공지 검색하기"> <span class="input-group-btn">
 							<button type="submit" name="search" id="search-btn"
 								class="btn btn-flat">
 								<i class="fa fa-search"></i>
@@ -190,33 +201,36 @@
 
 				<!-- Sidebar Menu -->
 				<ul class="sidebar-menu" data-widget="tree">
-					<li class="header">HEADER</li>
+					<li class="header">메뉴</li>
 					<!-- Optionally, you can add icons to the links -->
+					<li><a href="/index.do"><i class="fa fa-home"></i> 
+							<span>메인화면</span></a>
+					</li>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">
-					<li><a href="/notice/selectNoticeForm.do"><i class="fa fa-link"></i>
+					<li><a href="/notice/selectNoticeForm.do"><i class="fa fa-bullhorn"></i>
 							<span>공지사항</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">
-					<li><a href="/notice/selectNoticeStudentForm.do"><i class="fa fa-link"></i>
+					<li><a href="/notice/selectNoticeStudentForm.do"><i class="fa fa-bullhorn"></i>
 							<span>공지사항</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">		
-					<li><a href="/quest/selectQuestListForm.do"><i class="fa fa-link"></i> 
+					<li><a href="/quest/selectQuestListForm.do"><i class="fa fa-copy"></i> 
 							<span>설문목록</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">		
-					<li><a href="/quest/selectQuestListStudentForm.do"><i class="fa fa-link"></i> 
+					<li><a href="/quest/selectQuestListStudentForm.do"><i class="fa fa-copy"></i> 
 							<span>설문목록</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginYes'}">		
-					<li><a href="/schedule/selectScheduleForm.do"><i class="fa fa-link"></i>
+					<li><a href="/schedule/selectScheduleForm.do"><i class="fa fa-calendar"></i>
 							<span>일정</span></a></li>
 					</c:if>
 					<c:if test="${sessionScope.adminLoginCheck eq 'adminLoginNo'}">		
-					<li><a href="/schedule/selectScheduleStudentForm.do"><i class="fa fa-link"></i>
+					<li><a href="/schedule/selectScheduleStudentForm.do"><i class="fa fa-calendar"></i>
 							<span>일정</span></a></li>
 					</c:if>
-					<li><a href="#"><i class="fa fa-link"></i> 
+					<li><a href="#"><i class="fa fa-bell-o"></i> 
 							<span>알림</span></a></li>
 				</ul>
 				<!-- /.sidebar-menu -->
@@ -328,12 +342,7 @@
 
 
 
-	<!-- 이하는 캘린더 추가를 위한 소 -->
-	<!-- jQuery UI 1.11.4 -->
-	<script src="/resources/bower_components/jquery-ui/jquery-ui.min.js"></script>
 	
-	<!-- FastClick -->
-	<script src="/resources/bower_components/fastclick/lib/fastclick.js"></script>
 	<!-- Page specific script -->
 	<script>
 		$(function() {

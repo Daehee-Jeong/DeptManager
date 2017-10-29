@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,25 +9,28 @@
 <title>설문지 리스트</title>
 </head>
 <body>
-	
+
 	<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    
-    <section class="content-header">
-      <h1>
-        설문지 목록
-        <small><button id="btn-insertQuest" type="button" class="btn btn-block btn-primary btn-xs">설문지 등록</button></small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 메인화면</a></li>
-        <li class="active">설문목록</li>
-      </ol>
-    </section>
-	
-	<section class="content"></section>
-    
+		<!-- Content Header (Page header) -->
+
+		<section class="content-header">
+		<h1>
+			설문지 목록 <small><button id="btn-insertQuest" type="button"
+					class="btn btn-block btn-primary btn-xs">설문지 등록</button></small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> 메인화면</a></li>
+			<li class="active">설문목록</li>
+		</ol>
+		
+		</section>
+		<section class="content"></section>
+		<div class="overlay" style="text-align: center; padding: 20px;">
+			<i class="fa fa-refresh fa-spin"></i>
+			&nbsp;&nbsp;설문목록 로드중..
+		</div>
 	</div>
-      
+
 	<script>
       	
 		var lastQuestNo = 0;
@@ -60,7 +63,7 @@
 							lastQuestNo = obj.questNo;
 							
 				        });
-						
+						$('.overlay').remove();
 						return;
 					} else {
 						// 안드로이드 토스트 호출
@@ -122,6 +125,6 @@
 		}
 		
 	</script>
-	
+
 </body>
 </html>
