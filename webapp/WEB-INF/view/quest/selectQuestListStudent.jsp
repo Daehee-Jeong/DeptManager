@@ -21,14 +21,11 @@
 			<li><a href="#"><i class="fa fa-dashboard"></i> 메인화면</a></li>
 			<li class="active">설문목록</li>
 		</ol>
-		
 		<div class="overlay" style="text-align: center; padding: 20px;">
 			<i class="fa fa-refresh fa-spin"></i>
 			&nbsp;&nbsp;설문목록 로드중..
 		</div>
-		
 		</section>
-
 		<section class="content"></section>
 
 	</div>
