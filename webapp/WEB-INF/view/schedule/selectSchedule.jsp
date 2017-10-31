@@ -483,14 +483,7 @@ loadScheduleList = function() {
 	 }
  }
  
- function doBack() {
-	 
-	var md_display = $('#clickModal').css('display');
-	window.mJSInterface.setSmile(md_display);
-	if (md_display == 'block')  $('#btn-close-md').click();
-	else window.history.back();
-	
- }
+
  
  /* initialize the external events
  -----------------------------------------------------------------*/
