@@ -452,7 +452,7 @@ textarea {
 				$("#notice").html("");
 				
 				loadPage();
-			},800);
+			},900);
 			
 			$("#notice").toggle(800);
 		}
