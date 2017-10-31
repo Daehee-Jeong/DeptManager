@@ -55,9 +55,25 @@
 						$.each(data.qList, function(i, obj) {
 				            
 				            var str = '';
-							str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+				            
+							if(obj.questIsRes == null) {
+				           		
+				           		str += '<div class="box box-danger" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+						        str += '<div class="box-body">'+ obj.questDesc +'</div>';
+						        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+				           		
+				           	} else if(obj.questIsRes != null) {
+				           		
+				           		str += '<div class="box box-primary" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+						        str += '<div class="box-body">'+ obj.questDesc +'</div>';
+						        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+				           		
+				           	}
+							
+							/* str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
 					        str += '<div class="box-body">'+ obj.questType +'</div>';
-					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>'; */
+					        
 							$(".content").append(str);
 							
 							lastQuestNo = obj.questNo;
@@ -101,9 +117,21 @@
 						$.each(data.qList, function(i, obj) {
 				            
 				            var str = '';
-							str += '<div class="box" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
-					        str += '<div class="box-body">'+ obj.questDesc +'</div>';
-					        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+				            
+				           	if(obj.questIsRes == null) {
+				           		
+				           		str += '<div class="box box-danger" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+						        str += '<div class="box-body">'+ obj.questDesc +'</div>';
+						        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+				           		
+				           	} else if(obj.questIsRes != null) {
+				           		
+				           		str += '<div class="box box-primary" onclick="detailQuest('+obj.questNo+')"><div class="box-header with-border"><h3 class="box-title">'+ obj.questTitle+'</h3></div>';
+						        str += '<div class="box-body">'+ obj.questDesc +'</div>';
+						        str += '<div class="box-footer">'+ obj.questStart +'</div></div>';
+				           		
+				           	}
+					        
 							$(".content").append(str);
 							
 							lastQuestNo = obj.questNo;

@@ -103,7 +103,16 @@
 	<!-- [학생] 설문지 List 최초 10건 조회 -->
 	<select id="selectQuestListStudent" resultType="questBean" parameterType="questBean">
 	    SELECT
-	    		<include refid="questColumns"/>
+	    		<include refid="questColumns"/>,
+	    		(
+	    			SELECT questres_no 
+	    			FROM questres 
+	    			WHERE
+	    				questres_quest IN (quest_no)
+	    				AND
+	    				questres.questres_member IN (#{questTo})
+	    		)
+	    		AS questIsRes
 		<![CDATA[
 	    FROM
 	    		quest
