@@ -56,23 +56,33 @@ div[name="targetFilter"] .btn-primary:active, div[name="targetFilter"] .btn-prim
 div
 
 
+
+
 [
 name
 =
 "targetFilter"
 ]
 
+
  
 
+
 .btn-primary
+
+
 
 
 :active
 
 
+
+
 :hover
 ,
 div
+
+
 
 
 [
@@ -81,17 +91,25 @@ name
 "typeFilter"
 ]
 
+
  
 
+
 .btn-primary
+
+
 
 
 .active
 
 
+
+
 :hover
 ,
 div
+
+
 
 
 [
@@ -100,17 +118,25 @@ name
 "targetFilter"
 ]
 
+
  
 
+
 .btn-primary
+
+
 
 
 :active
 
 
+
+
 :focus
 ,
 div
+
+
 
 
 [
@@ -119,17 +145,25 @@ name
 "typeFilter"
 ]
 
+
  
 
+
 .btn-primary
+
+
 
 
 .active
 
 
+
+
 :focus
 ,
 div
+
+
 
 
 [
@@ -138,12 +172,18 @@ name
 "targetFilter"
 ]
 
+
  
+
 
 .btn-primary
 
 
+
+
 :active
+
+
 
 
 .focus
@@ -151,18 +191,26 @@ name
 div
 
 
+
+
 [
 name
 =
 "typeFilter"
 ]
 
+
  
+
 
 .btn-primary
 
 
+
+
 .active
+
+
 
 
 .focus
@@ -171,33 +219,51 @@ name
 color
 
 
+
+
 :
+
 
  
 
+
 #fff
+
+
 
 
 ;
 background-color
 
 
+
+
 :
+
 
  
 
+
 #2e3436
+
+
 
 
 ;
 border-color
 
 
+
+
 :
+
 
  
 
+
 #2e3436
+
+
 
 
 ;
@@ -237,7 +303,7 @@ border-color
 		</div>
 	</div>
 
-	<div class="content-wrapper" style="min-height:900px">
+	<div class="content-wrapper" style="min-height: 900px">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 
@@ -306,294 +372,300 @@ border-color
 	<div class="control-sidebar-bg"></div>
 	<!-- ./wrapper -->
 
-</body>
-<script>
-	var scrollCount = 1;
-	var preDate = '';
-	var ul;
+	<script>
+		var scrollCount = 1;
+		var preDate = '';
+		var ul;
 
-	$(document).ready(function() {
-		moment.updateLocale('ko', lang);
+		$(document).ready(function() {
+			moment.updateLocale('ko', lang);
 
-		$(document).on('click', 'button[name="delete"]', deleteEvent);
-		$(document).on("click", 'button[name="readmore"]', readMoreEvent);
-		$("input[type='radio']").change(filterEvent);
-		$("#insertNotice").click(insertNoticeEvent);
+			$(document).on('click', 'button[name="delete"]', deleteEvent);
+			$(document).on("click", 'button[name="readmore"]', readMoreEvent);
+			$("input[type='radio']").change(filterEvent);
+			$("#insertNotice").click(insertNoticeEvent);
 
-		loadPage();
+			loadPage();
 
-		$(document).scroll(function() {
-			maxHeight = $(document).height();
-			currentScroll = $(window).scrollTop() + $(window).height();
+			$(document).scroll(function() {
+				maxHeight = $(document).height();
+				currentScroll = $(window).scrollTop() + $(window).height();
 
-			if (maxHeight <= currentScroll) {
-				scrollCount++;
-				loadPage();
-			}
+				if (maxHeight <= currentScroll) {
+					scrollCount++;
+					loadPage();
+				}
+			});
+
 		});
 
-	});
+		loadPage = function() {
+			var notice = $("#notice");
 
-	loadPage = function() {
-		var notice = $("#notice");
+			var type = $("div[name='typeFilter']").children().filter(".active")
+					.children().attr("option_id");
+			var target = $("div[name='targetFilter']").children().filter(
+					".active").children().attr("option_id");
 
-		var type = $("div[name='typeFilter']").children().filter(".active")
-				.children().attr("option_id");
-		var target = $("div[name='targetFilter']").children().filter(".active")
-				.children().attr("option_id");
+			$.ajax({
+				type : 'POST',
+				url : '/notice/selectNoticeListFilterProc.do',
+				data : {
+					"page" : String(scrollCount),
+					"type" : type,
+					"target" : target
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.result == 'success') {
+						console.log(data)
+						var list = data.mList;
 
-		$.ajax({
-			type : 'POST',
-			url : '/notice/selectNoticeListFilterProc.do',
-			data : {
-				"page" : String(scrollCount),
-				"type" : type,
-				"target" : target
-			},
-			dataType : 'json',
-			success : function(data) {
-				if (data.result == 'success') {
-					console.log(data)
-					var list = data.mList;
+						for ( var i in list) {
 
-					for ( var i in list) {
+							var noticeDate = list[i].noticeDate.split(' ');
+							var date = noticeDate[0];
+							var time = noticeDate[1];
 
-						var noticeDate = list[i].noticeDate.split(' ');
-						var date = noticeDate[0];
-						var time = noticeDate[1];
+							if (date != preDate) {
+								notice.append(createTimeLine(date));
+								preDate = date;
 
-						if (date != preDate) {
-							notice.append(createTimeLine(date));
-							preDate = date;
+								if (ul != undefined)
+									ul = ul.next();
+								else
+									ul = $("#notice").children().first();
+							}
 
-							if (ul != undefined)
-								ul = ul.next();
-							else
-								ul = $("#notice").children().first();
+							var noticeObj = {
+								no : list[i].noticeNo,
+								time : list[i].noticeDate,
+								title : list[i].noticeTitle,
+								content : list[i].noticeContent,
+								target : list[i].noticeTarget,
+								type : list[i].noticeType
+							}
+
+							ul.append(createLabelByObj(noticeObj));
+
+							$('button[type="button"]').on("click",
+									function(event) {
+										event.preventDefault();
+									})
 						}
-
-						var noticeObj = {
-							no : list[i].noticeNo,
-							time : list[i].noticeDate,
-							title : list[i].noticeTitle,
-							content : list[i].noticeContent,
-							target : list[i].noticeTarget,
-							type : list[i].noticeType
-						}
-
-						ul.append(createLabelByObj(noticeObj));
-
-						$('button[type="button"]').on("click", function(event) {
-							event.preventDefault();
-						})
 					}
+
+					else {
+					}
+				},
+				error : function(xhr, status, error) {
+					console.log(xhr);
+					alert("error\nxhr : " + xhr + ", status : " + status
+							+ ", error : " + error);
 				}
+			});
+		}
 
-				else {
-				}
-			},
-			error : function(xhr, status, error) {
-				console.log(xhr);
-				alert("error\nxhr : " + xhr + ", status : " + status
-						+ ", error : " + error);
-			}
-		});
-	}
-
-	/* 
-		notice Object를 이용하여 crateLabel 호출
-	 */
-	createLabelByObj = function(notice) {
-		return createLabel(notice.no, notice.time, notice.title,
-				notice.content, notice.type, notice.target);
-	}
-
-	/* TimeLine 소속되는 Label을 만드는 메소드
-	 * Label -> 하나의 공지
-	 * time -> 게시된 시:분:초
-	 * type -> 공지의 분류
-	 * target -> 공지대상                                 */
-	createLabel = function(no, time, title, content, type, target) {
-		var typeIcon;
-		var targetIcon;
-
-		if (target == 0)
-			target = "전체";
-		else
-			target = target + "학년";
-
-		/* 1 -> 일반 메세지 모양 
-		 * 2 -> 학사모 모양
-		 * 3 -> 
+		/* 
+			notice Object를 이용하여 crateLabel 호출
 		 */
-		switch (type) {
-		case '1':
-			typeIcon = "fa fa-envelope bg-blue";
-			break;
-		case '2':
-			typeIcon = "fa fa-mortar-board bg-black";
-			break;
-		case '3':
-			typeIcon = "fa fa-warning bg-red";
-			break;
-		default:
-			typeIcon = "fa fa-envelope bg-blue";
-			break;
+		createLabelByObj = function(notice) {
+			return createLabel(notice.no, notice.time, notice.title,
+					notice.content, notice.type, notice.target);
 		}
 
-		var str = "            <!-- timeline item -->\r\n"
-				+ "            <li>\r\n"
-				+ "              <i class=\"" + typeIcon + "\"></i>\r\n"
-				+ "              <div class=\"timeline-item\">\r\n"
-				+ "                <span class=\"time\"><span class=\"label label-info\">"
-				+ target
-				+ "</span>    <i class=\"fa fa-clock-o\"></i>"
-				+ calulateTime(time)
-				+ "</span>\r\n"
-				+ "\r\n"
-				+ "                <h3 class=\"timeline-header\">"
-				+ title
-				+ "</h3>\r\n"
-				+ "\r\n"
-				+ "                <div class=\"timeline-body\">\r\n"
-				+ "                 "
-				+ content
-				+ "                </div>\r\n"
-				+ "                <div class=\"timeline-footer\">\r\n"
-				+ "                  <button tpye=\"button\" id=\""+no+"\" name=\"delete\" class=\"btn btn-danger btn-xs\">삭제</button>\r\n"
-				+ "                  <button type=\"button\" name=\"readmore\" class=\"btn btn-primary btn-xs\">자세히 보기</a>\r\n"
-				+ "                </div>\r\n" + "              </div>\r\n"
-				+ "            </li>";
+		/* TimeLine 소속되는 Label을 만드는 메소드
+		 * Label -> 하나의 공지
+		 * time -> 게시된 시:분:초
+		 * type -> 공지의 분류
+		 * target -> 공지대상                                 */
+		createLabel = function(no, time, title, content, type, target) {
+			var typeIcon;
+			var targetIcon;
 
-		return str;
-	}
+			if (target == 0)
+				target = "전체";
+			else
+				target = target + "학년";
 
-	createTimeLine = function(date) {
-		var str = "<ul class=\"timeline\" id=\"" + date.trim() + "\">" +
+			/* 1 -> 일반 메세지 모양 
+			 * 2 -> 학사모 모양
+			 * 3 -> 
+			 */
+			switch (type) {
+			case '1':
+				typeIcon = "fa fa-envelope bg-blue";
+				break;
+			case '2':
+				typeIcon = "fa fa-mortar-board bg-black";
+				break;
+			case '3':
+				typeIcon = "fa fa-warning bg-red";
+				break;
+			default:
+				typeIcon = "fa fa-envelope bg-blue";
+				break;
+			}
 
-		"	<li class=\"time-label\">\r\n" + "     <span class=\"bg-red\">\r\n"
-				+ date + "     </span>\r\n" + "	</li>" + "</ul>";
+			var str = "            <!-- timeline item -->\r\n"
+					+ "            <li>\r\n"
+					+ "              <i class=\"" + typeIcon + "\"></i>\r\n"
+					+ "              <div class=\"timeline-item\">\r\n"
+					+ "                <span class=\"time\"><span class=\"label label-info\">"
+					+ target
+					+ "</span>    <i class=\"fa fa-clock-o\"></i>"
+					+ calulateTime(time)
+					+ "</span>\r\n"
+					+ "\r\n"
+					+ "                <h3 class=\"timeline-header\">"
+					+ title
+					+ "</h3>\r\n"
+					+ "\r\n"
+					+ "                <div class=\"timeline-body\">\r\n"
+					+ "                 "
+					+ content
+					+ "                </div>\r\n"
+					+ "                <div class=\"timeline-footer\">\r\n"
+					+ "                  <button tpye=\"button\" id=\""+no+"\" name=\"delete\" class=\"btn btn-danger btn-xs\">삭제</button>\r\n"
+					+ "                  <button type=\"button\" name=\"readmore\" class=\"btn btn-primary btn-xs\">자세히 보기</a>\r\n"
+					+ "                </div>\r\n" + "              </div>\r\n"
+					+ "            </li>";
 
-		return str;
-	}
-
-	readMoreEvent = function(event) {
-		var modalDom = $(this).parent().siblings();
-		var rmModal = $("#readMoreModal");
-
-		var title = modalDom.filter("h3").text().trim();
-		var desc = modalDom.filter("div").text().trim();
-		var time = modalDom.filter("span").text().split(" ")[4];
-		var target = modalDom.filter("span").text().split(" ")[0];
-		console.log(modalDom.parent().parent().find("i").attr("class"));
-		var color = modalDom.parent().parent().find("i").attr("class").split(
-				" ")[2];
-
-		var bodyString = "";
-
-		bodyString += "<h3> " + title + "</h3>" + "<hr>" + desc
-		rmModal.find(".modal-header").attr("class", "modal-header " + color);
-		rmModal.find(".modal-body").html(bodyString);
-		rmModal.find("i").html(time);
-
-		rmModal.modal("show");
-	}
-
-	calulateTime = function(time) {
-		var today = moment().format('YYYY-MM-DD h:mm A');
-
-		if (time.split(" ")[0] == today.split(" ")[0])
-			return moment(time, 'YYYY-MM-DD h:mm A').fromNow();
-
-		else
-			return time.split(" ")[1];
-	}
-
-	deleteEvent = function(event) {
-		var no = $(this).attr("id");
-
-		BootstrapDialog.show({
-			type : BootstrapDialog.TYPE_DANGER,
-			title : "[주의] 공지를 삭제합니다.",
-			message : "삭제한 내용은 복구할 수 없습니다. <br> 삭제하시겠습니까?",
-			buttons : [ {
-				label : "삭제",
-				cssClass : 'btn-danger btn-sm',
-				action : function(dialog) {
-					$.ajax({
-						type : 'POST',
-						url : '/notice/deleteNoticeProc.do',
-						data : {
-							"noticeNo" : no
-						},
-						dataType : 'json',
-						success : function(data) {
-							$("#" + no).parent().parent().parent().toggle(800);
-							dialog.close();
-						}
-					});
-				}
-			}, {
-				label : "취소",
-				cssClass : 'btn-primary btn-sm',
-				action : function(dialog) {
-					dialog.close();
-				}
-			} ]
-		});
-
-		return false;
-	}
-
-	var lang = {
-		months : "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
-		monthsShort : "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
-		weekdays : "일요일_월요일_화요일_수요일_목요일_금요일_토요일".split("_"),
-		weekdaysShort : "일_월_화_수_목_금_토".split("_"),
-		longDateFormat : {
-			L : "YYYY.MM.DD",
-			LL : "YYYY년 MMMM D일",
-			LLL : "YYYY년 MMMM D일 A h시 mm분",
-			LLLL : "YYYY년 MMMM D일 dddd A h시 mm분"
-		},
-		meridiem : {
-			AM : '오전',
-			am : '오전',
-			PM : '오후',
-			pm : '오후'
-		},
-		relativeTime : {
-			future : "%s 후",
-			past : "%s 전",
-			s : "몇초",
-			ss : "%d초",
-			m : "일분",
-			mm : "%d분",
-			h : "한시간",
-			hh : "%d시간",
-			d : "하루",
-			dd : "%d일",
-			M : "한달",
-			MM : "%d달",
-			y : "일년",
-			yy : "%d년"
-		},
-		ordinal : function(number) {
-			return '일';
+			return str;
 		}
-	}
 
-	filterEvent = function(event) {
-		scrollCount = 1;
-		preDate = '';
-		ul = undefined;
-		$("#notice").html("");
+		createTimeLine = function(date) {
+			var str = "<ul class=\"timeline\" id=\"" + date.trim() + "\">" +
 
-		loadPage();
-	}
+			"	<li class=\"time-label\">\r\n"
+					+ "     <span class=\"bg-red\">\r\n" + date
+					+ "     </span>\r\n" + "	</li>" + "</ul>";
 
-	insertNoticeEvent = function(event) {
-		$(location).attr("href", "insertNoticeForm.do");
-	}
-</script>
+			return str;
+		}
+
+		readMoreEvent = function(event) {
+			var modalDom = $(this).parent().siblings();
+			var rmModal = $("#readMoreModal");
+
+			var title = modalDom.filter("h3").text().trim();
+			var desc = modalDom.filter("div").text().trim();
+			var time = modalDom.filter("span").text().split(" ")[4];
+			var target = modalDom.filter("span").text().split(" ")[0];
+			console.log(modalDom.parent().parent().find("i").attr("class"));
+			var color = modalDom.parent().parent().find("i").attr("class")
+					.split(" ")[2];
+
+			var bodyString = "";
+
+			bodyString += "<h3> " + title + "</h3>" + "<hr>" + desc
+			rmModal.find(".modal-header")
+					.attr("class", "modal-header " + color);
+			rmModal.find(".modal-body").html(bodyString);
+			rmModal.find("i").html(time);
+
+			rmModal.modal("show");
+		}
+
+		calulateTime = function(time) {
+			var today = moment().format('YYYY-MM-DD h:mm A');
+
+			if (time.split(" ")[0] == today.split(" ")[0])
+				return moment(time, 'YYYY-MM-DD h:mm A').fromNow();
+
+			else
+				return time.split(" ")[1];
+		}
+
+		deleteEvent = function(event) {
+			var no = $(this).attr("id");
+
+			BootstrapDialog.show({
+				type : BootstrapDialog.TYPE_DANGER,
+				title : "[주의] 공지를 삭제합니다.",
+				message : "삭제한 내용은 복구할 수 없습니다. <br> 삭제하시겠습니까?",
+				buttons : [
+						{
+							label : "삭제",
+							cssClass : 'btn-danger btn-sm',
+							action : function(dialog) {
+								$.ajax({
+									type : 'POST',
+									url : '/notice/deleteNoticeProc.do',
+									data : {
+										"noticeNo" : no
+									},
+									dataType : 'json',
+									success : function(data) {
+										$("#" + no).parent().parent().parent()
+												.toggle(800);
+										dialog.close();
+									}
+								});
+							}
+						}, {
+							label : "취소",
+							cssClass : 'btn-primary btn-sm',
+							action : function(dialog) {
+								dialog.close();
+							}
+						} ]
+			});
+
+			return false;
+		}
+
+		var lang = {
+			months : "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
+			monthsShort : "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
+			weekdays : "일요일_월요일_화요일_수요일_목요일_금요일_토요일".split("_"),
+			weekdaysShort : "일_월_화_수_목_금_토".split("_"),
+			longDateFormat : {
+				L : "YYYY.MM.DD",
+				LL : "YYYY년 MMMM D일",
+				LLL : "YYYY년 MMMM D일 A h시 mm분",
+				LLLL : "YYYY년 MMMM D일 dddd A h시 mm분"
+			},
+			meridiem : {
+				AM : '오전',
+				am : '오전',
+				PM : '오후',
+				pm : '오후'
+			},
+			relativeTime : {
+				future : "%s 후",
+				past : "%s 전",
+				s : "몇초",
+				ss : "%d초",
+				m : "일분",
+				mm : "%d분",
+				h : "한시간",
+				hh : "%d시간",
+				d : "하루",
+				dd : "%d일",
+				M : "한달",
+				MM : "%d달",
+				y : "일년",
+				yy : "%d년"
+			},
+			ordinal : function(number) {
+				return '일';
+			}
+		}
+
+		filterEvent = function(event) {
+			scrollCount = 1;
+			preDate = '';
+			ul = undefined;
+			$("#notice").html("");
+
+			loadPage();
+		}
+
+		insertNoticeEvent = function(event) {
+			$(location).attr("href", "insertNoticeForm.do");
+		}
+	</script>
+</body>
+
 </html>
