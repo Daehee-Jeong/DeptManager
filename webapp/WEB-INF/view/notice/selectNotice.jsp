@@ -60,219 +60,6 @@ textarea {
 	color: #fff;
 	background-color: #2e3436;
 	border-color: #2e3436;
-
-
-
-[
-name
-=
-"targetFilter"
-]
-
-
- 
-
-
-.btn-primary
-
-
-
-
-:active
-
-
-
-
-:hover
-,
-div
-
-
-
-
-[
-name
-=
-"typeFilter"
-]
-
-
- 
-
-
-.btn-primary
-
-
-
-
-.active
-
-
-
-
-:hover
-,
-div
-
-
-
-
-[
-name
-=
-"targetFilter"
-]
-
-
- 
-
-
-.btn-primary
-
-
-
-
-:active
-
-
-
-
-:focus
-,
-div
-
-
-
-
-[
-name
-=
-"typeFilter"
-]
-
-
- 
-
-
-.btn-primary
-
-
-
-
-.active
-
-
-
-
-:focus
-,
-div
-
-
-
-
-[
-name
-=
-"targetFilter"
-]
-
-
- 
-
-
-.btn-primary
-
-
-
-
-:active
-
-
-
-
-.focus
-,
-div
-
-
-
-
-[
-name
-=
-"typeFilter"
-]
-
-
- 
-
-
-.btn-primary
-
-
-
-
-.active
-
-
-
-
-.focus
-,
-{
-color
-
-
-
-
-:
-
-
- 
-
-
-#fff
-
-
-
-
-;
-background-color
-
-
-
-
-:
-
-
- 
-
-
-#2e3436
-
-
-
-
-;
-border-color
-
-
-
-
-:
-
-
- 
-
-
-#2e3436
-
-
-
-
-;
-}
 }
 </style>
 
@@ -323,6 +110,7 @@ border-color
 
 		<!-- Main content -->
 		<section class="content">
+
 
 			<div style="margin-bottom: 1%">
 				<div class="btn-group" data-toggle="buttons" name="targetFilter">
@@ -375,22 +163,22 @@ border-color
        immediately after the control sidebar -->
 	<div class="control-sidebar-bg"></div>
 	<!-- ./wrapper -->
-<script>
-	var scrollCount = 1;
-	var preDate = '';
-	var ul;
 
-	$(document).ready(function() {
+	<script>
+		var scrollCount = 1;
+		var preDate = '';
+		var ul;
 
-		
-		moment.updateLocale('ko', lang);
+		$(document).ready(function() {
+			moment.updateLocale('ko', lang);
+
 			$(document).on('click', 'button[name="delete"]', deleteEvent);
 			$(document).on("click", 'button[name="readmore"]', readMoreEvent);
 			$("input[type='radio']").change(filterEvent);
 			$("#insertNotice").click(insertNoticeEvent);
 
 			loadPage();
-		
+
 			$(document).scroll(function() {
 				maxHeight = $(document).height();
 				currentScroll = $(window).scrollTop() + $(window).height();
@@ -427,20 +215,6 @@ border-color
 
 						for ( var i in list) {
 
-		$.ajax({
-			type : 'POST',
-			url : '/notice/selectNoticeListFilterProc.do',
-			async : false,
-			data : {
-				"page" : String(scrollCount),
-				"type" : type,
-				"target" : target
-			},
-			dataType : 'json',
-			success : function(data) {
-				if (data.result == 'success') {
-					console.log(data)
-					var list = data.mList;
 							var noticeDate = list[i].noticeDate.split(' ');
 							var date = noticeDate[0];
 							var time = noticeDate[1];
@@ -675,43 +449,29 @@ border-color
 			scrollCount = 1;
 			preDate = '';
 			ul = undefined;
-			$("#notice").html("");
+			
+		
+			toggleEvent();
+		}
+		
+		toggleEvent = function() {
 
-			loadPage();
+			$("#notice").toggle(800);
+			
+			
+			setTimeout(function() {
+				$("#notice").html("");
+				
+				loadPage();
+			},800);
+			
+			$("#notice").toggle(800);
 		}
 
-	filterEvent = function(event) {
-	
-		
-		scrollCount = 1;
-		preDate = '';
-		ul = undefined;
-		
-	
-		toggleEvent();
-	}
-
-	insertNoticeEvent = function(event) {
-		$(location).attr("href", "insertNoticeForm.do");
-	}
-	
-	
-	toggleEvent = function() {
-
-		$("#notice").toggle(800);
-		
-		
-		setTimeout(function() {
-			$("#notice").html("");
-			
-			loadPage();
-		},800);
-		
-		$("#notice").toggle(800);
-	}
-</script>
-
-
+		insertNoticeEvent = function(event) {
+			$(location).attr("href", "insertNoticeForm.do");
+		}
+	</script>
 </body>
 
 </html>
