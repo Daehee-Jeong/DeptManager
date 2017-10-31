@@ -433,13 +433,28 @@ textarea {
 			}
 		}
 
+
 		filterEvent = function(event) {
 			scrollCount = 1;
 			preDate = '';
 			ul = undefined;
-			$("#notice").html("");
+			
+		
+			toggleEvent();
+		}
+		
+		toggleEvent = function() {
 
-			loadPage();
+			$("#notice").toggle(800);
+			
+			
+			setTimeout(function() {
+				$("#notice").html("");
+				
+				loadPage();
+			},800);
+			
+			$("#notice").toggle(800);
 		}
 	</script>
 </body>

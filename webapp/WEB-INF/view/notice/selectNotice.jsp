@@ -46,162 +46,20 @@ textarea {
 	overflow: hidden;
 }
 
-div[name="targetFilter"] .btn-primary:active, div[name="targetFilter"] .btn-primary.active,
-	div[name="typeFilter"] .btn-primary:active, div[name="typeFilter"] .btn-primary.active,
-	.open>.dropdown-toggle.btn-primary {
+.btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary
+	{
 	color: #fff;
 	background-color: #2e3436;
 	border-color: #2e3436;
 }
-div
 
-
-[
-name
-=
-"targetFilter"
-]
-
- 
-
-.btn-primary
-
-
-:active
-
-
-:hover
-,
-div
-
-
-[
-name
-=
-"typeFilter"
-]
-
- 
-
-.btn-primary
-
-
-.active
-
-
-:hover
-,
-div
-
-
-[
-name
-=
-"targetFilter"
-]
-
- 
-
-.btn-primary
-
-
-:active
-
-
-:focus
-,
-div
-
-
-[
-name
-=
-"typeFilter"
-]
-
- 
-
-.btn-primary
-
-
-.active
-
-
-:focus
-,
-div
-
-
-[
-name
-=
-"targetFilter"
-]
-
- 
-
-.btn-primary
-
-
-:active
-
-
-.focus
-,
-div
-
-
-[
-name
-=
-"typeFilter"
-]
-
- 
-
-.btn-primary
-
-
-.active
-
-
-.focus
-,
-{
-color
-
-
-:
-
- 
-
-#fff
-
-
-;
-background-color
-
-
-:
-
- 
-
-#2e3436
-
-
-;
-border-color
-
-
-:
-
- 
-
-#2e3436
-
-
-;
-}
+.btn-primary:active:hover, .btn-primary.active:hover, .open>.dropdown-toggle.btn-primary:hover,
+	.btn-primary:active:focus, .btn-primary.active:focus, .open>.dropdown-toggle.btn-primary:focus,
+	.btn-primary:active.focus, .btn-primary.active.focus, .open>.dropdown-toggle.btn-primary.focus
+	{
+	color: #fff;
+	background-color: #2e3436;
+	border-color: #2e3436;
 }
 </style>
 
@@ -252,7 +110,6 @@ border-color
 
 		<!-- Main content -->
 		<section class="content">
-
 
 			<div style="margin-bottom: 1%">
 				<div class="btn-group" data-toggle="buttons" name="targetFilter">
@@ -305,21 +162,21 @@ border-color
        immediately after the control sidebar -->
 	<div class="control-sidebar-bg"></div>
 	<!-- ./wrapper -->
-
-</body>
 <script>
 	var scrollCount = 1;
 	var preDate = '';
 	var ul;
 
 	$(document).ready(function() {
+
+		
 		moment.updateLocale('ko', lang);
 
 		$(document).on('click', 'button[name="delete"]', deleteEvent);
 		$(document).on("click", 'button[name="readmore"]', readMoreEvent);
 		$("input[type='radio']").change(filterEvent);
 		$("#insertNotice").click(insertNoticeEvent);
-
+		
 		loadPage();
 
 		$(document).scroll(function() {
@@ -345,6 +202,7 @@ border-color
 		$.ajax({
 			type : 'POST',
 			url : '/notice/selectNoticeListFilterProc.do',
+			async : false,
 			data : {
 				"page" : String(scrollCount),
 				"type" : type,
@@ -584,16 +442,37 @@ border-color
 	}
 
 	filterEvent = function(event) {
+	
+		
 		scrollCount = 1;
 		preDate = '';
 		ul = undefined;
-		$("#notice").html("");
-
-		loadPage();
+		
+	
+		toggleEvent();
 	}
 
 	insertNoticeEvent = function(event) {
 		$(location).attr("href", "insertNoticeForm.do");
 	}
+	
+	
+	toggleEvent = function() {
+
+		$("#notice").toggle(800);
+		
+		
+		setTimeout(function() {
+			$("#notice").html("");
+			
+			loadPage();
+		},800);
+		
+		$("#notice").toggle(800);
+	}
 </script>
+
+
+</body>
+
 </html>
