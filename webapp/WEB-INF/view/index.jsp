@@ -58,7 +58,7 @@
 			<div class="row">
 				<!-- /.col -->
 		        <div class="col-md-12">
-		          <div class="box box-primary">
+		          <div class="box box-info">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">설문목록</h3>
 		            </div>
@@ -117,7 +117,7 @@
 			
 				<!-- 공지 목록 -->
 		        <div class="col-md-6">
-		          <div class="box box-primary">
+		          <div class="box box-success">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">공지사항</h3>
 		            </div>
@@ -138,7 +138,7 @@
 		        
 				<!-- 학사 일정 목록 -->
 		        <div class="col-md-6">
-		          <div class="box box-solid">
+		          <div class="box box-warning">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">학사일정</h3>
 		            </div>
@@ -150,7 +150,7 @@
 							    <th style="width: 150px">제목</th>
 							    <th>날짜</th>
 							</tr>
-			             </table>
+        </table>
 		            </div>
 		            <!-- /.box-body -->
 		          </div>
