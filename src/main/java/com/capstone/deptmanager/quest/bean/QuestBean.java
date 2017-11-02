@@ -16,6 +16,7 @@ public class QuestBean {
 	private String questContent;
 	private String questDesc;
 	private String questTo; // 해당 설문지에 푸쉬알림 받는 학생
+	private String questIsRes;
 	
 	public String getQuestNo() {
 		return questNo;
@@ -58,6 +59,12 @@ public class QuestBean {
 	}
 	public void setQuestTo(String questTo) {
 		this.questTo = questTo;
+	}
+	public String getQuestIsRes() {
+		return questIsRes;
+	}
+	public void setQuestIsRes(String questIsRes) {
+		this.questIsRes = questIsRes;
 	}
 	
 }
