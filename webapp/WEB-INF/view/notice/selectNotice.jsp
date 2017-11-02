@@ -14,14 +14,13 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 
-<link rel="stylesheet"
-	href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-<link rel="stylesheet"
-	href="/resources/bower_components/bootstrap/dist/css/bootstrap-switch.css">
+<link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-switch.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript"
-	src="../resources/bower_components/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="../resources/bower_components/ckeditor/ckeditor.js"></script>
 <!-- FastClick -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <script src="/resources/bower_components/moment/moment.js"></script>
 <script src="/resources/bower_components/moment/locale/ko.js"></script>
 
@@ -33,8 +32,7 @@
   <![endif]-->
 
 <!-- Google Font -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
 <style>
@@ -455,17 +453,18 @@ textarea {
 		}
 		
 		toggleEvent = function() {
-
-			$("#notice").toggle(800);
+			var options = {};
+			  
+			$("#notice").toggle("fade", options, 450);
 			
 			
 			setTimeout(function() {
 				$("#notice").html("");
 				
 				loadPage();
-			},900);
+			},450);
 			
-			$("#notice").toggle(800);
+			$("#notice").toggle("fade", options, 450);
 		}
 
 		insertNoticeEvent = function(event) {

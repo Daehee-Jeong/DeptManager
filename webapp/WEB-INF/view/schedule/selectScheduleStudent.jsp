@@ -15,6 +15,7 @@
 
 <link rel="stylesheet"
 	href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
 
 <!-- fullCalendar -->
 <script
@@ -25,8 +26,8 @@
 	src="/resources/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
 <script
 	src="/resources/bower_components/fullcalendar/dist/locale-all.js"></script>
-<script
-	src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,54 +63,104 @@
 	</div>
 
 
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Calendar
+        <small>Control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Calendar</li>
+      </ol>
+    </section>
 
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper" style="min-height: 800px;">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<h1>
-				Calendar <small>Control panel</small>
-			</h1>
-			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li class="active">Calendar</li>
-			</ol>
-		</section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          
+          <!-- Filtering  -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">선택한 일정 보기</h3>
 
-		<!-- Main content -->
-		<section class="content">
-			<div class="row">
-			
-				<!-- /.col -->
-				<div class="col-md-9">
-					<div class="box box-primary">
-						<div class="box-body no-padding" style="min-height: 100px">
-							<div class="overlay">
-								<i class="fa fa-refresh fa-spin"></i>
-							</div>
-							<!-- THE CALENDAR -->
-							<div id="calendar"></div>
-						</div>
-						<!-- /.box-body -->
-					</div>
-					<!-- /. box -->
-				</div>
-				<!-- /.col -->
-			</div>
-			<!-- /.row -->
-		</section>
-		<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+              		
+                <li><a>
+                	<select class="selectpicker" id="filterSelect" data-none-selected-text="옵션을 선택하세요" multiple>
+									  <optgroup label="공지 유형(한가지 선택)" name="type" data-max-options="1">
+									  	<option data-icon="fa fa-envelope" value="0">전체 </option> 
+									   	<option data-icon="fa fa-envelope" value="1">일반 공지 </option> 
+                			<option data-icon="fa fa-mortar-board" value="2">학사 공지 </option> 
+                			<option data-icon="fa fa-warning" value="3"> 긴급 공지 </option> 
+										</optgroup>
+										<optgroup label="공지 대상(한가지 선택)" name="target" data-max-options="1">
+											<option value="0">전체</option>
+											<option value="1">1학년</option>
+											<option value="2">2학년</option>
+											<option value="3">3학년</option>
+											<option value="4">4학년</option>
+										</optgroup>
+									</select>
+								</a></li>
+                						
+                <li><a><button id="filterEvent" type="button" class="btn btn-primary">선택한 일정만 보기</button></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Calendar -->
+        <div class="col-md-9">
+          <div class="box box-primary">
+            <div class="box-body no-padding" style="min-height: 100px">
+            	  <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+              </div>
+              <!-- THE CALENDAR -->
+              <div id="calendar"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /. box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
 
 	<script>
   $(function () {
 	  
 	  /* moment locale 설정 */
 	  moment.updateLocale('ko', lang);
+	  
+	  $("#filterEvent").click(filterEvent);
 
 	  initializeCalendar();
-	  loadScheduleList();
+	  loadScheduleList(0, 0);
+	  
+		$(".selectpicker").on("show.bs.select", function(event) {
+			$(this).selectpicker("deselectAll");
+		})
+		
+		$(".selectpicker").change(function(event) {
+			if($(this).val().length == 2) $(this).selectpicker("toggle");
+		})
 	  
 	  $('.overlay').remove();
 	  
@@ -136,12 +187,24 @@ clickEvent = function(event) {
 			case "3":
 				modalType = 'modal-header bg-red';
 				break;
+			default:
+				modalType = 'modal-header bg-blue';
+				break;
 			}
 			
 			$(".modal-header").attr("class", modalType);
+
+			
 			
 			var body = "";
-			body += 'title : ' + msg.schedule.scheduleTitle;
+			
+			
+			body += '<h3>' + msg.schedule.scheduleTitle + '</h3>';
+			body += '<dl class=\"dl-horizontal\">'
+			body += ' <dt> asdasd </dt>'
+			body += ' <dd> assdsdd </dd>'
+			body += '</dl>'
+					
 			body += '<br>startDate : ' + msg.schedule.scheduleStart;
 			body += '<br>endDate : ' + msg.schedule.scheduleEnd;
 			body += '<br>desc : ' + msg.schedule.scheduleDesc;
@@ -161,7 +224,7 @@ initializeCalendar = function() {
      header    : {
        left  : 'prev,next today',
        center: 'title',
-       right : 'month,agendaWeek,agendaDay'
+       right : 'month'
      },
      buttonText: {
        today: '오늘',
@@ -176,48 +239,6 @@ initializeCalendar = function() {
     	 	$("#clickModal").modal('show');
      	}
      })
-     
-    
-
-/* ADDING EVENTS */
-   var currColor = '#3c8dbc' //Red by default
-   //Color chooser button
-   var colorChooser = $('#color-chooser-btn')
-   $('#color-chooser > li > a').click(function (e) {
-     e.preventDefault()
-     //Save color
-     currColor = $(this).css('color')
-     //Add color effect to button
-     $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor })
-     $('#add-new-event').attr("value", $(this).attr("value"));
-   })
-   
-   $('#add-new-event').click(function (e) {
-     e.preventDefault()
-     //Get value and make sure it is not null
-     var val = $('#new-event').val()
-     if (val.length == 0) {
-       return
-     }
-
-     //Create events
-     var event = $('<div />')
-     event.css({
-       'background-color': currColor,
-       'border-color'    : currColor,
-       'color'           : '#fff'
-     }).addClass('external-event')
-     event.html(val)
-     $('#external-events').prepend(event)
-
-     //Add draggable funtionality
-     init_events(event)
-
-     //Remove event from text input
-     $('#new-event').val('')
-   })
-   
-	
 }
    
   
@@ -258,12 +279,16 @@ initializeCalendar = function() {
 	       }
 }
  
-loadScheduleList = function() {
+loadScheduleList = function(type, target) {
 	 var events = [];
 	 
 	 	$.ajax({
 	 		url : "/schedule/selectScheduleListProc.do",
 	 		dataType : 'json',
+	 		data : {
+	 			scheduleType : type,
+	 			scheduleTarget : target
+	 		},
 	 		success : function(data) {
   				if (data.result == 'success') {
         				console.log(data);
@@ -283,7 +308,8 @@ loadScheduleList = function() {
         					events.push(event)
         				}
         				
-        				 $('#calendar').fullCalendar('addEventSource', events );
+        				$('#calendar').fullCalendar('removeEvents');
+        				$('#calendar').fullCalendar('addEventSource', events );
 						
   				}
   				else {
@@ -311,62 +337,14 @@ loadScheduleList = function() {
 	 }
  }
  
+ filterEvent = function(event) {
+		var type = $("#filterSelect").val()[0];
+		var target = $("#filterSelect").val()[1];
+		
+		loadScheduleList(type, target);
+	}
 
  
- /* initialize the external events
- -----------------------------------------------------------------*/
-/* function init_events(ele) {
-  ele.each(function () {
-
-    // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-    // it doesn't need to have a start or end
-    var eventObject = {
-      title: $.trim($(this).text()) // use the element's text as the event title
-    }
-
-    // store the Event Object in the DOM element so we can get to it later
-    $(this).data('eventObject', eventObject)
-
-    // make the event draggable using jQuery UI
-    $(this).draggable({
-      zIndex        : 1070,
-      revert        : true, // will cause the event to go back to its
-      revertDuration: 0  //  original position after the drag
-    })
-  
-  })
-}
-
-init_events($('#external-events div.external-event'));
-
-editable  : true,
-droppable : true, // this allows things to be dropped onto the calendar !!!
-drop      : function (date, allDay) { // this function is called when something is dropped
-
-  // retrieve the dropped element's stored Event Object
-  var originalEventObject = $(this).data('eventObject')
-
-  // we need to copy it, so that multiple events don't have a reference to the same object
-  var copiedEventObject = $.extend({}, originalEventObject)
-
-  // assign it the date that was reported
-  copiedEventObject.start           = date
-  copiedEventObject.allDay          = allDay
-  copiedEventObject.backgroundColor = $(this).css('background-color')
-  copiedEventObject.borderColor     = $(this).css('border-color')
-
-  // render the event on the calendar
-  // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-  $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-
-  // is the "remove after drop" checkbox checked?
-  if ($('#drop-remove').is(':checked')) {
-    // if so, remove the element from the "Draggable Events" list
-    $(this).remove()
-  }
-
-} */
-
 </script>
 </body>
 

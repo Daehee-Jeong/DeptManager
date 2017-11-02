@@ -12,6 +12,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+ <link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,8 +22,18 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<!-- fullCalendar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.min.js"></script>
+<script src="/resources/bower_components/fullcalendar/dist/locale-all.js"></script>
+<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+
+
 </head>
 
 <body>
@@ -66,63 +77,94 @@
     <section class="content">
       <div class="row">
         <div class="col-md-3">
-          
-          <!-- /. box -->
-          <div class="box box-solid">
+          <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title"> 일정 등록 </h3>
+              <h3 class="box-title">일정 등록</h3>
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
             </div>
-            <div class="box-body">
-              <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                <h5> 일정 종류 선택 </h5>
-                <input type="hidden" id="type-value" val="0">
-                <ul class="fc-color-picker" id="color-chooser">
-                  <li><a class="text-blue" href="#" value="1"><span class="fa fa-envelope bg-blue fa-fw"></span></a></li>
-                  <li><a class="text-black" href="#" value="2"><span class="fa fa-mortar-board bg-black fa-fw"></span></a></li>
-                  <li><a class="text-red" href="#" value="3"><span class="fa fa-warning bg-red fa-fw"></span></a></li>
-                </ul>
-               </div>
-               <div class=input-group>
-               <h5> 대상 학년 </h5>
-               <label class="radio-inline">
-                  <input type="radio" name="inlineRadioOptions" id="inlineRadio0" value="0"> 전체
-                </label>
-               <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> 1
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 2
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3"> 3
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4"> 4
-                </label>
-                </div>
-   
-              <!-- /btn-group -->
-              
-              <div class="input-group">
-              <div class="input-group-addon">
-                    <i class="fa fa-clock-o"></i>
-                  </div>
-              <input type="text" id="datepicker" class="form-control"/>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+              							<!-- Validation Alert  -->
+                <div class="alert alert-warning" role="alert" style="display : none">
+									<strong>경고!</strong> 제목과 내용은 빈칸일 수 없습니다!
+								</div>
+               	<!-- End Validation  -->
+                <li><a>		
+                	<select class="selectpicker" id="createSelect" data-none-selected-text="옵션을 선택하세요" multiple>
+									  <optgroup label="공지 유형(한가지 선택)" name="type" data-max-options="1">
+									   	<option data-icon="fa fa-envelope" value="1">일반 공지 </option> 
+                			<option data-icon="fa fa-mortar-board" value="2">학사 공지 </option> 
+                			<option data-icon="fa fa-warning" value="3"> 긴급 공지 </option> 
+										</optgroup>
+										<optgroup label="공지 대상(한가지 선택)" name="target" data-max-options="1">
+											<option value="0">전체</option>
+											<option value="1">1학년</option>
+											<option value="2">2학년</option>
+											<option value="3">3학년</option>
+											<option value="4">4학년</option>
+										</optgroup>
+									</select>
+								</a></li>
+                						
+                <li><a>
+									 <div class="input-group">
+			              	<div class="input-group-addon">
+			                	<i class="fa fa-clock-o"></i>
+			              	</div>
+			              	
+			              	<input type="text" id="datepicker" class="form-control"/>
+			              </div>
+								</a></li>
+								
+                <li><a><input id="new-event" type="text" class="form-control" placeholder="일정 이름"></a></li>
+                <li><a><textarea id="event-desc" class="form-control" placeholder="일정 설명"></textarea></a></li>
+                <li><a><button id="add-new-event" type="button" class="btn btn-primary">등록</button></a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Filtering  -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">선택한 일정 보기</h3>
+
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
               </div>
-              <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="일정 이름">
-                <textarea id="event-desc" class="form-control" placeholder="일정 설명"></textarea>
-                <!-- /btn-group -->
-              </div>
-              <div class="input-group-btn">
-                  <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
-                </div>
-              <!-- /input-group -->
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+              		
+                <li><a>
+                	<select class="selectpicker" id="filterSelect" data-none-selected-text="옵션을 선택하세요" multiple>
+									  <optgroup label="공지 유형(한가지 선택)" name="type" data-max-options="1">
+									  	<option data-icon="fa fa-envelope" value="0">전체 </option> 
+									   	<option data-icon="fa fa-envelope" value="1">일반 공지 </option> 
+                			<option data-icon="fa fa-mortar-board" value="2">학사 공지 </option> 
+                			<option data-icon="fa fa-warning" value="3"> 긴급 공지 </option> 
+										</optgroup>
+										<optgroup label="공지 대상(한가지 선택)" name="target" data-max-options="1">
+											<option value="0">전체</option>
+											<option value="1">1학년</option>
+											<option value="2">2학년</option>
+											<option value="3">3학년</option>
+											<option value="4">4학년</option>
+										</optgroup>
+									</select>
+								</a></li>
+                						
+                <li><a><button id="filterEvent" type="button" class="btn btn-primary">선택한 일정만 보기</button></a></li>
+              </ul>
             </div>
           </div>
         </div>
-        <!-- /.col -->
+
+
+        <!-- Calendar -->
         <div class="col-md-9">
           <div class="box box-primary">
             <div class="box-body no-padding" style="min-height: 100px">
@@ -144,12 +186,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-<!-- fullCalendar -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script> 
-<script src="/resources/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
-<script src="/resources/bower_components/fullcalendar/dist/locale-all.js"></script>
-<script src="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -159,9 +196,18 @@
 
 	  $("#add-new-event").click(createEvent);
 		$("#delete").click(deleteEvent);
+		$("#filterEvent").click(filterEvent);
+		
+		$(".selectpicker").on("show.bs.select", function(event) {
+			$(this).selectpicker("deselectAll");
+		})
+		
+		$(".selectpicker").change(function(event) {
+			if($(this).val().length == 2) $(this).selectpicker("toggle");
+		})
 		
 	  initializeCalendar();
-	  loadScheduleList();
+	  loadScheduleList("0", "0");
 	  
 	  $('#calendar').fullCalendar('rerenderEvents');
 	  $('.overlay').remove();
@@ -170,8 +216,6 @@
 	  $('#datepicker').daterangepicker({
 		    "timePicker": true,
 		    "timePickerIncrement": 30,
-		    "startDate": "2017/10/15",
-		    "endDate": "2017/10/20",
 		    "opens": "center",
 		    locale: {
 	            "format": "YYYY/MM/DD h:mm",
@@ -221,7 +265,7 @@ clickEvent = function(event) {
 			scheduleNo : event.id
 		},
 		success : function(msg) {
-var modalType = "";
+			var modalType = "";
 			
 			switch(msg.schedule.scheduleType) {
 			case "1":
@@ -232,6 +276,9 @@ var modalType = "";
 				break;
 			case "3":
 				modalType = 'modal-header bg-red';
+				break;
+			default:
+				modalType = 'modal-header bg-blue';
 				break;
 			}
 			
@@ -280,7 +327,7 @@ initializeCalendar = function() {
      header    : {
        left  : 'prev,next today',
        center: 'title',
-       right : 'month,agendaWeek,agendaDay'
+       right : 'month'
      },
      buttonText: {
        today: '오늘',
@@ -295,62 +342,27 @@ initializeCalendar = function() {
     	 	$("#clickModal").modal('show');
      	}
      })
-     
-    
-
-/* ADDING EVENTS */
-   var currColor = '#3c8dbc' //Red by default
-   //Color chooser button
-   var colorChooser = $('#color-chooser-btn')
-   $('#color-chooser > li > a').click(function (e) {
-     e.preventDefault()
-     //Save color
-     currColor = $(this).css('color')
-     //Add color effect to button
-     $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor })
-     $('#add-new-event').attr("value", $(this).attr("value"));
-   })
-   
-   $('#add-new-event').click(function (e) {
-     e.preventDefault()
-     //Get value and make sure it is not null
-     var val = $('#new-event').val()
-     if (val.length == 0) {
-       return
-     }
-
-     //Create events
-     var event = $('<div />')
-     event.css({
-       'background-color': currColor,
-       'border-color'    : currColor,
-       'color'           : '#fff'
-     }).addClass('external-event')
-     event.html(val)
-     $('#external-events').prepend(event)
-
-     //Add draggable funtionality
-     init_events(event)
-
-     //Remove event from text input
-     $('#new-event').val('')
-   })
-   
-	
 }
-   
-  
   
 createEvent = function(event) {
-	var title = decodeURIComponent($("#new-event").val());
-	/* var startDate = parseDate($("#datepicker").val().split("-")[0].trim());
-	var endDate = parseDate($("#datepicker").val().split("-")[1].trim()); */
-	
+
+	var title = $("#new-event").val();
 	var startDate = $("#datepicker").val().split("-")[0].trim();
 	var endDate = $("#datepicker").val().split("-")[1].trim();
-	var target = $('input[type="radio"]:checked').val();
-	var type = $('#add-new-event').attr("value");
+	var target = $("#createSelect").val()[1];
+	var type = $("#createSelect").val()[0];
 	var desc = $("#event-desc").val();
+	
+	if(title.trim() == "" || desc.trim() == "") {
+		$( ".alert" ).toggle(800)
+		
+		setTimeout(function() {
+			$( ".alert" ).toggle(800);
+			},2000)
+			
+		return;
+	}
+	
 	
 	if(target == undefined) target = 0;
 	if(type == undefined) type = 1;
@@ -373,15 +385,18 @@ createEvent = function(event) {
 		  
 		  success : function(msg) {
 				console.log(msg);
+				
 				var event = {
 					'id' : msg.scheduleNo,
 				  'title' : title,
 				  'start' : startDate,
 				  'end' : endDate,
-				  'color' :  $('#add-new-event').css('background-color')
+				  'color' :  getColor(type)
 				 }
 				
-			  $('#calendar').fullCalendar('addEventSource', event )
+				console.log(event);
+				
+			  $('#calendar').fullCalendar('addEventSource', [event])
 		  },
 		  error : function(xhr, status, error) {
 			  console.log(xhr);
@@ -430,12 +445,16 @@ createEvent = function(event) {
 	       }
 }
  
-loadScheduleList = function() {
+loadScheduleList = function(type, target) {
 	 var events = [];
 	 
 	 	$.ajax({
 	 		url : "/schedule/selectScheduleListProc.do",
 	 		dataType : 'json',
+	 		data : {
+	 			scheduleType : type,
+	 			scheduleTarget : target
+	 		},
 	 		success : function(data) {
   				if (data.result == 'success') {
         				console.log(data);
@@ -450,13 +469,13 @@ loadScheduleList = function() {
         						'start' : list[i].scheduleStart,
         						'end' : list[i].scheduleEnd,
         						'color' : getColor(list[i].scheduleType)
-        					};
+        							};
         					
         					events.push(event)
-        				}
+        						}
         				
-        				 $('#calendar').fullCalendar('addEventSource', events );
-						
+        				$('#calendar').fullCalendar('removeEvents');
+        				$('#calendar').fullCalendar('addEventSource', events );
   				}
   				else {
   					console.log(data);
@@ -483,6 +502,12 @@ loadScheduleList = function() {
 	 }
  }
  
+filterEvent = function(event) {
+	var type = $("#filterSelect").val()[0];
+	var target = $("#filterSelect").val()[1];
+	
+	loadScheduleList(type, target);
+}
 
  
  /* initialize the external events

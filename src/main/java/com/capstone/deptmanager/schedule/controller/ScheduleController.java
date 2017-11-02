@@ -1,7 +1,5 @@
 package com.capstone.deptmanager.schedule.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,15 +99,21 @@ public class ScheduleController {
 	
 	@RequestMapping("/schedule/selectScheduleListProc")
 	@ResponseBody
-	public Map<String, Object> selectScheduleListProc() {
+	public Map<String, Object> selectScheduleListProc(ScheduleBean bean) {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 
 		resMap.put(Constants.RESULT, Constants.RESULT_FAIL);
 		resMap.put(Constants.RESULT_MSG, "일정 조회에 실패했습니다.");
 		
 		Logger logger = Logger.getLogger(this.getClass());
+		
 		try {
-			List<ScheduleBean> schedules = scheduleService.selectScheduleList();
+			logger.info(bean.getScheduleTarget());
+			logger.info(bean.getScheduleType());
+			if(bean.getScheduleTarget().equals("0")) bean.setScheduleTarget(null);
+			if(bean.getScheduleType().equals("0")) bean.setScheduleType(null);
+			
+			List<ScheduleBean> schedules = scheduleService.selectScheduleList(bean);
 			
 			if(schedules != null || schedules.size() > 1){
 				resMap.put(Constants.RESULT, Constants.RESULT_SUCCESS);

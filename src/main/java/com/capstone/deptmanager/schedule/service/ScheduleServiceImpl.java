@@ -33,9 +33,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleBean> selectScheduleList() {
+	public List<ScheduleBean> selectScheduleList(ScheduleBean bean) {
 		// TODO Auto-generated method stub
-		return scheduleDao.selectScheduleList();
+		return scheduleDao.selectScheduleList(bean);
 	}
 
 	@Override

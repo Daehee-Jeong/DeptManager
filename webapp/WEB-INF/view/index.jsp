@@ -170,33 +170,25 @@
 
   $(function () {
 	  
-	  $(document).ready(function() {
-		  	// 설문목록
-		  	initQuest();
-		  	// 공지사항
-		  	selectNotice();
-		  	// 학사일
-		  	selectStudentSchedule();
-		});
+	  	// 설문목록
+	  	initQuest();
+	  	// 공지사항
+	  	selectNotice();
+	  	// 학사일
+	  	selectStudentSchedule();
 	  
 	  /* moment locale 설정 */
 	  moment.updateLocale('ko', lang);
 
-	  $("#add-new-event").click(createEvent);
-		$("#delete").click(deleteEvent);
-		
 	  initializeCalendar();
-	  loadScheduleList();
+	  loadScheduleList(0, 0);
 	  
-	  $('#calendar').fullCalendar('rerenderEvents');
 	  $('.overlay').remove();
 	  
 	  /* datepicker 로딩 */
 	  $('#datepicker').daterangepicker({
 		    "timePicker": true,
 		    "timePickerIncrement": 30,
-		    "startDate": "2017/10/15",
-		    "endDate": "2017/10/20",
 		    "opens": "center",
 		    locale: {
 	            "format": "YYYY/MM/DD h:mm",
@@ -237,66 +229,8 @@
 		});
 })
 
-clickEvent = function(event) {
-	console.log(event.id);
-	
-	$.ajax({
-		url : '/schedule/selectScheduleProc.do',
-		data : {
-			scheduleNo : event.id
-		},
-		success : function(msg) {
-			var modalType = "";
-			
-			switch(msg.schedule.scheduleType) {
-			case "1":
-				modalType = 'modal modal-primary fade';
-				break;
-			case "2":
-				modalType = 'modal modal-success fade';
-				break;
-			case "3":
-				modalType = 'modal modal-danger fade';
-				break;
-			}
-			
-			$("#clickModal").attr("class", modalType);
-			
-			var body = "";
-			body += 'title : ' + msg.schedule.scheduleTitle;
-			body += '<br>startDate : ' + msg.schedule.scheduleStart;
-			body += '<br>endDate : ' + msg.schedule.scheduleEnd;
-			body += '<br>desc : ' + msg.schedule.scheduleDesc;
-			
-			$("#modalBody").html(body);
-			$("#delete").attr("value", msg.schedule.scheduleNo);
-		}
-	})
-}
 
-deleteEvent = function(event) {
-	console.log(event);
-	
-	var no = $(this).attr("value");
-	
-	$.ajax({
-		url : '/schedule/deleteScheduleProc.do',
-		data : {
-			scheduleNo : no
-		},
-		success : function(msg) {
-			console.log(msg);
-			$('#calendar').fullCalendar('removeEvents', no);
-			$("#clickModal").hide();
-		},
-		error : function(xhr, status, error) {
-			  console.log(xhr);
-			  console.log(status);
-			  console.log(error);
-		  }
-	})
-}
-	  
+  
 initializeCalendar = function() {
 
    /* initialize the calendar */
@@ -305,7 +239,7 @@ initializeCalendar = function() {
      header    : {
        left  : 'prev,next today',
        center: 'title',
-       right : 'month,agendaWeek,agendaDay'
+       right : 'month'
      },
      buttonText: {
        today: '오늘',
@@ -321,103 +255,8 @@ initializeCalendar = function() {
     	 	$("#clickModal").modal('show');
      	}
      })
-     
-    
-
-/* ADDING EVENTS */
-   var currColor = '#3c8dbc' //Red by default
-   //Color chooser button
-   var colorChooser = $('#color-chooser-btn')
-   $('#color-chooser > li > a').click(function (e) {
-     e.preventDefault()
-     //Save color
-     currColor = $(this).css('color')
-     //Add color effect to button
-     $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor })
-     $('#add-new-event').attr("value", $(this).attr("value"));
-   })
-   
-   $('#add-new-event').click(function (e) {
-     e.preventDefault()
-     //Get value and make sure it is not null
-     var val = $('#new-event').val()
-     if (val.length == 0) {
-       return
-     }
-
-     //Create events
-     var event = $('<div />')
-     event.css({
-       'background-color': currColor,
-       'border-color'    : currColor,
-       'color'           : '#fff'
-     }).addClass('external-event')
-     event.html(val)
-     $('#external-events').prepend(event)
-
-     //Add draggable funtionality
-     init_events(event)
-
-     //Remove event from text input
-     $('#new-event').val('')
-   })
-   
-	
 }
    
-  
-  
-createEvent = function(event) {
-	var title = decodeURIComponent($("#new-event").val());
-	/* var startDate = parseDate($("#datepicker").val().split("-")[0].trim());
-	var endDate = parseDate($("#datepicker").val().split("-")[1].trim()); */
-	
-	var startDate = $("#datepicker").val().split("-")[0].trim();
-	var endDate = $("#datepicker").val().split("-")[1].trim();
-	var target = $('input[type="radio"]:checked').val();
-	var type = $('#add-new-event').attr("value");
-	var desc = $("#event-desc").val();
-	
-	if(target == undefined) target = 0;
-	if(type == undefined) type = 1;
-
-	$("#new-event").val("");
-	$("#event-desc").val("");
-
-	$.ajax({
-		  url : '/schedule/insertScheduleProc.do',
-		  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		  type : "POST",
-		  data : {
-			  scheduleTitle : title,
-			  scheduleStart : startDate,
-			  scheduleEnd : endDate,
-			  scheduleType : type,
-			  scheduleTarget : target,
-			  scheduleDesc : desc
-		  },
-		  
-		  success : function(msg) {
-				console.log(msg);
-				var event = {
-					'id' : msg.scheduleNo,
-				  'title' : title,
-				  'start' : startDate,
-				  'end' : endDate,
-				  'color' :  $('#add-new-event').css('background-color')
-				 }
-				
-			  $('#calendar').fullCalendar('renderEvent', event )
-		  },
-		  error : function(xhr, status, error) {
-			  console.log(xhr);
-			  console.log(status);
-			  console.log(error);
-		  }
-	  }); 
-	  
-  }
-  
   
  var lang = {
         months: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
@@ -456,12 +295,16 @@ createEvent = function(event) {
 	       }
 }
  
-loadScheduleList = function() {
+loadScheduleList = function(type, target) {
 	 var events = [];
 	 
 	 	$.ajax({
 	 		url : "/schedule/selectScheduleListProc.do",
 	 		dataType : 'json',
+	 		data : {
+	 			scheduleType : type,
+	 			scheduleTarget : target
+	 		},
 	 		success : function(data) {
   				if (data.result == 'success') {
         				console.log(data);
@@ -481,7 +324,7 @@ loadScheduleList = function() {
         					events.push(event)
         				}
         				
-        				 $('#calendar').fullCalendar('renderEvents', events );
+        				$('#calendar').fullCalendar('addEventSource', events );
 						
   				}
   				else {

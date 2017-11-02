@@ -12,7 +12,7 @@ public int insertSchedule(ScheduleBean bean);
 	
 	public ScheduleBean selectSchedule(ScheduleBean bean);
 	
-	public List<ScheduleBean> selectScheduleList();
+	public List<ScheduleBean> selectScheduleList(ScheduleBean bean);
 	
 	public int deleteSchedule(ScheduleBean bean);
 }

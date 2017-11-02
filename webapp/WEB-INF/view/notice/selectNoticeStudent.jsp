@@ -444,18 +444,20 @@ textarea {
 		}
 		
 		toggleEvent = function() {
-
-			$("#notice").toggle(800);
+			var options = {};
+			  
+			$("#notice").toggle("fade", options, 450);
 			
 			
 			setTimeout(function() {
 				$("#notice").html("");
 				
 				loadPage();
-			},900);
+			},450);
 			
-			$("#notice").toggle(800);
+			$("#notice").toggle("fade", options, 450);
 		}
+
 	</script>
 </body>
 </html>
