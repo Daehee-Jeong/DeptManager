@@ -94,12 +94,12 @@
                	<!-- End Validation  -->
                 <li><a>		
                 	<select class="selectpicker" id="createSelect" data-none-selected-text="옵션을 선택하세요" multiple>
-									  <optgroup label="공지 유형(한가지 선택)" name="type" data-max-options="1">
+									  <optgroup label="일정 유형(한가지 선택)" name="type" data-max-options="1">
 									   	<option data-icon="fa fa-envelope" value="1">일반 공지 </option> 
                 			<option data-icon="fa fa-mortar-board" value="2">학사 공지 </option> 
                 			<option data-icon="fa fa-warning" value="3"> 긴급 공지 </option> 
 										</optgroup>
-										<optgroup label="공지 대상(한가지 선택)" name="target" data-max-options="1">
+										<optgroup label="알정 대상(한가지 선택)" name="target" data-max-options="1">
 											<option value="0">전체</option>
 											<option value="1">1학년</option>
 											<option value="2">2학년</option>
@@ -141,13 +141,13 @@
               		
                 <li><a>
                 	<select class="selectpicker" id="filterSelect" data-none-selected-text="옵션을 선택하세요" multiple>
-									  <optgroup label="공지 유형(한가지 선택)" name="type" data-max-options="1">
+									  <optgroup label="일정 유형(한가지 선택)" name="type" data-max-options="1">
 									  	<option data-icon="fa fa-envelope" value="0">전체 </option> 
 									   	<option data-icon="fa fa-envelope" value="1">일반 공지 </option> 
                 			<option data-icon="fa fa-mortar-board" value="2">학사 공지 </option> 
                 			<option data-icon="fa fa-warning" value="3"> 긴급 공지 </option> 
 										</optgroup>
-										<optgroup label="공지 대상(한가지 선택)" name="target" data-max-options="1">
+										<optgroup label="일정 대상(한가지 선택)" name="target" data-max-options="1">
 											<option value="0">전체</option>
 											<option value="1">1학년</option>
 											<option value="2">2학년</option>

@@ -17,12 +17,14 @@
 <link rel="stylesheet" href="/resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-switch.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/resources/bower_components/bootstrap/dist/css/bootstrap-select.min.css">
 
 <script type="text/javascript" src="../resources/bower_components/ckeditor/ckeditor.js"></script>
 <!-- FastClick -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <script src="/resources/bower_components/moment/moment.js"></script>
 <script src="/resources/bower_components/moment/locale/ko.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -110,7 +112,7 @@ textarea {
 		<section class="content">
 
 
-			<div style="margin-bottom: 1%">
+			<!-- <div style="margin-bottom: 1%">
 				<div class="btn-group" data-toggle="buttons" name="targetFilter">
 					<label class="btn btn-primary active"> <input type="radio"
 						name="options" option_id="0" autocomplete="off"> 전체
@@ -140,13 +142,69 @@ textarea {
 				<button id="insertNotice" class="btn btn-primary"
 					style="float: right; margin-right: 3%">공지 작성</button>
 
-			</div>
+			</div> -->
+			
+			  <!-- Filtering  -->
+			 <div class=row>
+			  <div class="col-md-3">
+			  
+			  <div class="box box-primary">
+           	 <div class="box-header with-border">
+              <h3 class="box-title">공지 작성</h3>
 
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            	</div>
+            	<div class="box-body no-padding">
+            	 <ul class="nav nav-pills nav-stacked">
+                <li><a><button id="insertNotice" type="button" class="btn btn-primary">공지 작성</button></a></li>
+              </ul>
+            	</div>
+          	</div>
+			  
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">선택한 공지 보기</h3>
+
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+              		
+                <li><a>
+                	<select class="selectpicker" id="filterSelect" data-none-selected-text="옵션을 선택하세요" multiple>
+									  <optgroup label="공지 유형(한가지 선택)" name="type" data-max-options="1">
+									  	<option data-icon="fa fa-envelope" value="0">전체 </option> 
+									   	<option data-icon="fa fa-envelope" value="1">일반 공지 </option> 
+                			<option data-icon="fa fa-mortar-board" value="2">학사 공지 </option> 
+                			<option data-icon="fa fa-warning" value="3"> 긴급 공지 </option> 
+										</optgroup>
+										<optgroup label="공지 대상(한가지 선택)" name="target" data-max-options="1">
+											<option value="0">전체</option>
+											<option value="1">1학년</option>
+											<option value="2">2학년</option>
+											<option value="3">3학년</option>
+											<option value="4">4학년</option>
+										</optgroup>
+									</select>
+								</a></li>
+                						
+                <li><a><button id="filterEvent" type="button" class="btn btn-primary">선택한 일정만 보기</button></a></li>
+              </ul>
+            </div>
+            </div>
+            
+         	</div>
 
 
 			<!-- row -->
-			<div class="row">
-				<div class="col-md-12" id="notice"></div>
+
+				<div class="col-md-9" id="notice"></div>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->
@@ -166,16 +224,27 @@ textarea {
 		var scrollCount = 1;
 		var preDate = '';
 		var ul;
+		
+		var filterType = 0;
+		var filterTarget = 0;
 
 		$(document).ready(function() {
 			moment.updateLocale('ko', lang);
 
 			$(document).on('click', 'button[name="delete"]', deleteEvent);
 			$(document).on("click", 'button[name="readmore"]', readMoreEvent);
-			$("input[type='radio']").change(filterEvent);
 			$("#insertNotice").click(insertNoticeEvent);
-
-			loadPage();
+			$("#filterEvent").click(filterEvent);
+			
+			$(".selectpicker").on("show.bs.select", function(event) {
+				$(this).selectpicker("deselectAll");
+			})
+			
+			$(".selectpicker").change(function(event) {
+				if($(this).val().length == 2) $(this).selectpicker("toggle");
+			})
+			
+			loadPage(filterType, filterTarget);
 
 			$(document).scroll(function() {
 				maxHeight = $(document).height();
@@ -183,20 +252,20 @@ textarea {
 
 				if (maxHeight <= currentScroll) {
 					scrollCount++;
-					loadPage();
+					loadPage(filterType, filterTarget);
 				}
 			});
 
 		});
 
-		loadPage = function() {
+		loadPage = function(type, target) {
 			var notice = $("#notice");
 
-			var type = $("div[name='typeFilter']").children().filter(".active")
+		/* 	var type = $("div[name='typeFilter']").children().filter(".active")
 					.children().attr("option_id");
 			var target = $("div[name='targetFilter']").children().filter(
 					".active").children().attr("option_id");
-
+ */
 			$.ajax({
 				type : 'POST',
 				url : '/notice/selectNoticeListFilterProc.do',
@@ -443,7 +512,7 @@ textarea {
 			}
 		}
 
-		filterEvent = function(event) {
+	/* 	filterEvent = function(event) {
 			scrollCount = 1;
 			preDate = '';
 			ul = undefined;
@@ -451,8 +520,45 @@ textarea {
 		
 			toggleEvent();
 		}
+		 */
+
+		insertNoticeEvent = function(event) {
+			$(location).attr("href", "insertNoticeForm.do");
+		}
 		
-		toggleEvent = function() {
+		
+		filterEvent = function(event) {
+			scrollCount = 1;
+			preDate = '';
+			ul = undefined;
+			
+			filterType = $("#filterSelect").val()[0];
+			filterTarget = $("#filterSelect").val()[1];
+			
+			var options = {};
+			  
+			$("#notice").toggle("fade", options, 450);
+			
+			
+			setTimeout(function() {
+				$("#notice").html("");
+				
+				loadPage(filterType, filterTarget);
+			},450);
+			
+			$("#notice").toggle("fade", options, 450);
+		}
+		
+		/* 		filterEvent = function(event) {
+		scrollCount = 1;
+		preDate = '';
+		ul = undefined;
+		
+	
+		toggleEvent();
+	} */
+
+/* 	toggleEvent = function() {
 			var options = {};
 			  
 			$("#notice").toggle("fade", options, 450);
@@ -466,11 +572,14 @@ textarea {
 			
 			$("#notice").toggle("fade", options, 450);
 		}
-
-		insertNoticeEvent = function(event) {
-			$(location).attr("href", "insertNoticeForm.do");
-		}
-	</script>
+*/
+		
+		
+		
+</script>
 </body>
 
 </html>
+
+
+
