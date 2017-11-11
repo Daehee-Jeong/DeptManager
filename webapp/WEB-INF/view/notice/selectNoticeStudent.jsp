@@ -187,11 +187,19 @@ textarea {
 										</optgroup>
 									</select>
 								</a></li>
+								
+							<li>
+								<a>
+									<div class="input-group col-md-12">
+										<input type="text" name="noticeTitle" id="filterKeyword" class="form-control" placeholder="공지 검색하기"> 
+									</div>
+								</a>
+							</li>
                 						
                 <li><a><button id="filterEvent" type="button" class="btn btn-primary">선택한 일정만 보기</button></a></li>
               </ul>
             </div>
-            </div>
+           </div>
             
          	</div>
 
@@ -199,17 +207,6 @@ textarea {
 			<!-- row -->
 
 				<div class="col-md-9" id="notice"></div>
-				<!-- /.col -->
-			</div>
-			<!-- /.row -->
-
-
-
-
-
-			<!-- row -->
-			<div class="row">
-				<div class="col-md-12" id="notice"></div>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->
@@ -230,11 +227,13 @@ textarea {
 
 		var filterType = 0;
 		var filterTarget = 0;
+		var filterKeyword = "";
 
 		$(document).ready(function() {
 			moment.updateLocale('ko', lang);
 
 			$(document).on("click", ".btn-xs", readMoreEvent);
+			$("#filterKeyword").keyup(searchEnterEvent);
 			$("#filterEvent").click(filterEvent);
 			
 			$(".selectpicker").on("show.bs.select", function(event) {
@@ -246,7 +245,7 @@ textarea {
 			})
 			
 
-			loadPage(filterType, filterTarget);
+			loadPage(filterType, filterTarget, filterKeyword);
 
 			$(document).scroll(function() {
 				maxHeight = $(document).height();
@@ -254,28 +253,37 @@ textarea {
 
 				if (maxHeight <= currentScroll) {
 					scrollCount++;
-					loadPage(filterType, filterTarget);
+					loadPage(filterType, filterTarget, filterKeyword);
 				}
 			});
 
 		});
 
-		loadPage = function(type, target) {
+		loadPage = function(type, target, keyword) {
 			var notice = $("#notice");
+			
+			var filterData = {
+				"page" : String(scrollCount),
+				"type" : type,
+				"target" : target
+			}
+			
+			if(keyword != undefined) filterData.noticeTitle = keyword;
 
+		/* 	var type = $("div[name='typeFilter']").children().filter(".active")
+					.children().attr("option_id");
+			var target = $("div[name='targetFilter']").children().filter(
+					".active").children().attr("option_id");
+ */
 			$.ajax({
 				type : 'POST',
 				url : '/notice/selectNoticeListFilterProc.do',
-				data : {
-					"page" : String(scrollCount),
-					"type" : type,
-					"target" : target
-				},
+				data : filterData,
 				dataType : 'json',
 				success : function(data) {
 					if (data.result == 'success') {
-						console.log(data);
-
+						
+						console.log(data)
 						var list = data.mList;
 
 						for ( var i in list) {
@@ -313,7 +321,6 @@ textarea {
 					}
 
 					else {
-						//alert("endPage")
 					}
 				},
 				error : function(xhr, status, error) {
@@ -492,7 +499,6 @@ textarea {
 
 
 
-		
 		filterEvent = function(event) {
 			scrollCount = 1;
 			preDate = '';
@@ -500,6 +506,11 @@ textarea {
 			
 			filterType = $("#filterSelect").val()[0];
 			filterTarget = $("#filterSelect").val()[1];
+			filterKeyword = $("#filterKeyword").val();
+			
+			if(filterType == undefined) filterType = 0;
+			if(filterTarget == undefined) filterTarget = 0;
+			if(filterKeyword.trim().length == 0) filterKeyword = undefined;
 			
 			var options = {};
 			  
@@ -509,11 +520,17 @@ textarea {
 			setTimeout(function() {
 				$("#notice").html("");
 				
-				loadPage(filterType, filterTarget);
+				loadPage(filterType, filterTarget, filterKeyword);
 			},450);
 			
 			$("#notice").toggle("fade", options, 450);
 		}
+		
+		
+		searchEnterEvent = function(event) {
+			if(event.originalEvent.key == "Enter") filterEvent();
+		}
+		
 		
 		/* 		filterEvent = function(event) {
 		scrollCount = 1;

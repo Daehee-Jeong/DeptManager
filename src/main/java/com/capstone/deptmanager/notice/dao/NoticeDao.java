@@ -34,4 +34,7 @@ public interface NoticeDao {
 	
 	/** 공지 리스트 조회 (index) */
 	public List<NoticeBean> selectNoticeIndexList();
+	
+/*	*//** 공지 검색 *//*
+	public List<NoticeBean> searchNoticeList(PageBean bean);*/
 }

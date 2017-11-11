@@ -1,6 +1,6 @@
 package com.capstone.deptmanager.notice.bean;
 
-public class PageBean {
+public class PageBean extends NoticeBean {
 
 	int page;
 	String type;
@@ -34,10 +34,12 @@ public class PageBean {
 	public void setTarget(String target) {
 		this.target = target;
 	}
+	
 	@Override
 	public String toString() {
 		return "PageBean [page=" + page + ", type=" + type + ", target=" + target + "]";
 	}
 
+	
 	
 }

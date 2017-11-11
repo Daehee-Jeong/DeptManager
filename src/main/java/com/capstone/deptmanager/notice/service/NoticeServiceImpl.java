@@ -61,4 +61,9 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNoticeIndexList();
 	}
 	
+/*	*//** 공지 검색 *//*
+	public List<NoticeBean> searchNoticeList(PageBean bean) throws Exception {
+		return noticeDao.searchNoticeList(bean);
+	}*/
+	
 } // end of class

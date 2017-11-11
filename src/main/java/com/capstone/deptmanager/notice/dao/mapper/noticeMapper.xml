@@ -107,6 +107,9 @@
 	       	 		<if test="type != null and type != ''">
 	       	 			notice_type = #{type} AND
 	       	 		</if>
+	       	 		<if test="noticeTitle != null and noticeTitle !=''">
+	       	 			(notice_title LIKE '%${noticeTitle}%' OR notice_content LIKE '%${noticeTitle}%') AND
+	       	 		</if>
 	       	 				1 = 1
 	       	 	ORDER BY notice_date DESC) LISTA
 		)LISTB
@@ -126,5 +129,23 @@
 	    	order by notice_date desc
 	    	limit 0, 10;
 	</select>
+	
+	<!-- 
+	<select id="searchNoticeList" parameterType="pageBean" resultType="noticeBean">
+	    SELECT
+			<include refid="noticeColumns"/>  
+	    FROM
+	    		notice
+	    where 
+	    	<if test="noticeTitle != null and noticeTitle != ''">
+	    		notice_title LIKE '%${noticeTitle}%' AND
+	    	</if>
+	    		<if test="noticeContent != null and noticeContent != ''">
+	    		notice_content LIKE '%'||#{noticeContent}||'%' AND
+	    	</if>
+	    		1=1
+	    ORDER BY notice_date DESC
+	    LIMIT	(#{page}-1) * 8,  #{page} * 7
+	</select> -->
 	
 </mapper>

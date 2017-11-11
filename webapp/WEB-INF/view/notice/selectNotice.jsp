@@ -193,11 +193,21 @@ textarea {
 										</optgroup>
 									</select>
 								</a></li>
+								
+							<li>
+								<a>
+									<div class="input-group col-md-12">
+										<input type="text" name="noticeTitle" id="filterKeyword" class="form-control" placeholder="공지 검색하기"> 
+									</div>
+								</a>
+							</li>
                 						
                 <li><a><button id="filterEvent" type="button" class="btn btn-primary">선택한 일정만 보기</button></a></li>
               </ul>
             </div>
-            </div>
+           </div>
+           
+            
             
          	</div>
 
@@ -227,6 +237,7 @@ textarea {
 		
 		var filterType = 0;
 		var filterTarget = 0;
+		var filterKeyword = "";
 
 		$(document).ready(function() {
 			moment.updateLocale('ko', lang);
@@ -235,6 +246,7 @@ textarea {
 			$(document).on("click", 'button[name="readmore"]', readMoreEvent);
 			$("#insertNotice").click(insertNoticeEvent);
 			$("#filterEvent").click(filterEvent);
+			$("#filterKeyword").keyup(searchEnterEvent);
 			
 			$(".selectpicker").on("show.bs.select", function(event) {
 				$(this).selectpicker("deselectAll");
@@ -244,7 +256,7 @@ textarea {
 				if($(this).val().length == 2) $(this).selectpicker("toggle");
 			})
 			
-			loadPage(filterType, filterTarget);
+			loadPage(filterType, filterTarget, filterKeyword);
 
 			$(document).scroll(function() {
 				maxHeight = $(document).height();
@@ -252,14 +264,22 @@ textarea {
 
 				if (maxHeight <= currentScroll) {
 					scrollCount++;
-					loadPage(filterType, filterTarget);
+					loadPage(filterType, filterTarget, filterKeyword);
 				}
 			});
 
 		});
 
-		loadPage = function(type, target) {
+		loadPage = function(type, target, keyword) {
 			var notice = $("#notice");
+			
+			var filterData = {
+				"page" : String(scrollCount),
+				"type" : type,
+				"target" : target
+			}
+			
+			if(keyword != undefined) filterData.noticeTitle = keyword;
 
 		/* 	var type = $("div[name='typeFilter']").children().filter(".active")
 					.children().attr("option_id");
@@ -269,11 +289,7 @@ textarea {
 			$.ajax({
 				type : 'POST',
 				url : '/notice/selectNoticeListFilterProc.do',
-				data : {
-					"page" : String(scrollCount),
-					"type" : type,
-					"target" : target
-				},
+				data : filterData,
 				dataType : 'json',
 				success : function(data) {
 					if (data.result == 'success') {
@@ -534,6 +550,11 @@ textarea {
 			
 			filterType = $("#filterSelect").val()[0];
 			filterTarget = $("#filterSelect").val()[1];
+			filterKeyword = $("#filterKeyword").val();
+			
+			if(filterType == undefined) filterType = 0;
+			if(filterTarget == undefined) filterTarget = 0;
+			if(filterKeyword.trim().length == 0) filterKeyword = undefined;
 			
 			var options = {};
 			  
@@ -543,10 +564,15 @@ textarea {
 			setTimeout(function() {
 				$("#notice").html("");
 				
-				loadPage(filterType, filterTarget);
+				loadPage(filterType, filterTarget, filterKeyword);
 			},450);
 			
 			$("#notice").toggle("fade", options, 450);
+		}
+		
+		
+		searchEnterEvent = function(event) {
+			if(event.originalEvent.key == "Enter") filterEvent();
 		}
 		
 		/* 		filterEvent = function(event) {
