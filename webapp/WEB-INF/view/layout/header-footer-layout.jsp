@@ -88,11 +88,12 @@
 					<ul class="nav navbar-nav">
 						<!-- Notifications Menu -->
 						<li id="btn-noti" class="dropdown notifications-menu">
-							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fa fa-bell-o"></i> <span
-								class="label label-warning">10</span>
-						</a>
-							<ul class="dropdown-menu">
+							<!-- Menu toggle button -->
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-bell-o"></i>
+								<span id="span-noti-badge" class="label label-warning">10</span>
+							</a>
+							<ul id="ul-noti-list" class="dropdown-menu">
 								<li class="header">You have 10 notifications</li>
 								<li>
 									<!-- Inner Menu: contains the notifications -->
