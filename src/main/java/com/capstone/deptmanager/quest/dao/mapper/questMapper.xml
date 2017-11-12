@@ -126,6 +126,15 @@
 	<select id="selectQuestListStudentScrollDown" resultType="questBean" parameterType="questBean">
 	    SELECT
 	    		<include refid="questColumns"/>
+	    		(
+	    			SELECT questres_no 
+	    			FROM questres 
+	    			WHERE
+	    				questres_quest IN (quest_no)
+	    				AND
+	    				questres.questres_member IN (#{questTo})
+	    		)
+	    		AS questIsRes
 		<![CDATA[
 	    FROM
 	    		quest
