@@ -125,7 +125,7 @@
 	<!-- [학생] 설문지 List 조회 (무한 스크롤)-->
 	<select id="selectQuestListStudentScrollDown" resultType="questBean" parameterType="questBean">
 	    SELECT
-	    		<include refid="questColumns"/>
+	    		<include refid="questColumns"/>,
 	    		(
 	    			SELECT questres_no 
 	    			FROM questres 
